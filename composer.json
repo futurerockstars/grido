@@ -4,7 +4,7 @@
     "description": "Grido - DataGrid for Nette Framework",
     "keywords": ["datagrid", "datalist", "tablegrid", "grid", "list", "table", "nette"],
     "homepage": "http://o5.github.io/grido-examples/",
-    "license": ["BSD-3", "GPL-2.0-only", "GPL-3.0-only"],
+    "license": ["BSD-3-Clause", "GPL-2.0-only", "GPL-3.0-only"],
     "authors": [{
         "name": "Petr Bugyík",
         "homepage": "http://petr.bugyik.cz/"
