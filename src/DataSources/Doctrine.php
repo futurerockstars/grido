@@ -14,6 +14,7 @@ namespace Grido\DataSources;
 use Grido\Exception;
 use Grido\Components\Filters\Condition;
 
+use Nette\SmartObject;
 use Nette\Utils\Strings;
 use Nette\Utils\Random;
 use Doctrine\ORM\Tools\Pagination\Paginator;
@@ -32,8 +33,11 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
  * @property-read int $count
  * @property-read array $data
  */
-class Doctrine extends \Nette\Object implements IDataSource
+class Doctrine implements IDataSource
 {
+
+	use SmartObject;
+
     /** @var \Doctrine\ORM\QueryBuilder */
     protected $qb;
 
