@@ -3,3 +3,5 @@
 /tests/tmp
 /tests/*/output
 coverage.xml
+node_modules/
+.idea/

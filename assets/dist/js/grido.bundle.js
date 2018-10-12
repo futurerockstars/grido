@@ -14,10 +14,8 @@
  * @param {jQuery} $ (version > 1.7)
  * @param {Window} window
  * @param {Document} document
- * @param {Location} location
- * @param {Navigator} navigator
  */
-;(function($, window, document, location, navigator) {
+;(function($, window, document) {
     /*jshint laxbreak: true, expr: true */
     "use strict";
 
@@ -72,7 +70,22 @@
         {
             $('.filter select, .filter [type=checkbox]', this.$element)
                 .off('change.grido')
-                .on('change.grido', $.proxy(this.sendFilterForm, this));
+                .on('change.grido', this.sendFilterForm);
+
+            var that = this;
+            $('.filter input, .filter textarea', this.$element)
+                .off('focus.grido')
+                .on('focus.grido', function() {
+                    var $el = $(this);
+                    $el.data('current-value', $el.val());
+                })
+                .off('blur.grido')
+                .on('blur.grido', function() {
+                    var $el = $(this);
+                    if ($el.data('current-value') !== $el.val()) {
+                        that.sendFilterForm();
+                    }
+                });
         },
 
         /**
@@ -167,7 +180,7 @@
          */
         sendFilterForm: function()
         {
-            $('.filter [name="buttons[search]"]', this.$element).click();
+            $('[name="buttons[search]"]', this.$element).click();
         }
     };
 
@@ -272,7 +285,7 @@
                         that.changeRow($(this).closest('tr'), !val);
                     });
 
-                    return false;
+                    return true;
                 });
         },
 
@@ -494,7 +507,7 @@
 
             if (state !== query) {
                 var url = this.getRefreshGridHandlerUrl(this.grido.$element);
-                this.doRequest(url);
+                this.doRequest(url + query.replace('?', '&'));
             }
         },
 
@@ -940,12 +953,436 @@
     $.fn.grido.defaults = {
         ajax: true,
         datepicker : {
-            mask: '99.99.9999',
-            format: 'dd.mm.yyyy'
+            format: 'DD.MM.YYYY',
+            options: {} // @link http://www.daterangepicker.com/#options
+        },
+        daterangepicker : {
+            format: 'DD.MM.YYYY',
+            separator: ' - ',
+            options: {} // @link http://www.daterangepicker.com/#options
         }
     };
 
     window.Grido = Grido;
     return Grido;
 
-})(jQuery, window, document, location, navigator);
+})(jQuery, window, document);
+
+/**
+ * Grido paginator plugin.
+ *
+ * @author Petr Bugyík
+ * @param {jQuery} $
+ * @param {Window} window
+ */
+;
+(function($, window) {
+    /*jshint laxbreak: true, expr: true */
+    "use strict";
+
+    window.Grido.Grid.prototype.onInit.push(function(Grido)
+    {
+        if (Grido.$element.hasClass('bootstrap') === false) { // template `bootstrap.latte` is required
+            return;
+        }
+
+        var tmp;
+        var selector = '.paginator input';
+
+        Grido.$element
+            .on('keyup', selector, function(e) {
+                var code = e.keyCode || e.which;
+                if (code === 13) {
+                    var $el = $(this);
+                    Grido.ajax.doRequest($el.data('grido-link').replace(0, $el.val()));
+                    return false;
+                }
+
+                var val = parseInt(this.value);
+                var min = parseInt($(this).attr('min'));
+                var max = parseInt($(this).attr('max'));
+                if (isNaN(this.value) || val < min || max < val) {
+                    $(this).val(this.value.length > 1
+                        ? this.value.substr(0, this.value.length - 1)
+                        : $(this).data('grido-current'));
+
+                    return false;
+                }
+            })
+            .on('focus', selector, function() {
+                $(this)
+                    .val($(this).data('grido-current'))
+                    .select();
+            })
+            .on('blur', selector, function() {
+                $(this).val('');
+                $(this).attr('placeholder', tmp);
+            });
+    });
+
+})(jQuery, window);
+
+/**
+ * Grido plugin for bootstrap-select library.
+ * @link https://github.com/silviomoreto/bootstrap-select
+ *
+ * @author Petr Bugyík
+ * @param {jQuery} $
+ * @param {Window} window
+ * @param {Document} document
+ * @param {undefined} undefined
+ */
+;
+(function($, window, document, undefined) {
+    /*jshint laxbreak: true, expr: true */
+    "use strict";
+
+    window.Grido.Grid.prototype.onInit.push(function(Grido)
+    {
+        if (Grido.$element.hasClass('bootstrap') === false) { // template `bootstrap.latte` is required
+            return;
+        }
+
+        if ($.fn.selectpicker === undefined) {
+            console.error('Plugin "bootstrap-select.js" is missing! Run `bower install bootstrap-select` and load it.');
+            return;
+        }
+
+        var init = function () {
+            $('.filter select').selectpicker({
+                noneSelectedText: '',
+                style: 'btn-default',
+                liveSearch: true
+            });
+        };
+
+        init();
+        $(document).ajaxSuccess(init);
+    });
+
+})(jQuery, window, document);
+
+/**
+ * Grido date picker plugin.
+ * @link https://github.com/dangrossman/bootstrap-daterangepicker
+ *
+ * @author Petr Bugyík
+ * @param {jQuery} $
+ * @param {Window} window
+ * @param {undefined} undefined
+ */
+;
+(function($, window, undefined) {
+    /*jshint laxbreak: true, expr: true */
+    "use strict";
+
+    window.Grido.DatePicker =
+    {
+        /**
+         * @returns {boolean}
+         */
+        isLoaded: function()
+        {
+            if ($.fn.daterangepicker === undefined) {
+                console.error('Plugin "bootstrap-daterangepicker.js" is missing! Run `bower install bootstrap-daterangepicker` and load it.');
+                return false;
+            }
+
+            return true;
+        },
+
+        /**
+         * @param Grido
+         * @returns {Grido.DatePicker}
+         */
+        init: function(Grido)
+        {
+            var $input,
+                defaults = Grido.options.datepicker;
+
+            var options = $.extend({
+                autoApply: false,
+                showDropdowns: true,
+                autoUpdateInput: false,
+                singleDatePicker: true,
+                locale: {
+                    format: defaults.format
+                }
+            }, defaults.options);
+
+            Grido.$element.on('focus', 'input.date', function() {
+                $input = $(this);
+                $input.daterangepicker(options);
+                $input.on('apply.daterangepicker', function(e, picker) {
+                    $input.val(picker.startDate.format(defaults.format));
+                    Grido.sendFilterForm();
+                });
+            });
+
+            return this;
+        }
+    };
+
+    window.Grido.Grid.prototype.onInit.push(function(Grido)
+    {
+        var DatePicker = window.Grido.DatePicker;
+        DatePicker.isLoaded() && DatePicker.init(Grido);
+    });
+
+})(jQuery, window);
+
+/**
+ * Grido date-range picker plugin.
+ * @link https://github.com/dangrossman/bootstrap-daterangepicker
+ *
+ * @author Petr Bugyík
+ * @param {jQuery} $
+ * @param {Window} window
+ * @param {undefined} undefined
+ */
+;
+(function($, window, undefined) {
+    /*jshint laxbreak: true, expr: true */
+    "use strict";
+
+    window.Grido.DateRangePicker =
+    {
+        /**
+         * @returns {boolean}
+         */
+        isLoaded: function()
+        {
+            if ($.fn.daterangepicker === undefined) {
+                console.error('Plugin "bootstrap-daterangepicker.js" is missing! Run `bower install bootstrap-daterangepicker` and load it.');
+                return false;
+
+            } else if (window.moment === undefined) {
+                console.error('Plugin "moment.js" required by "bootstrap-daterangepicker.js" is missing!');
+                return false;
+            }
+
+            return true;
+        },
+
+        /**
+         * @param Grido
+         * @returns {Grido.DateRangePicker}
+         */
+        init: function(Grido)
+        {
+            var $input,
+                defaults = Grido.options.daterangepicker;
+
+            var options = $.extend({
+                autoApply: true,
+                showDropdowns: true,
+                autoUpdateInput: false,
+                ranges: this.getRanges(),
+                locale: {
+                    format: defaults.format,
+                    separator: defaults.separator
+                },
+            }, defaults.options);
+
+            Grido.$element.on('focus', 'input.daterange', function()
+            {
+                $input = $(this);
+                $input.daterangepicker(options);
+                $input.on('apply.daterangepicker', function(e, picker) {
+                    $input.val(
+                        picker.startDate.format(defaults.format) +
+                        defaults.separator +
+                        picker.endDate.format(defaults.format)
+                    );
+                    Grido.sendFilterForm();
+                });
+            });
+
+            return this;
+        },
+
+        /**
+         * @returns {{Today: *[], Yesterday: *[], Last 7 Days: *[], Last 30 Days: *[], This Month: *[], Last Month: *[]}}
+         */
+        getRanges: function()
+        {
+            return {
+                'Today': [window.moment(), window.moment()],
+                'Yesterday': [window.moment().subtract(1, 'days'), window.moment().subtract(1, 'days')],
+                'Last 7 Days': [window.moment().subtract(6, 'days'), window.moment()],
+                'Last 30 Days': [window.moment().subtract(29, 'days'), window.moment()],
+                'This Month': [window.moment().startOf('month'), window.moment().endOf('month')],
+                'Last Month': [window.moment().subtract(1, 'month').startOf('month'), window.moment().subtract(1, 'month').endOf('month')]
+            };
+        }
+    };
+
+    window.Grido.Grid.prototype.onInit.push(function(Grido)
+    {
+        var DateRangePicker = window.Grido.DateRangePicker;
+        DateRangePicker.isLoaded() && DateRangePicker.init(Grido);
+    });
+
+})(jQuery, window);
+
+/**
+ * Grido history.js plugin.
+ * @link https://github.com/browserstate/history.js
+ *
+ * @author Petr Bugyík
+ * @param {jQuery} $
+ * @param {Window} window
+ * @param {Document} document
+ * @param {undefined} undefined
+ */
+;
+(function($, window, document, undefined) {
+    /*jshint laxbreak: true, expr: true */
+    "use strict";
+
+    window.Grido.Ajax.prototype.onSuccessEvent = function(params, url)
+    {
+        if (window.History === undefined) {
+            console.error('Plugin "history.js" is missing! Run `bower install history.js` and load it.');
+            return;
+        }
+
+        window.History.pushState(params, document.title, url);
+    };
+
+})(jQuery, window, document);
+
+/**
+ * Grido nette.ajax.js plugin.
+ *
+ * @author Petr Bugyík
+ * @param {jQuery} $
+ * @param {Document} document
+ * @param {Window} window
+ * @param {Grido} Grido
+ * @param {undefined} undefined
+ */
+;
+(function($, window, undefined) {
+    /*jshint laxbreak: true, expr: true */
+    "use strict";
+
+    /**
+     * @param {string} url
+     * @param {Element|null} ussually Anchor or Form
+     * @param {event|null} event causing the request
+     */
+    window.Grido.Ajax.prototype.doRequest = function(url, ui, e)
+    {
+        if ($.fn.netteAjax === undefined) {
+            console.error('Plugin "nette.ajax.js" is missing! Run `bower install nette.ajax.js` and load it.');
+            return;
+        }
+
+        $.nette.ajax({url: url}, ui, e);
+    };
+
+})(jQuery, window);
+
+/**
+ * Grido extension for nette.ajax.js
+ * @author Petr Bugyík
+ * @param {jQuery} $
+ */
+;(function($) {
+    "use strict";
+
+    $.nette.ext('grido',
+    {
+        load: function()
+        {
+            this.selector = $('.grido');
+            this.selector.grido();
+        },
+
+        success: function(payload)
+        {
+            if (payload.grido) {
+                this.selector.trigger('success.ajax.grido', payload);
+
+                //scroll to first grid after ajax update
+                var offset = 0;
+                for (var id in payload.snippets) {
+                    var $snippet = $('#' + id);
+                    if ($snippet.length) {
+                        offset = parseInt($snippet.offset()['top']);
+                    }
+                    break;
+                }
+
+                $('html, body').animate({scrollTop: offset}, 400);
+            }
+        }
+    });
+
+})(jQuery);
+
+/**
+ * Grido suggest plugin.
+ * @link https://github.com/twitter/typeahead.js
+ *
+ * @author Petr Bugyík
+ * @param {jQuery} $
+ * @param {Window} window
+ * @param {undefined} undefined
+ */
+;
+(function($, window, undefined) {
+    /*jshint laxbreak: true, expr: true */
+    "use strict";
+
+    window.Grido.Grid.prototype.onInit.push(function(Grido)
+    {
+        if ($.fn.typeahead === undefined) {
+            console.error('Plugin "typeahead.js" is missing! Run `bower install typeahead.js` and load bundled version.');
+            return;
+        } else if (window.Bloodhound === undefined) {
+            console.error('Plugin "Bloodhound" required by "typeahead.js" is missing!');
+            return;
+        }
+
+        var _this = Grido;
+        Grido.$element.find('input.suggest').each(function()
+        {
+            var url = $(this).data('grido-suggest-handler'),
+                wildcard = $(this).data('grido-suggest-replacement');
+
+            var options = {
+                limit: $(this).data('grido-suggest-limit'),
+                datumTokenizer: window.Bloodhound.tokenizers.obj.whitespace('value'),
+                queryTokenizer: window.Bloodhound.tokenizers.whitespace,
+                remote: {
+                    url: url.replace(wildcard, '%QUERY'),
+                    wildcard: '%QUERY'
+                }
+            };
+
+            if (window.NProgress !== undefined) {
+                options.remote.ajax = {
+                    beforeSend: $.proxy(window.NProgress.start),
+                    complete: $.proxy(window.NProgress.done)
+                };
+            }
+
+            var source = new window.Bloodhound(options);
+            source.initialize();
+
+            $(this).typeahead(null, {
+                displayKey: function(item) {
+                    return item;
+                },
+                source: source.ttAdapter()
+            });
+
+            $(this).on('typeahead:selected', function() {
+                _this.sendFilterForm();
+            });
+        });
+    });
+
+})(jQuery, window);

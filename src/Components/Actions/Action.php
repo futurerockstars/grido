@@ -22,9 +22,9 @@ use Nette\Utils\Html;
  * @author      Petr Bugyík
  *
  * @property-read Html $element
- * @property-write Html $elementPrototype
  * @property-write callback $customRender
  * @property-write callback $disable
+ * @property Html $elementPrototype
  * @property string $primaryKey
  * @property string $options
  */
@@ -156,14 +156,12 @@ abstract class Action extends \Grido\Components\Component
     {
         if ($this->elementPrototype === NULL) {
             $this->elementPrototype = Html::el('a')
-                ->setClass(array('grid-action-' . $this->getName()))
+                ->setClass(['grid-action-' . $this->getName()])
                 ->setText($this->label);
         }
 
-        if (isset($this->elementPrototype->class) && is_string($this->elementPrototype->class)) {
+        if (isset($this->elementPrototype->class)) {
             $this->elementPrototype->class = (array) $this->elementPrototype->class;
-        } elseif (isset($this->elementPrototype->class) && !is_array($this->elementPrototype->class)) {
-            throw new Exception('Attribute class must be string or array.');
         }
 
         return $this->elementPrototype;
@@ -193,12 +191,14 @@ abstract class Action extends \Grido\Components\Component
 
         if ($confirm = $this->getOption('confirm')) {
             $confirm = is_callable($confirm)
-                ? callback($confirm)->invokeArgs(array($row))
+                ? call_user_func_array($confirm, [$row])
                 : $confirm;
 
-            $element->data['grido-confirm'] = is_array($confirm)
+            $value = is_array($confirm)
                 ? vsprintf($this->translate(array_shift($confirm)), $confirm)
                 : $this->translate($confirm);
+
+            $element->setAttribute('data-grido-confirm', $value);
         }
 
         return $element;
@@ -235,14 +235,14 @@ abstract class Action extends \Grido\Components\Component
      */
     public function render($row)
     {
-        if (!$row || ($this->disable && callback($this->disable)->invokeArgs(array($row)))) {
+        if (!$row || ($this->disable && call_user_func_array($this->disable, [$row]))) {
             return;
         }
 
         $element = $this->getElement($row);
 
         if ($this->customRender) {
-            echo callback($this->customRender)->invokeArgs(array($row, $element));
+            echo call_user_func_array($this->customRender, [$row, $element]);
             return;
         }
 

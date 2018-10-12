@@ -19,9 +19,8 @@ class DibiFluentTest extends DataSourceTestCase
 {
     function setUp()
     {
-        $that = $this;
-        Helper::grid(function(Grid $grid, TestPresenter $presenter) use ($that) {
-            $fluent = $presenter->context->dibi_sqlite
+        Helper::grid(function(Grid $grid, TestPresenter $presenter) {
+            $fluent = $presenter->context->getService('dibi_sqlite')
                 ->select('u.*, c.title AS country')
                 ->from('[user] u')
                 ->leftJoin('[country] c')->on('u.country_code = c.code');
@@ -30,7 +29,7 @@ class DibiFluentTest extends DataSourceTestCase
             $grid->setDefaultPerPage(3);
 
             $grid->addColumnText('firstname', 'Firstname')
-                ->setEditable(callback($that, 'editableCallbackTest'))
+                ->setEditable([$this, 'editableCallbackTest'])
                 ->setSortable();
             $grid->addColumnText('surname', 'Surname');
             $grid->addColumnText('gender', 'Gender');
@@ -50,9 +49,9 @@ class DibiFluentTest extends DataSourceTestCase
                     ->setSuggestion('title');
 
             $grid->addFilterCheck('male', 'Only male')
-                ->setCondition(array(
-                    TRUE => array('gender', '= ?', 'male')
-                ));
+                ->setCondition([
+                    TRUE => ['gender', '= ?', 'male']
+                ]);
 
             $grid->addFilterCheck('tall', 'Only tall')
                 ->setWhere(function($value, \DibiFluent $fluent) {
@@ -60,7 +59,9 @@ class DibiFluentTest extends DataSourceTestCase
                     $fluent->where('[centimeters] >= %i', 180);
                 });
 
-            $grid->setExport();
+            $limit = 100;
+            $export = $grid->setExport()->setFetchLimit($limit);
+            Assert::same($limit, $export->getFetchLimit());
 
         })->run();
     }

@@ -12,7 +12,7 @@
 namespace Grido\Translations;
 
 use Grido\Exception;
-use Nette\SmartObject;
+use Nette;
 
 /**
  * Simple file translator.
@@ -23,17 +23,16 @@ use Nette\SmartObject;
  */
 class FileTranslator implements \Nette\Localization\ITranslator
 {
-
-	use SmartObject;
+    use Nette\SmartObject;
 
     /** @var array */
-    protected $translations = array();
+    protected $translations = [];
 
     /**
      * @param string $lang
      * @param array $translations
      */
-    public function __construct($lang = 'en', array $translations = array())
+    public function __construct($lang = 'en', array $translations = [])
     {
         $translations = $translations + $this->getTranslationsFromFile($lang);
         $this->translations = $translations;
@@ -55,11 +54,12 @@ class FileTranslator implements \Nette\Localization\ITranslator
      */
     protected function getTranslationsFromFile($lang)
     {
-        if (!$translations = @include (__DIR__ . "/$lang.php")) {
+        $filename = __DIR__ . "/$lang.php";
+        if (!file_exists($filename)) {
             throw new Exception("Translations for language '$lang' not found.");
         }
 
-        return $translations;
+        return include ($filename);
     }
 
     /************************* interface \Nette\Localization\ITranslator **************************/

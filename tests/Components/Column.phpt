@@ -9,6 +9,7 @@
 
 namespace Grido\Tests;
 
+use Grido\Translations\FileTranslator;
 use Tester\Assert,
     Grido\Grid,
     Grido\Components\Columns\Column;
@@ -30,22 +31,26 @@ class ColumnTest extends \Tester\TestCase
     function testSetReplacement()
     {
         $grid = new Grid;
-        $column = $grid->addColumnText('column', 'Column')->setReplacement(array('value' => 'new_value', 'replace' => '%value it!'));
-        Assert::same('new_value', $column->render(array('column' => 'value')));
-        Assert::same('unknown', $column->render(array('column' => 'unknown')));
-        Assert::same('replace it!', $column->render(array('column' => 'replace'))); //Column::VALUE_IDENTIFIER
+        $column = $grid->addColumnText('column', 'Column')->setReplacement(['value' => 'new_value', 'replace' => '%value it!']);
+        Assert::same('new_value', $column->render(['column' => 'value']));
+        Assert::same('unknown', $column->render(['column' => 'unknown']));
+        Assert::same('replace it!', $column->render(['column' => 'replace'])); //Column::VALUE_IDENTIFIER
 
         $value = new \stdClass;
-        Assert::same($value, $column->render(array('column' => $value)));
+        Assert::same($value, $column->render(['column' => $value]));
 
-        $column->setReplacement(array('value' => 'new_value', NULL => 'IS NULL'));
-        Assert::same('IS NULL', $column->render(array('column' => NULL)));
+        $column->setReplacement(['value' => 'new_value', NULL => 'IS NULL']);
+        Assert::same('IS NULL', $column->render(['column' => NULL]));
 
-        $column->setReplacement(array('value' => 'new_value', '' => 'IS EMPTY'));
-        Assert::same('IS NULL', $column->render(array('column' => '')));
+        $column->setReplacement(['value' => 'new_value', '' => 'IS EMPTY']);
+        Assert::same('IS NULL', $column->render(['column' => '']));
 
-        $column->setReplacement(array(TRUE => 'Yes', FALSE => 'No'));
-        Assert::same('No', $column->render(array('column' => FALSE)));
+        $column->setReplacement([TRUE => 'Yes', FALSE => 'No']);
+        Assert::same('No', $column->render(['column' => FALSE]));
+
+        $grid->translator = new FileTranslator('cs', ['female' => 'žena']);
+        $column->setReplacement(['f' => 'female']);
+        Assert::same('žena', $column->render(['column' => 'f']));
     }
 
     function testSetColumn()
@@ -62,20 +67,22 @@ class ColumnTest extends \Tester\TestCase
     {
         $grid = new Grid;
         $grid->addColumnText('column', 'Column')->setDefaultSort(Column::ORDER_DESC);
-        Assert::same(array('column' => Column::ORDER_DESC), $grid->defaultSort);
+        Assert::same(['column' => Column::ORDER_DESC], $grid->defaultSort);
     }
 
     function testSetCustomRender()
     {
         $grid = new Grid;
-        $column = $grid->addColumnText('column', 'Column')->setCustomRender(function($row) {
+        $testCustomVariables = ['var' => 'TEST'];
+        $column = $grid->addColumnText('column', 'Column')->setCustomRender(function($row, $variables) use ($testCustomVariables) {
+            Assert::same($testCustomVariables, $variables);
             return 'CUSTOM_RENDER-' . $row['column'];
-        });
-        Assert::same('CUSTOM_RENDER-TEST', $column->render(array('column' => 'TEST')));
+        }, $testCustomVariables);
+        Assert::same('CUSTOM_RENDER-TEST', $column->render(['column' => 'TEST']));
 
         Helper::grid(function(Grid $grid){
-            $grid->setModel(array(array('id' => 1, 'column' => 'TEST')));
-            $grid->addColumnText('column', 'Column')->setCustomRender(__DIR__ . '/files/Column.customRender.latte', array('var' => 'TEST'));
+            $grid->setModel([['id' => 1, 'column' => 'TEST']]);
+            $grid->addColumnText('column', 'Column')->setCustomRender(__DIR__ . '/files/Column.customRender.latte', ['var' => 'TEST']);
         })->run();
 
         ob_start();
@@ -88,7 +95,7 @@ class ColumnTest extends \Tester\TestCase
     function testSetCustomRenderExport()
     {
         $grid = new Grid;
-        $test = array('column' => 'TEST');
+        $test = ['column' => 'TEST'];
         $column = $grid->addColumnText('column', 'Column')->setCustomRenderExport(function($row) use ($test) {
             Assert::same($row, $test);
             return 'CUSTOM_RENDER_EXPORT-' . $row['column'];
@@ -100,18 +107,18 @@ class ColumnTest extends \Tester\TestCase
     {
         $grid = new Grid;
         $column = $grid->addColumnText('column', 'Column')->setTruncate(5);
-        Assert::same("valu…", $column->render(array('column' => 'valuee')));
+        Assert::same("valu…", $column->render(['column' => 'valuee']));
 
         $grid = new Grid;
         $column = $grid->addColumnText('column', 'Column')->setTruncate(5, '--');
-        Assert::same('val--', $column->render(array('column' => 'valuee')));
+        Assert::same('val--', $column->render(['column' => 'valuee']));
     }
 
     function testSetCellCallback()
     {
         Helper::grid(function(Grid $grid) {
-            $testRow = array('id' => 1, 'column' => 'Value');
-            $grid->setModel(array($testRow));
+            $testRow = ['id' => 1, 'column' => 'Value'];
+            $grid->setModel([$testRow]);
             $grid->addColumnText('column', 'Column')->setCellCallback(function($row, $td) use ($testRow) {
                 Assert::same($testRow, $row);
                 $td->class[] = 'test_class';
@@ -149,7 +156,7 @@ class ColumnTest extends \Tester\TestCase
         Assert::null($column->sort);
 
         Helper::grid(function(Grid $grid){
-            $grid->setModel(array());
+            $grid->setModel([]);
             $grid->addColumnText('column', 'Column')->setDefaultSort(Column::ORDER_ASC);
             $grid->data;
         })->run();
@@ -172,19 +179,19 @@ class ColumnTest extends \Tester\TestCase
     {
         $grid = new Grid;
         $column = $grid->addColumnText('column', 'Column');
-        Assert::same('test', $column->render(array('column' => 'test')));
-        Assert::same('&lt;script&gt;alert(&quot;XSS&quot;)&lt;/script&gt;', $column->render(array('column' => '<script>alert("XSS")</script>')));
+        Assert::same('test', $column->render(['column' => 'test']));
+        Assert::same('&lt;script&gt;alert(&quot;XSS&quot;)&lt;/script&gt;', $column->render(['column' => '<script>alert("XSS")</script>']));
     }
 
     function testRenderExport()
     {
         $grid = new Grid;
-        $column = $grid->addColumnText('column', 'Column')->setReplacement(array(
+        $column = $grid->addColumnText('column', 'Column')->setReplacement([
             'value' => 'new_value', 'html' => \Nette\Utils\Html::el('b')->setText('html')
-        ));
-        Assert::same('new_value', $column->renderExport(array('column' => 'value')));
-        Assert::same('test', $column->renderExport(array('column' => 'test')));
-        Assert::same('html', $column->renderExport(array('column' => 'html')));
+        ]);
+        Assert::same('new_value', $column->renderExport(['column' => 'value']));
+        Assert::same('test', $column->renderExport(['column' => 'test']));
+        Assert::same('html', $column->renderExport(['column' => 'html']));
     }
 
     /**********************************************************************************************/
@@ -250,11 +257,11 @@ class ColumnTest extends \Tester\TestCase
         Assert::type('\Grido\Components\Columns\Number', $component);
         Assert::type('\Grido\Components\Columns\Column', $component);
         Assert::same($label, $component->label);
-        Assert::same(array(
+        Assert::same([
             \Grido\Components\Columns\Number::NUMBER_FORMAT_DECIMALS => $decimals,
             \Grido\Components\Columns\Number::NUMBER_FORMAT_DECIMAL_POINT => $decPoint,
             \Grido\Components\Columns\Number::NUMBER_FORMAT_THOUSANDS_SEPARATOR => $thousandsSep
-        ), $component->numberFormat);
+        ], $component->numberFormat);
 
         // getter
         Assert::exception(function() use ($grid) {
@@ -274,6 +281,7 @@ class ColumnTest extends \Tester\TestCase
         $grid = new Grid;
         $fiter = $grid->addColumnText($name, $label)->setFilterText();
         Assert::type('\Grido\Components\Filters\Text', $fiter);
+        Assert::same('Grido\Components\Filters\Text', $fiter->type);
         Assert::same($name, $fiter->name);
         Assert::same($label, $fiter->label);
 
@@ -296,7 +304,7 @@ class ColumnTest extends \Tester\TestCase
         Assert::same($label, $fiter->label);
 
         $grid = new Grid;
-        $items = array('one' => 'One');
+        $items = ['one' => 'One'];
         $fiter = $grid->addColumnText($name, $label)->setFilterSelect($items);
         Assert::type('\Grido\Components\Filters\Select', $fiter);
         Assert::same($name, $fiter->name);

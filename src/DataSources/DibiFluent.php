@@ -12,7 +12,7 @@
 namespace Grido\DataSources;
 
 use Grido\Exception;
-use Nette\SmartObject;
+use Nette;
 
 /**
  * Dibi Fluent data source.
@@ -27,10 +27,9 @@ use Nette\SmartObject;
  * @property-read int $count
  * @property-read array $data
  */
-class DibiFluent implements IDataSource
+class DibiFluent  implements IDataSource
 {
-
-	use SmartObject;
+    use Nette\SmartObject;
 
     /** @var \DibiFluent */
     protected $fluent;
@@ -84,9 +83,9 @@ class DibiFluent implements IDataSource
             : $fluent;
 
         if ($condition->callback) {
-            callback($condition->callback)->invokeArgs(array($condition->value, $fluent));
+            call_user_func_array($condition->callback, [$condition->value, $fluent]);
         } else {
-            call_user_func_array(array($fluent, 'where'), $condition->__toArray('[', ']'));
+            call_user_func_array([$fluent, 'where'], $condition->__toArray('[', ']'));
         }
     }
 
@@ -173,7 +172,7 @@ class DibiFluent implements IDataSource
             $this->makeWhere($condition, $fluent);
         }
 
-        $items = array();
+        $items = [];
         $data = $fluent->fetchAll(0, $limit);
         foreach ($data as $row) {
             if (is_string($column)) {
@@ -185,7 +184,7 @@ class DibiFluent implements IDataSource
                 throw new Exception("Column of suggestion must be string or callback, $type given.");
             }
 
-            $items[$value] = \Nette\Templating\Helpers::escapeHtml($value);
+            $items[$value] = \Latte\Runtime\Filters::escapeHtml($value);
         }
 
         is_callable($column) && sort($items);

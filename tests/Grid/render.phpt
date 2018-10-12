@@ -18,7 +18,7 @@ require_once __DIR__ . '/../bootstrap.php';
 test(function()
 {
     Helper::grid(function(Grid $grid, TestPresenter $presenter) {
-        $data = $presenter->context->dibi_sqlite
+        $data = $presenter->context->getService('dibi_sqlite')
             ->select('u.*, c.title AS country')
             ->from('[user] u')
             ->leftJoin('[country] c')->on('u.country_code = c.code')
@@ -46,15 +46,15 @@ test(function()
             ->setFilterDate();
 
         $grid->addActionHref('edit', 'Edit')
-            ->elementPrototype->addAttributes(array('class' => 'xxx'));
+            ->elementPrototype->addAttributes(['class' => 'xxx']);
 
-        $grid->addActionEvent('delete', 'Delete')
+        $grid->addActionEvent('delete', 'Delete', function() {})
             ->elementPrototype->class[] = 'yyy';
 
-        $grid->addActionEvent('print', 'Print')
+        $grid->addActionEvent('print', 'Print', function() {})
             ->elementPrototype = \Nette\Utils\Html::el('button');
 
-        $grid->setOperation(array('print' => 'Print'), function(){});
+        $grid->setOperation(['print' => 'Print'], function(){});
         $grid->setExport();
 
     })->run();

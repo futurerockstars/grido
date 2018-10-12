@@ -42,7 +42,7 @@ abstract class Filter extends \Grido\Components\Component
     protected $optional;
 
     /** @var array */
-    protected $column = array();
+    protected $column = [];
 
     /** @var string */
     protected $condition = '= ?';
@@ -94,7 +94,8 @@ abstract class Filter extends \Grido\Components\Component
     {
         $columnAlreadySet = count($this->column) > 0;
         if (!Condition::isOperator($operator) && $columnAlreadySet) {
-            throw new Exception('Operator must be Condition::OPERATOR_AND or Condition::OPERATOR_OR.');
+            $msg = sprintf("Operator must be '%s' or '%s'.", Condition::OPERATOR_AND, Condition::OPERATOR_OR);
+            throw new Exception($msg);
         }
 
         if ($columnAlreadySet) {
@@ -147,7 +148,7 @@ abstract class Filter extends \Grido\Components\Component
      */
     public function setDefaultValue($value)
     {
-        $this->grid->setDefaultFilter(array($this->getName() => $value));
+        $this->grid->setDefaultFilter([$this->getName() => $value]);
         return $this;
     }
 
@@ -159,7 +160,7 @@ abstract class Filter extends \Grido\Components\Component
      */
     public function getColumn()
     {
-        if (!$this->column) {
+        if (empty($this->column)) {
             $column = $this->getName();
             if ($columnComponent = $this->grid->getColumn($column, FALSE)) {
                 $column = $columnComponent->column; //use db column from column compoment
@@ -185,6 +186,14 @@ abstract class Filter extends \Grido\Components\Component
     }
 
     /**
+     * @throws Exception
+     */
+    protected function getFormControl()
+    {
+        throw new Exception("Filter {$this->name} cannot be use, because it is not implement getFormControl() method.");
+    }
+
+    /**
      * Returns wrapper prototype (<th> html tag).
      * @return \Nette\Utils\Html
      */
@@ -192,7 +201,7 @@ abstract class Filter extends \Grido\Components\Component
     {
         if (!$this->wrapperPrototype) {
             $this->wrapperPrototype = \Nette\Utils\Html::el('th')
-                ->setClass(array('grid-filter-' . $this->getName()));
+                ->setClass(['grid-filter-' . $this->getName()]);
         }
 
         return $this->wrapperPrototype;
@@ -227,7 +236,7 @@ abstract class Filter extends \Grido\Components\Component
             $condition = Condition::setup($this->getColumn(), $condition, $this->formatValue($value));
 
         } elseif (is_callable($condition)) {
-            $condition = callback($condition)->invokeArgs(array($value));
+            $condition = call_user_func_array($condition, [$value]);
 
         } elseif (is_array($condition)) {
             $condition = isset($condition[$value])

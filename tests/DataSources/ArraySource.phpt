@@ -11,6 +11,7 @@ namespace Grido\Tests;
 
 use Tester\Assert,
     Grido\Grid,
+    Grido\DataSources\ArraySource,
     Grido\Components\Filters\Condition;
 
 require_once __DIR__ . '/TestCase.php';
@@ -19,9 +20,8 @@ class ArraySourceTest extends DataSourceTestCase
 {
     function setUp()
     {
-        $that = $this;
-        Helper::grid(function(Grid $grid, TestPresenter $presenter) use ($that) {
-            $data = $presenter->context->dibi_sqlite
+        Helper::grid(function(Grid $grid, TestPresenter $presenter) {
+            $data = $presenter->context->getService('dibi_sqlite')
                 ->select('u.*, c.title AS country')
                 ->from('[user] u')
                 ->leftJoin('[country] c')->on('u.country_code = c.code')
@@ -30,7 +30,7 @@ class ArraySourceTest extends DataSourceTestCase
             $grid->setDefaultPerPage(3);
 
             $grid->addColumnText('firstname', 'Firstname')
-                ->setEditable(callback($that, 'editableCallbackTest'))
+                ->setEditable([$this, 'editableCallbackTest'])
                 ->setSortable();
             $grid->addColumnText('surname', 'Surname');
             $grid->addColumnText('gender', 'Gender');
@@ -49,9 +49,9 @@ class ArraySourceTest extends DataSourceTestCase
                     ->setSuggestion();
 
             $grid->addFilterCheck('male', 'Only male')
-                ->setCondition(array(
-                    TRUE => array('gender', '= ?', 'male')
-                ));
+                ->setCondition([
+                    TRUE => ['gender', '= ?', 'male']
+                ]);
 
             $grid->addFilterCheck('tall', 'Only tall')
                 ->setWhere(function($value, $row) {
@@ -66,7 +66,7 @@ class ArraySourceTest extends DataSourceTestCase
 
     function testCompare()
     {
-        $source = new \Grido\DataSources\ArraySource(array());
+        $source = new ArraySource([]);
 
         Assert::true($source->compare('Lucie', 'LIKE ?', '%Lu%'));
         Assert::true($source->compare('Lucie', 'LIKE ?', '%ie'));
@@ -100,7 +100,36 @@ class ArraySourceTest extends DataSourceTestCase
 
         Assert::error(function() use ($source) {
             Assert::true($source->compare(2, 'SOMETHING ?', 3));
-        }, 'Grido\Exception', "Condition 'SOMETHING ?' not implemented yet.");
+        }, 'Grido\Exception', "Condition 'SOMETHING ?' is not implemented yet.");
+    }
+
+    function testMakeWhere()
+    {
+        $data = [
+            ['name' => 'AA', 'surname' => 'BB', 'city' => 'CC'],
+            ['name' => 'CC', 'surname' => 'DD', 'city' => 'AA'],
+            ['name' => 'EE', 'surname' => 'AA', 'city' => 'FF'],
+            ['name' => 'AA', 'surname' => 'AA', 'city' => 'BB'],
+            ['name' => 'AA', 'surname' => 'AA', 'city' => 'AA'],
+        ];
+
+        $source = new ArraySource($data);
+        $source->filter([Condition::setup(['name'], '= ?', 'CC')]);
+        Assert::same([1 => $data[1]], $source->data);
+
+        $source = new ArraySource($data);
+        $source->filter([Condition::setup(['name', 'OR', 'surname'], '= ?', 'AA')]);
+        $expected = $data;
+        unset($expected[1]);
+        Assert::same($expected, $source->data);
+
+        $source = new ArraySource($data);
+        $source->filter([Condition::setup(['name', 'AND', 'surname'], '= ?', 'AA')]);
+        Assert::same([3 => $data[3], 4 => $data[4]], $source->data);
+
+        $source = new ArraySource($data);
+        $source->filter([Condition::setup(['name', 'AND', 'surname', 'AND', 'city'], '= ?', 'AA')]);
+        Assert::same([4 => $data[4]], $source->data);
     }
 }
 

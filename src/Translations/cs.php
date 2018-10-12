@@ -9,13 +9,11 @@
  * the file LICENSE.md that was distributed with this source code.
  */
 
-return array(
+return [
     'Grido.HintNumber' => 'Můžete použít <, <=, >, >=, <>. Např.: ">= %d"',
     'Grido.SelectSomeRow' => 'Vyberte řádek',
     'Grido.Invert' => 'Obrátit výběr',
     'Grido.Items' => 'Položky %d - %d z %d',
-    'Grido.Previous' => 'Předchozí',
-    'Grido.Next' => 'Další',
     'Grido.Actions' => 'Akce',
     'Grido.Search' => 'Vyhledat',
     'Grido.Reset' => 'Resetovat',
@@ -24,4 +22,10 @@ return array(
     'Grido.EnterPage' => 'Vložte stranu:',
     'Grido.NoResults' => 'Žádné výsledky.',
     'Grido.ExportAllItems' => 'Exportovat všechny položky',
-);
+    'Grido.Export' => 'Export',
+    'Grido.Paginator.Previous' => 'Předchozí',
+    'Grido.Paginator.Next' => 'Další',
+    'Grido.Paginator.Info' => 'Strana %d z %d',
+    'Grido.Paginator.First' => 'První',
+    'Grido.Paginator.Last' => 'Poslední',
+];
