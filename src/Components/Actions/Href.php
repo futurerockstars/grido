@@ -19,6 +19,8 @@ namespace Grido\Components\Actions;
  * @author      Petr Bugyík
  *
  * @property-write array $customHref
+ * @property-read string $destination
+ * @property-read array $arguments
  */
 class Href extends Action
 {
@@ -26,7 +28,7 @@ class Href extends Action
     protected $destination;
 
     /** @var array second param for method $presenter->link() */
-    protected $arguments = array();
+    protected $arguments = [];
 
     /** @var callback for custom href attribute creating */
     protected $customHref;
@@ -36,14 +38,14 @@ class Href extends Action
      * @param string $name
      * @param string $label
      * @param string $destination - first param for method $presenter->link()
-     * @param array|null $args - second param for method $presenter->link()
+     * @param array $arguments - second param for method $presenter->link()
      */
-    public function __construct($grid, $name, $label, $destination = NULL, array $args = NULL)
+    public function __construct($grid, $name, $label, $destination = NULL, array $arguments = [])
     {
         parent::__construct($grid, $name, $label);
 
         $this->destination = $destination;
-        $this->arguments = $args;
+        $this->arguments = $arguments;
     }
 
     /**
@@ -69,7 +71,7 @@ class Href extends Action
         $element = parent::getElement($row);
 
         if ($this->customHref) {
-            $href = callback($this->customHref)->invokeArgs(array($row));
+            $href = call_user_func_array($this->customHref, [$row]);
         } else {
             $primaryKey = $this->getPrimaryKey();
             $primaryValue = $this->grid->getProperty($row, $primaryKey);
@@ -98,6 +100,7 @@ class Href extends Action
 
     /**
      * @return array
+     * @internal
      */
     public function getArguments()
     {

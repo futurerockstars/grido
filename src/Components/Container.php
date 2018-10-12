@@ -43,6 +43,9 @@ abstract class Container extends \Nette\Application\UI\Control
     /** @var bool */
     protected $hasExport;
 
+    /** @var bool */
+    protected $hasButtons;
+
     /**
      * Returns column component.
      * @param string $name
@@ -100,6 +103,18 @@ abstract class Container extends \Nette\Application\UI\Control
     public function getExport($need = TRUE)
     {
         return $this->getComponent(Export::ID, $need);
+    }
+
+    /**
+     * Returns toolbar button component.
+     * @param bool $need
+     * @return Button
+     */
+    public function getButton($name, $need = TRUE)
+    {
+        return $this->hasButtons()
+            ? $this->getComponent(Button::ID)->getComponent($name, $need)
+            : NULL;
     }
 
     /**********************************************************************************************/
@@ -192,6 +207,23 @@ abstract class Container extends \Nette\Application\UI\Control
         return $hasExport;
     }
 
+    /**
+     * @param bool $useCache
+     * @return bool
+     * @internal
+     */
+    public function hasButtons($useCache = TRUE)
+    {
+        $hasButtons = $this->hasButtons;
+
+        if ($hasButtons === NULL || $useCache === FALSE) {
+            $hasButtons = (bool) $this->getComponent(Button::ID, FALSE);
+            $this->hasButtons = $useCache ? $hasButtons : NULL;
+        }
+
+        return $hasButtons;
+    }
+
     /**********************************************************************************************/
 
     /**
@@ -205,16 +237,6 @@ abstract class Container extends \Nette\Application\UI\Control
     }
 
     /**
-     * @deprecated
-     */
-    public function addColumnMail($name, $label)
-    {
-        trigger_error(__METHOD__ . '() is deprecated; use addColumnEmail() instead.', E_USER_DEPRECATED);
-
-        return $this->addColumnEmail($name, $label);
-    }
-
-    /**
      * @param string $name
      * @param string $label
      * @return Columns\Email
@@ -222,16 +244,6 @@ abstract class Container extends \Nette\Application\UI\Control
     public function addColumnEmail($name, $label)
     {
         return new Columns\Email($this, $name, $label);
-    }
-
-    /**
-     * @deprecated
-     */
-    public function addColumnHref($name, $label)
-    {
-        trigger_error(__METHOD__ . '() is deprecated; use addColumnLink() instead.', E_USER_DEPRECATED);
-
-        return new Columns\Link($this, $name, $label);
     }
 
     /**
@@ -347,12 +359,12 @@ abstract class Container extends \Nette\Application\UI\Control
      * @param string $name
      * @param string $label
      * @param string $destination
-     * @param array $args
+     * @param array $arguments
      * @return Actions\Href
      */
-    public function addActionHref($name, $label, $destination = NULL, array $args = NULL)
+    public function addActionHref($name, $label, $destination = NULL, array $arguments = [])
     {
-        return new Actions\Href($this, $name, $label, $destination, $args);
+        return new Actions\Href($this, $name, $label, $destination, $arguments);
     }
 
     /**
@@ -385,6 +397,19 @@ abstract class Container extends \Nette\Application\UI\Control
     public function setExport($label = NULL)
     {
         return new Export($this, $label);
+    }
+
+
+    /**
+     * @param string $name
+     * @param string $label
+     * @param string $destination - first param for method $presenter->link()
+     * @param array $arguments - second param for method $presenter->link()
+     * @return Button
+     */
+    public function addButton($name, $label = NULL, $destination = NULL, array $arguments = [])
+    {
+        return new Button($this, $name, $label, $destination, $arguments);
     }
 
     /**

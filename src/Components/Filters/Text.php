@@ -57,14 +57,13 @@ class Text extends Filter
         $prototype->attrs['autocomplete'] = 'off';
         $prototype->class[] = 'suggest';
 
-        $filter = $this;
-        $this->grid->onRender[] = function() use ($prototype, $filter) {
+        $this->grid->onRender[] = function() use ($prototype) {
             $replacement = '-query-';
-            $prototype->data['grido-suggest-replacement'] = $replacement;
-            $prototype->data['grido-suggest-limit'] = $filter->suggestionLimit;
-            $prototype->data['grido-suggest-handler'] = $filter->link('suggest!', array(
+            $prototype->setAttribute('data-grido-suggest-replacement', $replacement);
+            $prototype->setAttribute('data-grido-suggest-limit', $this->suggestionLimit);
+            $prototype->setAttribute('data-grido-suggest-handler', $this->link('suggest!', [
                 'query' => $replacement
-            ));
+            ]));
         };
 
         return $this;
@@ -125,7 +124,7 @@ class Text extends Filter
      */
     public function handleSuggest($query)
     {
-        $this->grid->onRegistered && $this->grid->onRegistered($this->grid);
+        !empty($this->grid->onRegistered) && $this->grid->onRegistered($this->grid);
         $name = $this->getName();
 
         if (!$this->getPresenter()->isAjax() || !$this->suggestion || $query == '') {
@@ -146,7 +145,7 @@ class Text extends Filter
             $items = $this->grid->model->suggest($column, $conditions, $this->suggestionLimit);
 
         } else {
-            $items = callback($this->suggestionCallback)->invokeArgs(array($query, $actualFilter, $conditions, $this));
+            $items = call_user_func_array($this->suggestionCallback, [$query, $actualFilter, $conditions, $this]);
             if (!is_array($items)) {
                 throw new Exception('Items must be an array.');
             }

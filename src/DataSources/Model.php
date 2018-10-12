@@ -12,7 +12,7 @@
 namespace Grido\DataSources;
 
 use Grido\Exception;
-use Nette\SmartObject;
+use Nette;
 
 /**
  * Model of data source.
@@ -25,11 +25,10 @@ use Nette\SmartObject;
  */
 class Model
 {
-
-	use SmartObject;
+    use Nette\SmartObject;
 
     /** @var array */
-    public $callback = array();
+    public $callback = [];
 
     /** @var IDataSource */
     protected $dataSource;
@@ -40,7 +39,7 @@ class Model
      */
     public function __construct($model)
     {
-        if ($model instanceof \DibiFluent) {
+        if ($model instanceof \Dibi\Fluent) {
             $dataSource = new DibiFluent($model);
         } elseif ($model instanceof \Nette\Database\Table\Selection) {
             $dataSource = new NetteDatabase($model);
@@ -68,7 +67,7 @@ class Model
     public function __call($method, $args)
     {
         return isset($this->callback[$method])
-            ? callback($this->callback[$method])->invokeArgs(array($this->dataSource, $args))
-            : call_user_func_array(array($this->dataSource, $method), $args);
+            ? call_user_func_array($this->callback[$method], [$this->dataSource, $args])
+            : call_user_func_array([$this->dataSource, $method], $args);
     }
 }

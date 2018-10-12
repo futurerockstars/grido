@@ -11,6 +11,8 @@
 
 namespace Grido\Tests;
 
+use Tester\Assert;
+
 /**
  * Test helper.
  *
@@ -38,7 +40,7 @@ class Helper
             self::$presenter = $self->createPresenter();
         }
 
-        self::$presenter->onStartUp = array();
+        self::$presenter->onStartUp = [];
         self::$presenter->onStartUp[] = function(TestPresenter $presenter) use ($definition) {
             if (isset($presenter[Helper::GRID_NAME])) {
                 unset($presenter[Helper::GRID_NAME]);
@@ -55,7 +57,7 @@ class Helper
      * @param string $method
      * @return \Nette\Application\IResponse
      */
-    public static function request(array $params = array(), $method = \Nette\Http\Request::GET)
+    public static function request(array $params = [], $method = \Nette\Http\Request::GET)
     {
         $request = new \Nette\Application\Request('Test', $method, $params);
         $response = self::$presenter->run($request);
@@ -70,9 +72,18 @@ class Helper
      * @param string $method
      * @return \Nette\Application\IResponse
      */
-    public function run(array $params = array(), $method = \Nette\Http\Request::GET)
+    public function run(array $params = [], $method = \Nette\Http\Request::GET)
     {
         return self::request($params, $method);
+    }
+
+    public static function assertTypeError($function)
+    {
+        if (PHP_VERSION_ID < 70000) {
+            Assert::error($function, E_RECOVERABLE_ERROR);
+        } else {
+            Assert::exception($function, '\TypeError');
+        }
     }
 
     /**
@@ -83,7 +94,7 @@ class Helper
         $url = new \Nette\Http\UrlScript('http://localhost/');
         $url->setScriptPath('/');
 
-        $configurator = new \Nette\Config\Configurator;
+        $configurator = new \Nette\Configurator;
         $configurator->addConfig(__DIR__ . '/config.neon');
         \Kdyby\Events\DI\EventsExtension::register($configurator);
         \Kdyby\Annotations\DI\AnnotationsExtension::register($configurator);
@@ -95,8 +106,8 @@ class Helper
         $container->removeService('httpRequest');
         $container->addService('httpRequest', new \Nette\Http\Request($url));
 
-        $application = $container->getService('application');
-        $application->router[] = new \Nette\Application\Routers\SimpleRouter;
+        $router = $container->getByType(\Nette\Application\IRouter::class);
+        $router[] = new \Nette\Application\Routers\Route('<presenter>/<action>[/<id>]', 'Dashboard:default');
 
         $presenter = new TestPresenter($container);
         $container->callInjects($presenter);

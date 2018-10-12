@@ -13,9 +13,8 @@ namespace Grido\DataSources;
 
 use Grido\Exception;
 use Grido\Components\Filters\Condition;
-
-use Nette\SmartObject;
 use Nette\Utils\Strings;
+use Nette;
 
 /**
  * Array data source.
@@ -30,8 +29,7 @@ use Nette\Utils\Strings;
  */
 class ArraySource implements IDataSource
 {
-
-	use SmartObject;
+    use Nette\SmartObject;
 
     /** @var array */
     protected $data;
@@ -45,6 +43,7 @@ class ArraySource implements IDataSource
     }
 
     /**
+     * This method needs tests!
      * @param Condition $condition
      * @param array $data
      * @return array
@@ -55,21 +54,20 @@ class ArraySource implements IDataSource
             ? $this->data
             : $data;
 
-        $that = $this;
-        return array_filter($data, function ($row) use ($condition, $that) {
+        return array_filter($data, function ($row) use ($condition) {
             if ($condition->callback) {
-                return callback($condition->callback)->invokeArgs(array($condition->value, $row));
+                return call_user_func_array($condition->callback, [$condition->value, $row]);
             }
 
             $i = 0;
-            $results = array();
+            $results = [];
             foreach ($condition->column as $column) {
                 if (Condition::isOperator($column)) {
                     $results[] = " $column ";
 
                 } else {
                     $i = count($condition->condition) > 1 ? $i : 0;
-                    $results[] = (int) $that->compare(
+                    $results[] = (int) $this->compare(
                         $row[$column],
                         $condition->condition[$i],
                         isset($condition->value[$i]) ? $condition->value[$i] : NULL
@@ -82,7 +80,7 @@ class ArraySource implements IDataSource
             $result = implode('', $results);
             return count($condition->column) === 1
                 ? (bool) $result
-                : eval("return $result;");
+                : eval("return $result;"); // QUESTION: How to remove this eval? hmmm?
         });
     }
 
@@ -118,12 +116,20 @@ class ArraySource implements IDataSource
         } elseif ($cond === 'IS NOT NULL') {
             return $actual !== NULL;
 
-        } elseif (in_array($cond, array('<', '<=', '>', '>='))) {
-            $actual = (int) $actual;
-            return eval("return {$actual} {$cond} {$expected};");
+        } elseif ($cond === '<') {
+            return (int) $actual < $expected;
+
+        } elseif ($cond === '<=') {
+            return (int) $actual <= $expected;
+
+        } elseif ($cond === '>') {
+            return (int) $actual > $expected;
+
+        } elseif ($cond === '>=') {
+            return (int) $actual >= $expected;
 
         } else {
-            throw new Exception("Condition '$condition' not implemented yet.");
+            throw new Exception("Condition '$condition' is not implemented yet.");
         }
     }
 
@@ -175,7 +181,7 @@ class ArraySource implements IDataSource
         }
 
         foreach ($sorting as $column => $sort) {
-            $data = array();
+            $data = [];
             foreach ($this->data as $item) {
                 $sorter = (string) $item[$column];
                 $data[$sorter][] = $item;
@@ -187,7 +193,7 @@ class ArraySource implements IDataSource
                 krsort($data);
             }
 
-            $this->data = array();
+            $this->data = [];
             foreach ($data as $i) {
                 foreach ($i as $item) {
                     $this->data[] = $item;
@@ -212,7 +218,7 @@ class ArraySource implements IDataSource
 
         array_slice($data, 1, $limit);
 
-        $items = array();
+        $items = [];
         foreach ($data as $row) {
             if (is_string($column)) {
                 $value = (string) $row[$column];
@@ -223,7 +229,7 @@ class ArraySource implements IDataSource
                 throw new Exception("Column of suggestion must be string or callback, $type given.");
             }
 
-            $items[$value] = \Nette\Templating\Helpers::escapeHtml($value);
+            $items[$value] = \Latte\Runtime\Filters::escapeHtml($value);
         }
 
         sort($items);

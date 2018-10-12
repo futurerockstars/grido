@@ -9,13 +9,11 @@
  * the file LICENSE.md that was distributed with this source code.
  */
 
-return array(
+return [
     'Grido.HintNumber' => 'You can use <, <=, >, >=, <>. e.g. ">= %d"',
     'Grido.SelectSomeRow' => 'Select some row',
     'Grido.Invert' => 'Invert',
     'Grido.Items' => 'Items %d - %d of %d',
-    'Grido.Previous' => 'Previous',
-    'Grido.Next' => 'Next',
     'Grido.Actions' => 'Actions',
     'Grido.Search' => 'Search',
     'Grido.Reset' => 'Reset',
@@ -24,4 +22,10 @@ return array(
     'Grido.EnterPage' => 'Enter page:',
     'Grido.NoResults' => 'No results.',
     'Grido.ExportAllItems' => 'Export all items',
-);
+    'Grido.Export' => 'Export',
+    'Grido.Paginator.Previous' => 'Previous',
+    'Grido.Paginator.Next' => 'Next',
+    'Grido.Paginator.Info' => 'Page %d z %d',
+    'Grido.Paginator.First' => 'First',
+    'Grido.Paginator.Last' => 'Last',
+];

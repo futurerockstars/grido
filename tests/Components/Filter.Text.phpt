@@ -19,30 +19,30 @@ class FilterTextTest extends \Tester\TestCase
     function testSetSuggestion()
     {
         Helper::grid(function(Grid $grid) {
-            $grid->setModel(array(
-                array('name' => 'AAtest'),
-                array('name' => 'AAxxx'),
-                array('name' => 'BBtest'),
-                array('name' => 'BBxxx'),
-                array('name' => 'CC <script>alert("XSS")</script>'),
-            ));
+            $grid->setModel([
+                ['name' => 'AAtest'],
+                ['name' => 'AAxxx'],
+                ['name' => 'BBtest'],
+                ['name' => 'BBxxx'],
+                ['name' => 'CC <script>alert("XSS")</script>'],
+            ]);
             $grid->addColumnText('name', 'Name');
             $filter = $grid->addFilterText('name', 'Name')->setSuggestion();
 
             Assert::same('off', $filter->control->controlPrototype->attrs['autocomplete']);
-            Assert::same(array('text', 'suggest'), $filter->control->controlPrototype->class);
+            Assert::same(['text', 'suggest'], $filter->control->controlPrototype->class);
 
             $grid->addFilterText('test', 'Test')
                 ->setSuggestion()
                     ->setSuggestionCallback(function($query, $filter, $conditions, $filterComp) use ($grid) {
                         Assert::same('QUERY', $query);
-                        Assert::same(array('name' => 'aa'), $filter);
+                        Assert::same(['name' => 'aa'], $filter);
                         Assert::same($grid->getFilter('test'), $filterComp);
 
                         $cond = new \Grido\Components\Filters\Condition('name', 'LIKE ?', '%aa%');
                         Assert::same($cond->__toArray(), $conditions[0]->__toArray());
 
-                        return array('test1', 'test2');
+                        return ['test1', 'test2'];
                     });
         })->run();
 
@@ -51,10 +51,10 @@ class FilterTextTest extends \Tester\TestCase
         ob_clean();
 
         $prototype = Helper::$grid->getFilter('name')->control->controlPrototype;
-        Assert::same('-query-', $prototype->data['grido-suggest-replacement']);
+        Assert::same('-query-', $prototype->getAttribute('data-grido-suggest-replacement'));
 
-        $url = '/?grid-filters-name-query=-query-&action=default&do=grid-filters-name-suggest&presenter=Test';
-        Assert::same($url, $prototype->data['grido-suggest-handler']);
+        $url = '/test/?grid-filters-name-query=-query-&do=grid-filters-name-suggest';
+        Assert::same($url, $prototype->getAttribute('data-grido-suggest-handler'));
 
         Helper::$presenter->forceAjaxMode = TRUE;
         Helper::request();
@@ -80,7 +80,7 @@ class FilterTextTest extends \Tester\TestCase
         Assert::same('["CC &lt;script&gt;alert(&quot;XSS&quot;)&lt;\/script&gt;"]', $output);
 
         ob_start();
-            Helper::request(array('grid-filter' => array('name' => 'aa'), 'do' => 'grid-filters-test-suggest', 'grid-filters-test-query' => 'QUERY'));
+            Helper::request(['grid-filter' => ['name' => 'aa'], 'do' => 'grid-filters-test-suggest', 'grid-filters-test-query' => 'QUERY']);
         $output = ob_get_clean();
 
         Assert::same('["test1","test2"]', $output);
@@ -97,7 +97,7 @@ class FilterTextTest extends \Tester\TestCase
     {
         $grid = new Grid;
         $filter = $grid->addFilterText('text', 'Text');
-        Assert::same(array('text LIKE ?', '%value%'), $filter->__getCondition('value')->__toArray());
+        Assert::same(['text LIKE ?', '%value%'], $filter->__getCondition('value')->__toArray());
     }
 }
 

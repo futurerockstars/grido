@@ -14,10 +14,10 @@ namespace Grido\DataSources;
 use Grido\Exception;
 use Grido\Components\Filters\Condition;
 
-use Nette\SmartObject;
 use Nette\Utils\Strings;
 use Nette\Utils\Random;
 use Doctrine\ORM\Tools\Pagination\Paginator;
+use Nette;
 
 /**
  * Doctrine data source.
@@ -35,8 +35,7 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
  */
 class Doctrine implements IDataSource
 {
-
-	use SmartObject;
+    use Nette\SmartObject;
 
     /** @var \Doctrine\ORM\QueryBuilder */
     protected $qb;
@@ -137,7 +136,7 @@ class Doctrine implements IDataSource
             : $qb;
 
         if ($condition->callback) {
-            return callback($condition->callback)->invokeArgs(array($condition->value, $qb));
+            return call_user_func_array($condition->callback, [$condition->value, $qb]);
         }
 
         $columns = $condition->column;
@@ -202,7 +201,7 @@ class Doctrine implements IDataSource
      */
     public function getData()
     {
-        $data = array();
+        $data = [];
 
         // Paginator is better if the query uses ManyToMany associations
         $result = $this->qb->getMaxResults() !== NULL || $this->qb->getFirstResult() !== NULL
@@ -280,7 +279,7 @@ class Doctrine implements IDataSource
             $this->makeWhere($condition, $qb);
         }
 
-        $items = array();
+        $items = [];
         $data = $qb->getQuery()->getScalarResult();
         foreach ($data as $row) {
             if (is_string($column)) {
@@ -292,7 +291,7 @@ class Doctrine implements IDataSource
                 throw new Exception("Column of suggestion must be string or callback, $type given.");
             }
 
-            $items[$value] = \Nette\Templating\Helpers::escapeHtml($value);
+            $items[$value] = \Latte\Runtime\Filters::escapeHtml($value);
         }
 
         is_callable($column) && sort($items);

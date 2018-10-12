@@ -12,7 +12,7 @@
 namespace Grido\DataSources;
 
 use Grido\Exception;
-use Nette\SmartObject;
+use Nette;
 
 /**
  * Dibi Fluent data source.
@@ -21,18 +21,17 @@ use Nette\SmartObject;
  * @subpackage  DataSources
  * @author      Petr Bugyík
  *
- * @property-read \DibiFluent $fluent
+ * @property-read \Dibi\Fluent $fluent
  * @property-read int $limit
  * @property-read int $offset
  * @property-read int $count
  * @property-read array $data
  */
-class DibiFluent implements IDataSource
+class DibiFluent  implements IDataSource
 {
+    use Nette\SmartObject;
 
-	use SmartObject;
-
-    /** @var \DibiFluent */
+    /** @var \Dibi\Fluent */
     protected $fluent;
 
     /** @var int */
@@ -42,15 +41,15 @@ class DibiFluent implements IDataSource
     protected $offset;
 
     /**
-     * @param \DibiFluent $fluent
+     * @param \Dibi\Fluent $fluent
      */
-    public function __construct(\DibiFluent $fluent)
+    public function __construct(\Dibi\Fluent $fluent)
     {
         $this->fluent = $fluent;
     }
 
     /**
-     * @return \DibiFluent
+     * @return \Dibi\Fluent
      */
     public function getFluent()
     {
@@ -75,18 +74,18 @@ class DibiFluent implements IDataSource
 
     /**
      * @param \Grido\Components\Filters\Condition $condition
-     * @param \DibiFluent $fluent
+     * @param \Dibi\Fluent $fluent
      */
-    protected function makeWhere(\Grido\Components\Filters\Condition $condition, \DibiFluent $fluent = NULL)
+    protected function makeWhere(\Grido\Components\Filters\Condition $condition, \Dibi\Fluent $fluent = NULL)
     {
         $fluent = $fluent === NULL
             ? $this->fluent
             : $fluent;
 
         if ($condition->callback) {
-            callback($condition->callback)->invokeArgs(array($condition->value, $fluent));
+            call_user_func_array($condition->callback, [$condition->value, $fluent]);
         } else {
-            call_user_func_array(array($fluent, 'where'), $condition->__toArray('[', ']'));
+            call_user_func_array([$fluent, 'where'], $condition->__toArray('[', ']'));
         }
     }
 
@@ -96,7 +95,7 @@ class DibiFluent implements IDataSource
      * Default callback used when an editable column has customRender.
      * @param mixed $id
      * @param string $idCol
-     * @return \DibiRow
+     * @return \Dibi\Row
      */
     public function getRow($id, $idCol)
     {
@@ -173,7 +172,7 @@ class DibiFluent implements IDataSource
             $this->makeWhere($condition, $fluent);
         }
 
-        $items = array();
+        $items = [];
         $data = $fluent->fetchAll(0, $limit);
         foreach ($data as $row) {
             if (is_string($column)) {
@@ -185,7 +184,7 @@ class DibiFluent implements IDataSource
                 throw new Exception("Column of suggestion must be string or callback, $type given.");
             }
 
-            $items[$value] = \Nette\Templating\Helpers::escapeHtml($value);
+            $items[$value] = \Latte\Runtime\Filters::escapeHtml($value);
         }
 
         is_callable($column) && sort($items);

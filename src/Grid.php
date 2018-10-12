@@ -12,9 +12,11 @@
 namespace Grido;
 
 use Grido\Exception;
+use Grido\Components\Button;
 use Grido\Components\Paginator;
 use Grido\Components\Columns\Column;
 use Grido\Components\Filters\Filter;
+use Grido\Components\Actions\Action;
 
 use Symfony\Component\PropertyAccess\PropertyAccessor;
 
@@ -28,6 +30,7 @@ use Symfony\Component\PropertyAccess\PropertyAccessor;
  * @property-read mixed $data
  * @property-read \Nette\Utils\Html $tablePrototype
  * @property-read PropertyAccessor $propertyAccessor
+ * @property-read Customization $customization
  * @property-write string $templateFile
  * @property bool $rememberState
  * @property array $defaultPerPage
@@ -59,10 +62,10 @@ class Grid extends Components\Container
     public $perPage;
 
     /** @var array @persistent */
-    public $sort = array();
+    public $sort = [];
 
     /** @var array @persistent */
-    public $filter = array();
+    public $filter = [];
 
     /** @var array event on all grid's components registered */
     public $onRegistered;
@@ -92,16 +95,16 @@ class Grid extends Components\Container
     protected $filterRenderType;
 
     /** @var array */
-    protected $perPageList = array(10, 20, 30, 50, 100);
+    protected $perPageList = [10, 20, 30, 50, 100];
 
     /** @var int */
     protected $defaultPerPage = 20;
 
     /** @var array */
-    protected $defaultFilter = array();
+    protected $defaultFilter = [];
 
     /** @var array */
-    protected $defaultSort = array();
+    protected $defaultSort = [];
 
     /** @var DataSources\IDataSource */
     protected $model;
@@ -125,9 +128,28 @@ class Grid extends Components\Container
     protected $strictMode = TRUE;
 
     /** @var array */
-    protected $options = array(
-        self::CLIENT_SIDE_OPTIONS => array()
-    );
+    protected $options = [
+        self::CLIENT_SIDE_OPTIONS => []
+    ];
+
+    /** @var Customization */
+    protected $customization;
+
+    /**
+     * Grid constructor.
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        list($parent, $name) = func_get_args() + [null, null];
+        if ($parent !== null) {
+            $parent->addComponent($this, $name);
+
+        } elseif (is_string($name)) {
+            $this->name = $name;
+        }
+    }
+
 
     /**
      * Sets a model that implements the interface Grido\DataSources\IDataSource or data-source object.
@@ -182,7 +204,7 @@ class Grid extends Components\Container
      */
     public function setDefaultSort(array $sort)
     {
-        static $replace = array('asc' => Column::ORDER_ASC, 'desc' => Column::ORDER_DESC);
+        static $replace = ['asc' => Column::ORDER_ASC, 'desc' => Column::ORDER_DESC];
 
         foreach ($sort as $column => $dir) {
             $dir = strtr(strtolower($dir), $replace);
@@ -233,7 +255,7 @@ class Grid extends Components\Container
     public function setFilterRenderType($type)
     {
         $type = strtolower($type);
-        if (!in_array($type, array(Filter::RENDER_INNER, Filter::RENDER_OUTER))) {
+        if (!in_array($type, [Filter::RENDER_INNER, Filter::RENDER_OUTER])) {
             throw new Exception('Type must be Filter::RENDER_INNER or Filter::RENDER_OUTER.');
         }
 
@@ -271,7 +293,11 @@ class Grid extends Components\Container
      */
     public function setTemplateFile($file)
     {
-        $this->getTemplate()->setFile($file);
+        $this->onRender[] = function() use ($file) {
+            $this->getTemplate()->add('gridoTemplate', $this->getTemplate()->getFile());
+            $this->getTemplate()->setFile($file);
+        };
+
         return $this;
     }
 
@@ -323,6 +349,14 @@ class Grid extends Components\Container
     {
         $this->strictMode = (bool) $mode;
         return $this;
+    }
+
+    /**
+     * @param \Grido\Customization $customization
+     */
+    public function setCustomization(Customization $customization)
+    {
+        $this->customization = $customization;
     }
 
     /**********************************************************************************************/
@@ -426,7 +460,7 @@ class Grid extends Components\Container
     public function getActualFilter($key = NULL)
     {
         $filter = $this->filter ? $this->filter : $this->defaultFilter;
-        return $key && isset($filter[$key]) ? $filter[$key] : $filter;
+        return $key !== NULL && isset($filter[$key]) ? $filter[$key] : $filter;
     }
 
     /**
@@ -435,7 +469,7 @@ class Grid extends Components\Container
      * @param bool $useCache
      * @param bool $fetch
      * @throws Exception
-     * @return array
+     * @return array|DataSources\IDataSource|\Nette\Database\Table\Selection
      */
     public function getData($applyPaging = TRUE, $useCache = TRUE, $fetch = TRUE)
     {
@@ -462,12 +496,12 @@ class Grid extends Components\Container
                 $this->data = $data;
             }
 
-            if ($applyPaging && $data && !in_array($this->page, range(1, $this->getPaginator()->pageCount))) {
+            if ($applyPaging && !empty($data) && !in_array($this->page, range(1, $this->getPaginator()->pageCount))) {
                 $this->__triggerUserNotice("Page is out of range.");
                 $this->page = 1;
             }
 
-            if ($this->onFetchData) {
+            if (!empty($this->onFetchData)) {
                 $this->onFetchData($this);
             }
         }
@@ -515,8 +549,7 @@ class Grid extends Components\Container
     {
         if ($this->tablePrototype === NULL) {
             $this->tablePrototype = \Nette\Utils\Html::el('table');
-            $this->tablePrototype->id($this->getName())
-                ->class[] = 'table table-striped table-hover';
+            $this->tablePrototype->id($this->getName());
         }
 
         return $this->tablePrototype;
@@ -574,7 +607,7 @@ class Grid extends Components\Container
     /**
      * A simple wrapper around symfony/property-access with Nette Database dot notation support.
      * @param array|object $object
-     * @param type $name
+     * @param string $name
      * @return mixed
      * @internal
      */
@@ -628,7 +661,7 @@ class Grid extends Components\Container
         $primaryValue ? $tr->class[] = "grid-row-$primaryValue" : NULL;
 
         if ($this->rowCallback) {
-            $tr = callback($this->rowCallback)->invokeArgs(array($row, $tr));
+            $tr = call_user_func_array($this->rowCallback, [$row, $tr]);
         }
 
         return $tr;
@@ -651,6 +684,18 @@ class Grid extends Components\Container
         return $this->strictMode;
     }
 
+    /**
+     * @return Customization
+     */
+    public function getCustomization()
+    {
+        if ($this->customization === NULL) {
+            $this->customization = new Customization($this);
+        }
+
+        return $this->customization;
+    }
+
     /**********************************************************************************************/
 
     /**
@@ -664,7 +709,7 @@ class Grid extends Components\Container
         $session = $this->getRememberSession();
         if ($session && $this->getPresenter()->isSignalReceiver($this)) {
             $session->remove();
-        } elseif ($session && !$params && $session->params) {
+        } elseif ($session && empty($params) && $session->params) {
             $params = (array) $session->params;
         }
 
@@ -679,7 +724,7 @@ class Grid extends Components\Container
      */
     public function saveState(array &$params, $reflection = NULL)
     {
-        $this->onRegistered && $this->onRegistered($this);
+        !empty($this->onRegistered) && $this->onRegistered($this);
         return parent::saveState($params, $reflection);
     }
 
@@ -721,8 +766,8 @@ class Grid extends Components\Container
         $session = $this->rememberState //session filter
             ? isset($this->getRememberSession(TRUE)->params['filter'])
                 ? $this->getRememberSession(TRUE)->params['filter']
-                : array()
-            : array();
+                : []
+            : [];
 
         foreach ($values as $name => $value) {
             if (is_numeric($value) || !empty($value) || isset($this->defaultFilter[$name]) || isset($session[$name])) {
@@ -742,15 +787,15 @@ class Grid extends Components\Container
      */
     public function handleReset(\Nette\Forms\Controls\SubmitButton $button)
     {
-        $this->sort = array();
-        $this->filter = array();
+        $this->sort = [];
+        $this->filter = [];
         $this->perPage = NULL;
 
         if ($session = $this->getRememberSession()) {
             $session->remove();
         }
 
-        $button->form->setValues(array(Filter::ID => $this->defaultFilter), TRUE);
+        $button->form->setValues([Filter::ID => $this->defaultFilter], TRUE);
 
         $this->page = 1;
         $this->reload();
@@ -795,8 +840,8 @@ class Grid extends Components\Container
     public function createTemplate()
     {
         $template = parent::createTemplate();
-        $template->setFile(__DIR__ . '/Grid.latte');
-        $template->registerHelper('translate', callback($this->getTranslator(), 'translate'));
+        $template->setFile($this->getCustomization()->getTemplateFiles()[Customization::TEMPLATE_DEFAULT]);
+        $template->getLatte()->addFilter('translate', [$this->getTranslator(), 'translate']);
 
         return $template;
     }
@@ -814,21 +859,39 @@ class Grid extends Components\Container
         $this->saveRememberState();
         $data = $this->getData();
 
-        if ($this->onRender) {
+        if (!empty($this->onRender)) {
             $this->onRender($this);
         }
 
-        $this->template->data = $data;
-        $this->template->form = $form = $this['form'];
-        $this->template->paginator = $this->paginator;
+        $form = $this['form'];
+
+        $this->getTemplate()->add('data', $data);
+        $this->getTemplate()->add('form', $form);
+        $this->getTemplate()->add('paginator', $this->getPaginator());
+        $this->getTemplate()->add('customization', $this->getCustomization());
+        $this->getTemplate()->add('columns', $this->getComponent(Column::ID)->getComponents());
+        $this->getTemplate()->add('actions', $this->hasActions()
+            ? $this->getComponent(Action::ID)->getComponents()
+            : []
+        );
+
+        $this->getTemplate()->add('buttons', $this->hasButtons()
+            ? $this->getComponent(Button::ID)->getComponents()
+            : []
+        );
+
+        $this->getTemplate()->add('formFilters', $this->hasFilters()
+            ? $form->getComponent(Filter::ID)->getComponents()
+            : []
+        );
 
         $form['count']->setValue($this->getPerPage());
 
         if ($options = $this->options[self::CLIENT_SIDE_OPTIONS]) {
-            $this->getTablePrototype()->data[self::CLIENT_SIDE_OPTIONS] = json_encode($options);
+            $this->getTablePrototype()->setAttribute('data-' . self::CLIENT_SIDE_OPTIONS, json_encode($options));
         }
 
-        $this->template->render();
+        $this->getTemplate()->render();
     }
 
     protected function saveRememberState()
@@ -855,9 +918,17 @@ class Grid extends Components\Container
      */
     public function __getConditions(array $filter)
     {
-        $conditions = array();
-        if ($filter) {
-            $this['form']->setDefaults(array(Filter::ID => $filter));
+        $conditions = [];
+        if (!empty($filter)) {
+            try {
+                $this['form']->setDefaults([Filter::ID => $filter]);
+            } catch (\Nette\InvalidArgumentException $e) {
+                $this->__triggerUserNotice($e->getMessage());
+                $filter = [];
+                if ($session = $this->getRememberSession()) {
+                    $session->remove();
+                }
+            }
 
             foreach ($filter as $column => $value) {
                 if ($component = $this->getFilter($column, FALSE)) {
@@ -875,7 +946,7 @@ class Grid extends Components\Container
 
     protected function applySorting()
     {
-        $sort = array();
+        $sort = [];
         $this->sort = $this->sort ? $this->sort : $this->defaultSort;
 
         foreach ($this->sort as $column => $dir) {
@@ -895,7 +966,7 @@ class Grid extends Components\Container
                 }
             }
 
-            if (!in_array($dir, array(Column::ORDER_ASC, Column::ORDER_DESC))) {
+            if (!in_array($dir, [Column::ORDER_ASC, Column::ORDER_DESC])) {
                 if ($dir == '' && isset($this->defaultSort[$column])) {
                     unset($this->sort[$column]);
                     break;
@@ -908,7 +979,7 @@ class Grid extends Components\Container
             $sort[$component ? $component->column : $column] = $dir == Column::ORDER_ASC ? 'ASC' : 'DESC';
         }
 
-        if ($sort) {
+        if (!empty($sort)) {
             $this->getModel()->sort($sort);
         }
     }
@@ -935,11 +1006,11 @@ class Grid extends Components\Container
 
         $buttons = $form->addContainer(self::BUTTONS);
         $buttons->addSubmit('search', 'Grido.Search')
-            ->onClick[] = callback($this, 'handleFilter');
+            ->onClick[] = [$this, 'handleFilter'];
         $buttons->addSubmit('reset', 'Grido.Reset')
-            ->onClick[] = callback($this, 'handleReset');
+            ->onClick[] = [$this, 'handleReset'];
         $buttons->addSubmit('perPage', 'Grido.ItemsPerPage')
-            ->onClick[] = callback($this, 'handlePerPage');
+            ->onClick[] = [$this, 'handlePerPage'];
 
         $form->addSelect('count', 'Count', $this->getItemsForCountSelect())
             ->setTranslator(NULL)
@@ -960,6 +1031,10 @@ class Grid extends Components\Container
      */
     public function __triggerUserNotice($message)
     {
+        if ($this->getPresenter(FALSE) && $session = $this->getRememberSession()) {
+            $session->remove();
+        }
+
         $this->strictMode && trigger_error($message, E_USER_NOTICE);
     }
 }

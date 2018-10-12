@@ -12,7 +12,7 @@
 namespace Grido\Components\Filters;
 
 use Grido\Exception;
-use Nette\SmartObject;
+use Nette;
 
 /**
  * Builds filter condition.
@@ -29,7 +29,7 @@ use Nette\SmartObject;
 class Condition
 {
 
-	use SmartObject;
+    use Nette\SmartObject;
 
     const OPERATOR_OR = 'OR';
     const OPERATOR_AND = 'AND';
@@ -143,7 +143,7 @@ class Condition
             return $this->value;
         }
 
-        $values = array();
+        $values = [];
         foreach ($this->getColumn() as $column) {
             if (!self::isOperator($column)) {
                 foreach ($this->getValue() as $val) {
@@ -160,7 +160,7 @@ class Condition
      */
     public function getColumnWithoutOperator()
     {
-        $columns = array();
+        $columns = [];
         foreach ($this->column as $column) {
             if (!self::isOperator($column)) {
                 $columns[] = $column;
@@ -187,7 +187,7 @@ class Condition
      */
     public static function isOperator($item)
     {
-        return in_array(strtoupper($item), array(self::OPERATOR_AND, self::OPERATOR_OR));
+        return in_array(strtoupper($item), [self::OPERATOR_AND, self::OPERATOR_OR]);
     }
 
     /**
@@ -248,7 +248,7 @@ class Condition
      */
     public function __toArray($prefix = NULL, $suffix = NULL, $brackets = TRUE)
     {
-        $condition = array();
+        $condition = [];
         $addBrackets = $brackets && count($this->column) > 1;
 
         if ($addBrackets) {
@@ -274,7 +274,7 @@ class Condition
         }
 
         return $condition
-            ? array_values(array_merge(array(implode('', $condition)), $this->getValueForColumn()))
+            ? array_values(array_merge([implode('', $condition)], $this->getValueForColumn()))
             : $this->condition;
     }
 }

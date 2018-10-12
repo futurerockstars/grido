@@ -26,7 +26,7 @@ use Grido\Exception;
  * @property-read \Nette\Utils\Html $headerPrototype
  * @property-write callback $cellCallback
  * @property-write string $defaultSorting
- * @property-write mixed $customRender
+ * @property mixed $customRender
  * @property-write array $customRenderVariables
  * @property-write mixed $customRenderExport
  * @property-write array $replacements
@@ -61,7 +61,7 @@ abstract class Column extends \Grido\Components\Component
     protected $customRender;
 
     /** @var array custom rendering template variables */
-    protected $customRenderVariables = array();
+    protected $customRenderVariables = [];
 
     /** @var mixed custom export rendering */
     protected $customRenderExport;
@@ -70,7 +70,7 @@ abstract class Column extends \Grido\Components\Component
     protected $sortable = FALSE;
 
     /** @var array of arrays('pattern' => 'replacement') */
-    protected $replacements = array();
+    protected $replacements = [];
 
     /**
      * @param \Grido\Grid $grid
@@ -121,7 +121,7 @@ abstract class Column extends \Grido\Components\Component
      */
     public function setDefaultSort($dir)
     {
-        $this->grid->setDefaultSort(array($this->getName() => $dir));
+        $this->grid->setDefaultSort([$this->getName() => $dir]);
         return $this;
     }
 
@@ -130,7 +130,7 @@ abstract class Column extends \Grido\Components\Component
      * @param array $variables - template variables
      * @return Column
      */
-    public function setCustomRender($callback, $variables = array())
+    public function setCustomRender($callback, $variables = [])
     {
         $this->customRender = $callback;
         $this->customRenderVariables = $variables;
@@ -171,12 +171,12 @@ abstract class Column extends \Grido\Components\Component
 
         if ($td === NULL) { //cache
             $td = $this->cellPrototype = \Nette\Utils\Html::el('td')
-                ->setClass(array('grid-cell-' . $this->getName()));
+                ->setClass(['grid-cell-' . $this->getName()]);
         }
 
         if ($this->cellCallback && $row !== NULL) {
             $td = clone $td;
-            $td = callback($this->cellCallback)->invokeArgs(array($row, $td));
+            $td = call_user_func_array($this->cellCallback, [$row, $td]);
         }
 
         return $td;
@@ -190,7 +190,7 @@ abstract class Column extends \Grido\Components\Component
     {
         if ($this->headerPrototype === NULL) {
             $this->headerPrototype = \Nette\Utils\Html::el('th')
-                ->setClass(array('column', 'grid-header-' . $this->getName()));
+                ->setClass(['column', 'grid-header-' . $this->getName()]);
         }
 
         if ($this->isSortable() && $this->getSort()) {
@@ -289,7 +289,7 @@ abstract class Column extends \Grido\Components\Component
     public function render($row)
     {
         if (is_callable($this->customRender)) {
-            return callback($this->customRender)->invokeArgs(array($row));
+            return call_user_func_array($this->customRender, [$row, $this->customRenderVariables]);
         }
 
         $value = $this->getValue($row);
@@ -304,7 +304,7 @@ abstract class Column extends \Grido\Components\Component
     public function renderExport($row)
     {
         if (is_callable($this->customRenderExport)) {
-            return callback($this->customRenderExport)->invokeArgs(array($row));
+            return call_user_func_array($this->customRenderExport, [$row]);
         }
 
         $value = $this->getValue($row);
@@ -323,7 +323,7 @@ abstract class Column extends \Grido\Components\Component
             return $this->grid->getProperty($row, Helpers::unformatColumnName($column));
 
         } elseif (is_callable($column)) {
-            return callback($column)->invokeArgs(array($row));
+            return call_user_func_array($column, [$row]);
 
         } else {
             throw new Exception('Column must be string or callback.');
@@ -336,11 +336,18 @@ abstract class Column extends \Grido\Components\Component
      */
     protected function applyReplacement($value)
     {
-        return (is_scalar($value) || $value === NULL) && isset($this->replacements[$value])
-            ? is_string($value)
-                ? str_replace(static::VALUE_IDENTIFIER, $value, $this->replacements[$value])
-                : $this->replacements[$value]
-            : $value;
+        if ((is_scalar($value) || $value === NULL) && isset($this->replacements[$value])) {
+            $replaced = $this->replacements[$value];
+            if (is_scalar($replaced)) {
+                $replaced = $this->translate($replaced);
+            }
+
+            $value = is_string($value)
+                ? str_replace(static::VALUE_IDENTIFIER, $value, $replaced)
+                : $replaced;
+        }
+
+        return $value;
     }
 
     /**
@@ -350,7 +357,7 @@ abstract class Column extends \Grido\Components\Component
     protected function formatValue($value)
     {
         $value = is_string($value)
-            ? \Nette\Templating\Helpers::escapeHtml($value)
+            ? \Latte\Runtime\Filters::escapeHtml($value)
             : $value;
 
         return $this->applyReplacement($value);
