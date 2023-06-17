@@ -1,6 +1,14 @@
+# IDE
+/.idea
+
+# Composer
 /vendor
 /composer.lock
+
+# NodeJS
+node_modules/
+
+# Generated
 /tests/tmp
 /tests/*/output
-coverage.xml
-node_modules/
+/var
