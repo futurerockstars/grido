@@ -1,1 +1,2487 @@
-[]
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Call to an undefined method Grido\\\\Components\\\\Actions\\\\Action\\:\\:getName\\(\\)\\.$#"
+			count: 1
+			path: ../src/Components/Actions/Action.php
+
+		-
+			message: "#^Cannot assign offset string to string\\.$#"
+			count: 1
+			path: ../src/Components/Actions/Action.php
+
+		-
+			message: "#^Cannot unset offset string on string\\.$#"
+			count: 1
+			path: ../src/Components/Actions/Action.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Actions\\\\Action\\:\\:getElementPrototype\\(\\) has Grido\\\\Exception in PHPDoc @throws tag but it's not thrown\\.$#"
+			count: 1
+			path: ../src/Components/Actions/Action.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Actions\\\\Action\\:\\:getOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Components/Actions/Action.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Actions\\\\Action\\:\\:getOptions\\(\\) should return array but returns string\\.$#"
+			count: 1
+			path: ../src/Components/Actions/Action.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Actions\\\\Action\\:\\:render\\(\\) has Grido\\\\Exception in PHPDoc @throws tag but it's not thrown\\.$#"
+			count: 1
+			path: ../src/Components/Actions/Action.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Actions\\\\Action\\:\\:setCustomRender\\(\\) has parameter \\$callback with no type specified\\.$#"
+			count: 1
+			path: ../src/Components/Actions/Action.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Actions\\\\Action\\:\\:setDisable\\(\\) has parameter \\$callback with no type specified\\.$#"
+			count: 1
+			path: ../src/Components/Actions/Action.php
+
+		-
+			message: "#^Offset string on string in isset\\(\\) does not exist\\.$#"
+			count: 1
+			path: ../src/Components/Actions/Action.php
+
+		-
+			message: "#^Only booleans are allowed in &&, mixed given on the right side\\.$#"
+			count: 1
+			path: ../src/Components/Actions/Action.php
+
+		-
+			message: "#^Only booleans are allowed in a negated boolean, mixed given\\.$#"
+			count: 1
+			path: ../src/Components/Actions/Action.php
+
+		-
+			message: "#^Only booleans are allowed in an if condition, mixed given\\.$#"
+			count: 1
+			path: ../src/Components/Actions/Action.php
+
+		-
+			message: "#^PHPDoc tag @param has invalid value \\(callback\\)\\: Unexpected token \"\\\\n     \\* \", expected variable at offset 142 on line 4$#"
+			count: 1
+			path: ../src/Components/Actions/Action.php
+
+		-
+			message: "#^PHPDoc tag @param has invalid value \\(callback\\)\\: Unexpected token \"\\\\n     \\* \", expected variable at offset 69 on line 3$#"
+			count: 1
+			path: ../src/Components/Actions/Action.php
+
+		-
+			message: "#^Parameter \\$confirm of method Grido\\\\Components\\\\Actions\\\\Action\\:\\:setConfirm\\(\\) has invalid type Grido\\\\Components\\\\Actions\\\\callback\\.$#"
+			count: 1
+			path: ../src/Components/Actions/Action.php
+
+		-
+			message: "#^Property Grido\\\\Components\\\\Actions\\\\Action\\:\\:\\$customRender has unknown class Grido\\\\Components\\\\Actions\\\\callback as its type\\.$#"
+			count: 1
+			path: ../src/Components/Actions/Action.php
+
+		-
+			message: "#^Property Grido\\\\Components\\\\Actions\\\\Action\\:\\:\\$disable has unknown class Grido\\\\Components\\\\Actions\\\\callback as its type\\.$#"
+			count: 1
+			path: ../src/Components/Actions/Action.php
+
+		-
+			message: "#^Property Grido\\\\Components\\\\Actions\\\\Action\\:\\:\\$elementPrototype has unknown class Grido\\\\Components\\\\Actions\\\\a as its type\\.$#"
+			count: 1
+			path: ../src/Components/Actions/Action.php
+
+		-
+			message: "#^Access to an undefined property Grido\\\\Components\\\\Actions\\\\Event\\:\\:\\$name\\.$#"
+			count: 1
+			path: ../src/Components/Actions/Event.php
+
+		-
+			message: "#^Call to an undefined method Grido\\\\Components\\\\Actions\\\\Event\\:\\:link\\(\\)\\.$#"
+			count: 1
+			path: ../src/Components/Actions/Event.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Actions\\\\Event\\:\\:__construct\\(\\) has Grido\\\\Exception in PHPDoc @throws tag but it's not thrown\\.$#"
+			count: 1
+			path: ../src/Components/Actions/Event.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Actions\\\\Event\\:\\:__construct\\(\\) has parameter \\$onClick with no signature specified for callable\\.$#"
+			count: 1
+			path: ../src/Components/Actions/Event.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Actions\\\\Event\\:\\:getOnClick\\(\\) return type has no signature specified for callable\\.$#"
+			count: 1
+			path: ../src/Components/Actions/Event.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Actions\\\\Event\\:\\:handleClick\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: ../src/Components/Actions/Event.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Actions\\\\Event\\:\\:setOnClick\\(\\) has parameter \\$onClick with no signature specified for callable\\.$#"
+			count: 1
+			path: ../src/Components/Actions/Event.php
+
+		-
+			message: "#^Property Grido\\\\Components\\\\Actions\\\\Event\\:\\:\\$onClick type has no signature specified for callable\\.$#"
+			count: 1
+			path: ../src/Components/Actions/Event.php
+
+		-
+			message: "#^Access to an undefined property Grido\\\\Components\\\\Actions\\\\Href\\:\\:\\$presenter\\.$#"
+			count: 1
+			path: ../src/Components/Actions/Href.php
+
+		-
+			message: "#^Call to an undefined method Grido\\\\Components\\\\Actions\\\\Href\\:\\:getName\\(\\)\\.$#"
+			count: 1
+			path: ../src/Components/Actions/Href.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Actions\\\\Href\\:\\:__construct\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Components/Actions/Href.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Actions\\\\Href\\:\\:getArguments\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Components/Actions/Href.php
+
+		-
+			message: "#^Parameter \\$callback of method Grido\\\\Components\\\\Actions\\\\Href\\:\\:setCustomHref\\(\\) has invalid type Grido\\\\Components\\\\Actions\\\\callback\\.$#"
+			count: 1
+			path: ../src/Components/Actions/Href.php
+
+		-
+			message: "#^Property Grido\\\\Components\\\\Actions\\\\Href\\:\\:\\$arguments type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Components/Actions/Href.php
+
+		-
+			message: "#^Property Grido\\\\Components\\\\Actions\\\\Href\\:\\:\\$customHref \\(array\\) does not accept Grido\\\\Components\\\\Actions\\\\callback\\.$#"
+			count: 1
+			path: ../src/Components/Actions/Href.php
+
+		-
+			message: "#^Property Grido\\\\Components\\\\Actions\\\\Href\\:\\:\\$customHref has unknown class Grido\\\\Components\\\\Actions\\\\callback as its type\\.$#"
+			count: 1
+			path: ../src/Components/Actions/Href.php
+
+		-
+			message: "#^Access to an undefined property Grido\\\\Components\\\\Button\\:\\:\\$presenter\\.$#"
+			count: 1
+			path: ../src/Components/Button.php
+
+		-
+			message: "#^Call to an undefined method Grido\\\\Components\\\\Button\\:\\:getName\\(\\)\\.$#"
+			count: 2
+			path: ../src/Components/Button.php
+
+		-
+			message: "#^Cannot assign offset string to string\\.$#"
+			count: 1
+			path: ../src/Components/Button.php
+
+		-
+			message: "#^Cannot unset offset string on string\\.$#"
+			count: 1
+			path: ../src/Components/Button.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Button\\:\\:__construct\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Components/Button.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Button\\:\\:getArguments\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Components/Button.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Button\\:\\:getElementPrototype\\(\\) has Grido\\\\Components\\\\Exception in PHPDoc @throws tag but it's not thrown\\.$#"
+			count: 1
+			path: ../src/Components/Button.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Button\\:\\:getOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Components/Button.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Button\\:\\:getOptions\\(\\) should return array but returns string\\.$#"
+			count: 1
+			path: ../src/Components/Button.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Button\\:\\:render\\(\\) has Grido\\\\Components\\\\Exception in PHPDoc @throws tag but it's not thrown\\.$#"
+			count: 1
+			path: ../src/Components/Button.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Button\\:\\:setIcon\\(\\) has invalid return type Grido\\\\Components\\\\Action\\.$#"
+			count: 1
+			path: ../src/Components/Button.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Button\\:\\:setIcon\\(\\) should return Grido\\\\Components\\\\Action but returns \\$this\\(Grido\\\\Components\\\\Button\\)\\.$#"
+			count: 1
+			path: ../src/Components/Button.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Button\\:\\:setOption\\(\\) has invalid return type Grido\\\\Components\\\\Action\\.$#"
+			count: 1
+			path: ../src/Components/Button.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Button\\:\\:setOption\\(\\) should return Grido\\\\Components\\\\Action but returns \\$this\\(Grido\\\\Components\\\\Button\\)\\.$#"
+			count: 1
+			path: ../src/Components/Button.php
+
+		-
+			message: "#^Offset string on string in isset\\(\\) does not exist\\.$#"
+			count: 1
+			path: ../src/Components/Button.php
+
+		-
+			message: "#^PHPDoc tag @throws with type Grido\\\\Components\\\\Exception is not subtype of Throwable$#"
+			count: 2
+			path: ../src/Components/Button.php
+
+		-
+			message: "#^Property Grido\\\\Components\\\\Button\\:\\:\\$arguments type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Components/Button.php
+
+		-
+			message: "#^Property Grido\\\\Components\\\\Button\\:\\:\\$elementPrototype has unknown class Grido\\\\Components\\\\a as its type\\.$#"
+			count: 1
+			path: ../src/Components/Button.php
+
+		-
+			message: "#^Property Grido\\\\Components\\\\Button\\:\\:\\$options type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Components/Button.php
+
+		-
+			message: "#^Call to an undefined method Grido\\\\Components\\\\Columns\\\\Column\\:\\:getName\\(\\)\\.$#"
+			count: 13
+			path: ../src/Components/Columns/Column.php
+
+		-
+			message: "#^Call to function is_callable\\(\\) with \\*NEVER\\* will always evaluate to true\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Column.php
+
+		-
+			message: "#^Call to function is_string\\(\\) with string will always evaluate to true\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Column.php
+
+		-
+			message: "#^Casting to bool something that's already bool\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Column.php
+
+		-
+			message: "#^Loose comparison via \"\\=\\=\" is not allowed\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Column.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Columns\\\\Column\\:\\:getCustomRenderVariables\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Column.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Columns\\\\Column\\:\\:setCustomRender\\(\\) has parameter \\$variables with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Column.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Columns\\\\Column\\:\\:setFilterSelect\\(\\) has parameter \\$items with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Column.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Columns\\\\Column\\:\\:setReplacement\\(\\) has parameter \\$replacement with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Column.php
+
+		-
+			message: "#^Only booleans are allowed in &&, string given on the right side\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Column.php
+
+		-
+			message: "#^Only booleans are allowed in a ternary operator condition, string given\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Column.php
+
+		-
+			message: "#^Parameter \\#1 \\$message of method Grido\\\\Components\\\\Component\\:\\:translate\\(\\) expects string, bool\\|float\\|int\\|string given\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Column.php
+
+		-
+			message: "#^Parameter \\$callback of method Grido\\\\Components\\\\Columns\\\\Column\\:\\:setCellCallback\\(\\) has invalid type Grido\\\\Components\\\\Columns\\\\callback\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Column.php
+
+		-
+			message: "#^Property Grido\\\\Components\\\\Columns\\\\Column\\:\\:\\$cellCallback has unknown class Grido\\\\Components\\\\Columns\\\\callback as its type\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Column.php
+
+		-
+			message: "#^Property Grido\\\\Components\\\\Columns\\\\Column\\:\\:\\$cellPrototype has unknown class Grido\\\\Components\\\\Columns\\\\td as its type\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Column.php
+
+		-
+			message: "#^Property Grido\\\\Components\\\\Columns\\\\Column\\:\\:\\$customRenderVariables type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Column.php
+
+		-
+			message: "#^Property Grido\\\\Components\\\\Columns\\\\Column\\:\\:\\$headerPrototype has unknown class Grido\\\\Components\\\\Columns\\\\th as its type\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Column.php
+
+		-
+			message: "#^Property Grido\\\\Components\\\\Columns\\\\Column\\:\\:\\$replacements type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Column.php
+
+		-
+			message: "#^Return type \\(mixed\\) of method Grido\\\\Components\\\\Columns\\\\Column\\:\\:getLabel\\(\\) should be covariant with return type \\(string\\) of method Grido\\\\Components\\\\Component\\:\\:getLabel\\(\\)$#"
+			count: 1
+			path: ../src/Components/Columns/Column.php
+
+		-
+			message: "#^Strict comparison using \\=\\=\\= between Nette\\\\Utils\\\\Html and null will always evaluate to false\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Column.php
+
+		-
+			message: "#^Unreachable statement \\- code above always terminates\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Column.php
+
+		-
+			message: "#^Call to function is_callable\\(\\) with \\*NEVER\\* will always evaluate to true\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Date.php
+
+		-
+			message: "#^Parameter \\#2 \\$timestamp of function date expects int, int\\|string\\|false given\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Date.php
+
+		-
+			message: "#^Unreachable statement \\- code above always terminates\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Date.php
+
+		-
+			message: "#^Access to an undefined property Grido\\\\Components\\\\Columns\\\\Editable\\:\\:\\$presenter\\.$#"
+			count: 6
+			path: ../src/Components/Columns/Editable.php
+
+		-
+			message: "#^Call to an undefined method Grido\\\\Components\\\\Columns\\\\Editable\\:\\:getName\\(\\)\\.$#"
+			count: 2
+			path: ../src/Components/Columns/Editable.php
+
+		-
+			message: "#^Call to an undefined method Grido\\\\Components\\\\Columns\\\\Editable\\:\\:link\\(\\)\\.$#"
+			count: 2
+			path: ../src/Components/Columns/Editable.php
+
+		-
+			message: "#^Call to an undefined method Grido\\\\DataSources\\\\IDataSource\\:\\:getRow\\(\\)\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Editable.php
+
+		-
+			message: "#^Call to an undefined method Grido\\\\DataSources\\\\IDataSource\\:\\:update\\(\\)\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Editable.php
+
+		-
+			message: "#^Call to function in_array\\(\\) requires parameter \\#3 to be set\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Editable.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Columns\\\\Editable\\:\\:getEditableCallback\\(\\) has invalid return type Grido\\\\Components\\\\Columns\\\\callback\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Editable.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Columns\\\\Editable\\:\\:getEditableControl\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Editable.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Columns\\\\Editable\\:\\:getEditableRowCallback\\(\\) has invalid return type Grido\\\\Components\\\\Columns\\\\callback\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Editable.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Columns\\\\Editable\\:\\:getEditableValueCallback\\(\\) has invalid return type Grido\\\\Components\\\\Columns\\\\callback\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Editable.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Columns\\\\Editable\\:\\:handleEditable\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Editable.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Columns\\\\Editable\\:\\:handleEditable\\(\\) has parameter \\$id with no type specified\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Editable.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Columns\\\\Editable\\:\\:handleEditable\\(\\) has parameter \\$newValue with no type specified\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Editable.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Columns\\\\Editable\\:\\:handleEditable\\(\\) has parameter \\$oldValue with no type specified\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Editable.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Columns\\\\Editable\\:\\:handleEditableControl\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Editable.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Columns\\\\Editable\\:\\:handleEditableControl\\(\\) has parameter \\$value with no type specified\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Editable.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Columns\\\\Editable\\:\\:setClientSideOptions\\(\\) has Grido\\\\Exception in PHPDoc @throws tag but it's not thrown\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Editable.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Columns\\\\Editable\\:\\:setClientSideOptions\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Editable.php
+
+		-
+			message: "#^Only booleans are allowed in &&, Grido\\\\Components\\\\Columns\\\\Editable given on the right side\\.$#"
+			count: 2
+			path: ../src/Components/Columns/Editable.php
+
+		-
+			message: "#^Only booleans are allowed in &&, Grido\\\\Components\\\\Columns\\\\callback\\|null given on the left side\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Editable.php
+
+		-
+			message: "#^Only booleans are allowed in &&, Nette\\\\Forms\\\\IControl\\|null given on the left side\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Editable.php
+
+		-
+			message: "#^Only booleans are allowed in &&, mixed given on the right side\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Editable.php
+
+		-
+			message: "#^Only booleans are allowed in \\|\\|, int\\<0, max\\>\\|false given on the right side\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Editable.php
+
+		-
+			message: "#^Parameter \\#1 \\$function of function call_user_func_array expects callable\\(\\)\\: mixed, Grido\\\\Components\\\\Columns\\\\callback given\\.$#"
+			count: 3
+			path: ../src/Components/Columns/Editable.php
+
+		-
+			message: "#^Parameter \\$callback of method Grido\\\\Components\\\\Columns\\\\Editable\\:\\:setEditable\\(\\) has invalid type Grido\\\\Components\\\\Columns\\\\callback\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Editable.php
+
+		-
+			message: "#^Parameter \\$callback of method Grido\\\\Components\\\\Columns\\\\Editable\\:\\:setEditableCallback\\(\\) has invalid type Grido\\\\Components\\\\Columns\\\\callback\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Editable.php
+
+		-
+			message: "#^Parameter \\$callback of method Grido\\\\Components\\\\Columns\\\\Editable\\:\\:setEditableRowCallback\\(\\) has invalid type Grido\\\\Components\\\\Columns\\\\callback\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Editable.php
+
+		-
+			message: "#^Parameter \\$callback of method Grido\\\\Components\\\\Columns\\\\Editable\\:\\:setEditableValueCallback\\(\\) has invalid type Grido\\\\Components\\\\Columns\\\\callback\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Editable.php
+
+		-
+			message: "#^Property Grido\\\\Components\\\\Columns\\\\Editable\\:\\:\\$editableCallback has unknown class Grido\\\\Components\\\\Columns\\\\callback as its type\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Editable.php
+
+		-
+			message: "#^Property Grido\\\\Components\\\\Columns\\\\Editable\\:\\:\\$editableRowCallback has unknown class Grido\\\\Components\\\\Columns\\\\callback as its type\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Editable.php
+
+		-
+			message: "#^Property Grido\\\\Components\\\\Columns\\\\Editable\\:\\:\\$editableValueCallback has unknown class Grido\\\\Components\\\\Columns\\\\callback as its type\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Editable.php
+
+		-
+			message: "#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#"
+			count: 4
+			path: ../src/Components/Columns/Editable.php
+
+		-
+			message: "#^Ternary operator condition is always true\\.$#"
+			count: 2
+			path: ../src/Components/Columns/Editable.php
+
+		-
+			message: "#^If condition is always true\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Link.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Columns\\\\Link\\:\\:formatText\\(\\) should return string but returns string\\|null\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Link.php
+
+		-
+			message: "#^Only booleans are allowed in a negated boolean, int\\|false given\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Link.php
+
+		-
+			message: "#^Only booleans are allowed in an if condition, Closure given\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Link.php
+
+		-
+			message: "#^Property Grido\\\\Components\\\\Columns\\\\Text\\:\\:\\$truncate \\(Closure\\) does not accept null\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Link.php
+
+		-
+			message: "#^Casting to int something that's already int\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Number.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Columns\\\\Number\\:\\:getNumberFormat\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Number.php
+
+		-
+			message: "#^Parameter \\#1 \\$number of function number_format expects float, float\\|int\\|string given\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Number.php
+
+		-
+			message: "#^Property Grido\\\\Components\\\\Columns\\\\Number\\:\\:\\$numberFormat type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Number.php
+
+		-
+			message: "#^If condition is always true\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Text.php
+
+		-
+			message: "#^Only booleans are allowed in an if condition, Closure given\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Text.php
+
+		-
+			message: "#^Property Grido\\\\Components\\\\Columns\\\\Text\\:\\:\\$truncate type has no signature specified for Closure\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Text.php
+
+		-
+			message: "#^Access to undefined constant Grido\\\\Components\\\\Component\\:\\:ID\\.$#"
+			count: 3
+			path: ../src/Components/Component.php
+
+		-
+			message: """
+				#^Class Grido\\\\Components\\\\Component extends deprecated class Nette\\\\Application\\\\UI\\\\PresenterComponent\\:
+				use Nette\\\\Application\\\\UI\\\\Component$#
+			"""
+			count: 1
+			path: ../src/Components/Component.php
+
+		-
+			message: "#^Access to an undefined property Grido\\\\Components\\\\Container\\:\\:\\$onRender\\.$#"
+			count: 1
+			path: ../src/Components/Container.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Container\\:\\:addActionHref\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Components/Container.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Container\\:\\:addButton\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Components/Container.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Container\\:\\:addFilterSelect\\(\\) has parameter \\$items with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Components/Container.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Container\\:\\:getButton\\(\\) has parameter \\$name with no type specified\\.$#"
+			count: 1
+			path: ../src/Components/Container.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Container\\:\\:setEditableColumns\\(\\) should return Grido\\\\Grid but returns \\$this\\(Grido\\\\Components\\\\Container\\)\\.$#"
+			count: 1
+			path: ../src/Components/Container.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Container\\:\\:setOperation\\(\\) has parameter \\$operations with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Components/Container.php
+
+		-
+			message: "#^Negated boolean expression is always false\\.$#"
+			count: 1
+			path: ../src/Components/Container.php
+
+		-
+			message: "#^Parameter \\#1 \\$callback of method Grido\\\\Components\\\\Columns\\\\Editable\\:\\:setEditable\\(\\) expects Grido\\\\Components\\\\Columns\\\\callback\\|null, Grido\\\\Components\\\\callback\\|null given\\.$#"
+			count: 1
+			path: ../src/Components/Container.php
+
+		-
+			message: "#^Parameter \\#1 \\$grid of class Grido\\\\Components\\\\Actions\\\\Event constructor expects Grido\\\\Grid, \\$this\\(Grido\\\\Components\\\\Container\\) given\\.$#"
+			count: 1
+			path: ../src/Components/Container.php
+
+		-
+			message: "#^Parameter \\#1 \\$grid of class Grido\\\\Components\\\\Actions\\\\Href constructor expects Grido\\\\Grid, \\$this\\(Grido\\\\Components\\\\Container\\) given\\.$#"
+			count: 1
+			path: ../src/Components/Container.php
+
+		-
+			message: "#^Parameter \\#1 \\$grid of class Grido\\\\Components\\\\Button constructor expects Grido\\\\Grid, \\$this\\(Grido\\\\Components\\\\Container\\) given\\.$#"
+			count: 1
+			path: ../src/Components/Container.php
+
+		-
+			message: "#^Parameter \\#1 \\$grid of class Grido\\\\Components\\\\Columns\\\\Date constructor expects Grido\\\\Grid, \\$this\\(Grido\\\\Components\\\\Container\\) given\\.$#"
+			count: 1
+			path: ../src/Components/Container.php
+
+		-
+			message: "#^Parameter \\#1 \\$grid of class Grido\\\\Components\\\\Columns\\\\Email constructor expects Grido\\\\Grid, \\$this\\(Grido\\\\Components\\\\Container\\) given\\.$#"
+			count: 1
+			path: ../src/Components/Container.php
+
+		-
+			message: "#^Parameter \\#1 \\$grid of class Grido\\\\Components\\\\Columns\\\\Link constructor expects Grido\\\\Grid, \\$this\\(Grido\\\\Components\\\\Container\\) given\\.$#"
+			count: 1
+			path: ../src/Components/Container.php
+
+		-
+			message: "#^Parameter \\#1 \\$grid of class Grido\\\\Components\\\\Columns\\\\Number constructor expects Grido\\\\Grid, \\$this\\(Grido\\\\Components\\\\Container\\) given\\.$#"
+			count: 1
+			path: ../src/Components/Container.php
+
+		-
+			message: "#^Parameter \\#1 \\$grid of class Grido\\\\Components\\\\Columns\\\\Text constructor expects Grido\\\\Grid, \\$this\\(Grido\\\\Components\\\\Container\\) given\\.$#"
+			count: 1
+			path: ../src/Components/Container.php
+
+		-
+			message: "#^Parameter \\#1 \\$grid of class Grido\\\\Components\\\\Export constructor expects Grido\\\\Grid, \\$this\\(Grido\\\\Components\\\\Container\\) given\\.$#"
+			count: 1
+			path: ../src/Components/Container.php
+
+		-
+			message: "#^Parameter \\#1 \\$grid of class Grido\\\\Components\\\\Filters\\\\Check constructor expects Grido\\\\Grid, \\$this\\(Grido\\\\Components\\\\Container\\) given\\.$#"
+			count: 1
+			path: ../src/Components/Container.php
+
+		-
+			message: "#^Parameter \\#1 \\$grid of class Grido\\\\Components\\\\Filters\\\\Custom constructor expects Grido\\\\Grid, \\$this\\(Grido\\\\Components\\\\Container\\) given\\.$#"
+			count: 1
+			path: ../src/Components/Container.php
+
+		-
+			message: "#^Parameter \\#1 \\$grid of class Grido\\\\Components\\\\Filters\\\\Date constructor expects Grido\\\\Grid, \\$this\\(Grido\\\\Components\\\\Container\\) given\\.$#"
+			count: 1
+			path: ../src/Components/Container.php
+
+		-
+			message: "#^Parameter \\#1 \\$grid of class Grido\\\\Components\\\\Filters\\\\DateRange constructor expects Grido\\\\Grid, \\$this\\(Grido\\\\Components\\\\Container\\) given\\.$#"
+			count: 1
+			path: ../src/Components/Container.php
+
+		-
+			message: "#^Parameter \\#1 \\$grid of class Grido\\\\Components\\\\Filters\\\\Number constructor expects Grido\\\\Grid, \\$this\\(Grido\\\\Components\\\\Container\\) given\\.$#"
+			count: 1
+			path: ../src/Components/Container.php
+
+		-
+			message: "#^Parameter \\#1 \\$grid of class Grido\\\\Components\\\\Filters\\\\Select constructor expects Grido\\\\Grid, \\$this\\(Grido\\\\Components\\\\Container\\) given\\.$#"
+			count: 1
+			path: ../src/Components/Container.php
+
+		-
+			message: "#^Parameter \\#1 \\$grid of class Grido\\\\Components\\\\Filters\\\\Text constructor expects Grido\\\\Grid, \\$this\\(Grido\\\\Components\\\\Container\\) given\\.$#"
+			count: 1
+			path: ../src/Components/Container.php
+
+		-
+			message: "#^Parameter \\#1 \\$grid of class Grido\\\\Components\\\\Operation constructor expects Grido\\\\Grid, \\$this\\(Grido\\\\Components\\\\Container\\) given\\.$#"
+			count: 1
+			path: ../src/Components/Container.php
+
+		-
+			message: "#^Parameter \\#3 \\$label of class Grido\\\\Components\\\\Filters\\\\Custom constructor expects string, null given\\.$#"
+			count: 1
+			path: ../src/Components/Container.php
+
+		-
+			message: "#^Parameter \\#4 \\$onClick of class Grido\\\\Components\\\\Actions\\\\Event constructor expects \\(callable\\(\\)\\: mixed\\)\\|null, Grido\\\\Components\\\\callback\\|null given\\.$#"
+			count: 1
+			path: ../src/Components/Container.php
+
+		-
+			message: "#^Parameter \\$callback of method Grido\\\\Components\\\\Container\\:\\:setEditableColumns\\(\\) has invalid type Grido\\\\Components\\\\callback\\.$#"
+			count: 1
+			path: ../src/Components/Container.php
+
+		-
+			message: "#^Parameter \\$onClick of method Grido\\\\Components\\\\Container\\:\\:addActionEvent\\(\\) has invalid type Grido\\\\Components\\\\callback\\.$#"
+			count: 1
+			path: ../src/Components/Container.php
+
+		-
+			message: "#^Parameter \\$onSubmit of method Grido\\\\Components\\\\Container\\:\\:setOperation\\(\\) has invalid type Grido\\\\Components\\\\callback\\.$#"
+			count: 1
+			path: ../src/Components/Container.php
+
+		-
+			message: "#^Property Grido\\\\Components\\\\Container\\:\\:\\$hasActions \\(bool\\) does not accept bool\\|null\\.$#"
+			count: 1
+			path: ../src/Components/Container.php
+
+		-
+			message: "#^Property Grido\\\\Components\\\\Container\\:\\:\\$hasButtons \\(bool\\) does not accept bool\\|null\\.$#"
+			count: 1
+			path: ../src/Components/Container.php
+
+		-
+			message: "#^Property Grido\\\\Components\\\\Container\\:\\:\\$hasColumns \\(bool\\) does not accept bool\\|null\\.$#"
+			count: 1
+			path: ../src/Components/Container.php
+
+		-
+			message: "#^Property Grido\\\\Components\\\\Container\\:\\:\\$hasExport \\(bool\\) does not accept bool\\|null\\.$#"
+			count: 1
+			path: ../src/Components/Container.php
+
+		-
+			message: "#^Property Grido\\\\Components\\\\Container\\:\\:\\$hasFilters \\(bool\\) does not accept bool\\|null\\.$#"
+			count: 1
+			path: ../src/Components/Container.php
+
+		-
+			message: "#^Property Grido\\\\Components\\\\Container\\:\\:\\$hasOperation \\(bool\\) does not accept bool\\|null\\.$#"
+			count: 1
+			path: ../src/Components/Container.php
+
+		-
+			message: "#^Result of && is always false\\.$#"
+			count: 1
+			path: ../src/Components/Container.php
+
+		-
+			message: "#^Strict comparison using \\=\\=\\= between bool and null will always evaluate to false\\.$#"
+			count: 6
+			path: ../src/Components/Container.php
+
+		-
+			message: "#^Cannot call method getCount\\(\\) on array\\|Grido\\\\DataSources\\\\IDataSource\\|Nette\\\\Database\\\\Table\\\\Selection\\.$#"
+			count: 1
+			path: ../src/Components/Export.php
+
+		-
+			message: "#^Cannot call method getData\\(\\) on array\\|Grido\\\\DataSources\\\\IDataSource\\|Nette\\\\Database\\\\Table\\\\Selection\\.$#"
+			count: 1
+			path: ../src/Components/Export.php
+
+		-
+			message: "#^Cannot call method limit\\(\\) on array\\|Grido\\\\DataSources\\\\IDataSource\\|Nette\\\\Database\\\\Table\\\\Selection\\.$#"
+			count: 1
+			path: ../src/Components/Export.php
+
+		-
+			message: "#^Casting to int something that's already int\\.$#"
+			count: 1
+			path: ../src/Components/Export.php
+
+		-
+			message: "#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#"
+			count: 1
+			path: ../src/Components/Export.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Export\\:\\:handleExport\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: ../src/Components/Export.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Export\\:\\:setCustomData\\(\\) has parameter \\$callback with no signature specified for callable\\.$#"
+			count: 1
+			path: ../src/Components/Export.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Export\\:\\:setHeader\\(\\) has parameter \\$header with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Components/Export.php
+
+		-
+			message: "#^Only booleans are allowed in &&, void given on the right side\\.$#"
+			count: 1
+			path: ../src/Components/Export.php
+
+		-
+			message: "#^Only booleans are allowed in a ternary operator condition, string given\\.$#"
+			count: 1
+			path: ../src/Components/Export.php
+
+		-
+			message: "#^Only booleans are allowed in \\|\\|, int\\|false given on the left side\\.$#"
+			count: 1
+			path: ../src/Components/Export.php
+
+		-
+			message: "#^Parameter \\#1 \\$component of method Nette\\\\ComponentModel\\\\Container\\:\\:addComponent\\(\\) expects Nette\\\\ComponentModel\\\\IComponent, \\$this\\(Grido\\\\Components\\\\Export\\) given\\.$#"
+			count: 1
+			path: ../src/Components/Export.php
+
+		-
+			message: "#^Parameter \\#1 \\$str of function ucfirst expects string, string\\|null given\\.$#"
+			count: 1
+			path: ../src/Components/Export.php
+
+		-
+			message: "#^Property Grido\\\\Components\\\\Export\\:\\:\\$customData type has no signature specified for callable\\.$#"
+			count: 1
+			path: ../src/Components/Export.php
+
+		-
+			message: "#^Property Grido\\\\Components\\\\Export\\:\\:\\$header type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Components/Export.php
+
+		-
+			message: "#^Casting to bool something that's already bool\\.$#"
+			count: 1
+			path: ../src/Components/Filters/Check.php
+
+		-
+			message: "#^Loose comparison via \"\\=\\=\" is not allowed\\.$#"
+			count: 1
+			path: ../src/Components/Filters/Check.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Filters\\\\Check\\:\\:changeValue\\(\\) should return string but returns bool\\|string\\.$#"
+			count: 1
+			path: ../src/Components/Filters/Check.php
+
+		-
+			message: "#^Parameter \\#1 \\$value \\(bool\\) of method Grido\\\\Components\\\\Filters\\\\Check\\:\\:changeValue\\(\\) should be compatible with parameter \\$value \\(string\\) of method Grido\\\\Components\\\\Filters\\\\Filter\\:\\:changeValue\\(\\)$#"
+			count: 1
+			path: ../src/Components/Filters/Check.php
+
+		-
+			message: "#^Parameter \\#1 \\$value \\(bool\\) of method Grido\\\\Components\\\\Filters\\\\Check\\:\\:formatValue\\(\\) should be compatible with parameter \\$value \\(string\\) of method Grido\\\\Components\\\\Filters\\\\Filter\\:\\:formatValue\\(\\)$#"
+			count: 1
+			path: ../src/Components/Filters/Check.php
+
+		-
+			message: "#^Parameter \\#1 \\$value \\(string\\) of method Grido\\\\Components\\\\Filters\\\\Check\\:\\:__getCondition\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Grido\\\\Components\\\\Filters\\\\Filter\\:\\:__getCondition\\(\\)$#"
+			count: 1
+			path: ../src/Components/Filters/Check.php
+
+		-
+			message: "#^Return type \\(null\\) of method Grido\\\\Components\\\\Filters\\\\Check\\:\\:formatValue\\(\\) should be compatible with return type \\(string\\) of method Grido\\\\Components\\\\Filters\\\\Filter\\:\\:formatValue\\(\\)$#"
+			count: 1
+			path: ../src/Components/Filters/Check.php
+
+		-
+			message: "#^Call to function in_array\\(\\) requires parameter \\#3 to be set\\.$#"
+			count: 1
+			path: ../src/Components/Filters/Condition.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Filters\\\\Condition\\:\\:__toArray\\(\\) has Grido\\\\Exception in PHPDoc @throws tag but it's not thrown\\.$#"
+			count: 1
+			path: ../src/Components/Filters/Condition.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Filters\\\\Condition\\:\\:__toArray\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Components/Filters/Condition.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Filters\\\\Condition\\:\\:getCallback\\(\\) return type has no signature specified for callable\\.$#"
+			count: 1
+			path: ../src/Components/Filters/Condition.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Filters\\\\Condition\\:\\:getColumn\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Components/Filters/Condition.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Filters\\\\Condition\\:\\:getColumnWithoutOperator\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Components/Filters/Condition.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Filters\\\\Condition\\:\\:getCondition\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Components/Filters/Condition.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Filters\\\\Condition\\:\\:getValue\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Components/Filters/Condition.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Filters\\\\Condition\\:\\:getValueForColumn\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Components/Filters/Condition.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Filters\\\\Condition\\:\\:setupFromArray\\(\\) has parameter \\$condition with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Components/Filters/Condition.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Filters\\\\Condition\\:\\:setupFromCallback\\(\\) has parameter \\$callback with no signature specified for callable\\.$#"
+			count: 1
+			path: ../src/Components/Filters/Condition.php
+
+		-
+			message: "#^Only booleans are allowed in &&, int\\<0, 1\\> given on the left side\\.$#"
+			count: 1
+			path: ../src/Components/Filters/Condition.php
+
+		-
+			message: "#^Only booleans are allowed in a ternary operator condition, array\\<int, string\\> given\\.$#"
+			count: 1
+			path: ../src/Components/Filters/Condition.php
+
+		-
+			message: "#^Property Grido\\\\Components\\\\Filters\\\\Condition\\:\\:\\$callback type has no signature specified for callable\\.$#"
+			count: 1
+			path: ../src/Components/Filters/Condition.php
+
+		-
+			message: "#^Property Grido\\\\Components\\\\Filters\\\\Condition\\:\\:\\$column type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Components/Filters/Condition.php
+
+		-
+			message: "#^Property Grido\\\\Components\\\\Filters\\\\Condition\\:\\:\\$condition type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Components/Filters/Condition.php
+
+		-
+			message: "#^Call to function is_string\\(\\) with string will always evaluate to true\\.$#"
+			count: 1
+			path: ../src/Components/Filters/Date.php
+
+		-
+			message: "#^Only booleans are allowed in a ternary operator condition, DateTime\\|false given\\.$#"
+			count: 1
+			path: ../src/Components/Filters/Date.php
+
+		-
+			message: "#^Parameter \\#1 \\$value \\(string\\) of method Grido\\\\Components\\\\Filters\\\\Date\\:\\:__getCondition\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Grido\\\\Components\\\\Filters\\\\Filter\\:\\:__getCondition\\(\\)$#"
+			count: 1
+			path: ../src/Components/Filters/Date.php
+
+		-
+			message: "#^Call to function is_string\\(\\) with string will always evaluate to true\\.$#"
+			count: 1
+			path: ../src/Components/Filters/DateRange.php
+
+		-
+			message: "#^Only booleans are allowed in &&, DateTime\\|false given on the left side\\.$#"
+			count: 2
+			path: ../src/Components/Filters/DateRange.php
+
+		-
+			message: "#^Only booleans are allowed in &&, DateTime\\|false given on the right side\\.$#"
+			count: 1
+			path: ../src/Components/Filters/DateRange.php
+
+		-
+			message: "#^Only booleans are allowed in a negated boolean, mixed given\\.$#"
+			count: 1
+			path: ../src/Components/Filters/DateRange.php
+
+		-
+			message: "#^Only booleans are allowed in a ternary operator condition, array\\<int, string\\>\\|null given\\.$#"
+			count: 1
+			path: ../src/Components/Filters/DateRange.php
+
+		-
+			message: "#^PHPDoc type array of property Grido\\\\Components\\\\Filters\\\\DateRange\\:\\:\\$dateFormatOutput is not the same as PHPDoc type string of overridden property Grido\\\\Components\\\\Filters\\\\Date\\:\\:\\$dateFormatOutput\\.$#"
+			count: 1
+			path: ../src/Components/Filters/DateRange.php
+
+		-
+			message: "#^Property Grido\\\\Components\\\\Filters\\\\DateRange\\:\\:\\$dateFormatOutput type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Components/Filters/DateRange.php
+
+		-
+			message: "#^Access to an undefined property Grido\\\\Components\\\\Filters\\\\Filter\\:\\:\\$name\\.$#"
+			count: 1
+			path: ../src/Components/Filters/Filter.php
+
+		-
+			message: "#^Call to an undefined method Grido\\\\Components\\\\Filters\\\\Filter\\:\\:getName\\(\\)\\.$#"
+			count: 4
+			path: ../src/Components/Filters/Filter.php
+
+		-
+			message: "#^Call to function is_array\\(\\) with Grido\\\\Components\\\\Filters\\\\Condition will always evaluate to false\\.$#"
+			count: 1
+			path: ../src/Components/Filters/Filter.php
+
+		-
+			message: "#^Call to function is_callable\\(\\) with \\*NEVER\\* will always evaluate to true\\.$#"
+			count: 1
+			path: ../src/Components/Filters/Filter.php
+
+		-
+			message: "#^Call to function is_string\\(\\) with string will always evaluate to true\\.$#"
+			count: 1
+			path: ../src/Components/Filters/Filter.php
+
+		-
+			message: "#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#"
+			count: 1
+			path: ../src/Components/Filters/Filter.php
+
+		-
+			message: "#^If condition is always true\\.$#"
+			count: 1
+			path: ../src/Components/Filters/Filter.php
+
+		-
+			message: "#^Instanceof between Grido\\\\Components\\\\Filters\\\\Condition and Grido\\\\Components\\\\Filters\\\\Condition will always evaluate to true\\.$#"
+			count: 1
+			path: ../src/Components/Filters/Filter.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Filters\\\\Filter\\:\\:__getCondition\\(\\) has Grido\\\\Exception in PHPDoc @throws tag but it's not thrown\\.$#"
+			count: 1
+			path: ../src/Components/Filters/Filter.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Filters\\\\Filter\\:\\:formatValue\\(\\) should return string but returns array\\<int, string\\>\\|string\\.$#"
+			count: 1
+			path: ../src/Components/Filters/Filter.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Filters\\\\Filter\\:\\:getColumn\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Components/Filters/Filter.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Filters\\\\Filter\\:\\:getFormControl\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: ../src/Components/Filters/Filter.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Filters\\\\Filter\\:\\:getWrapperPrototype\\(\\) should return Nette\\\\Utils\\\\Html but returns string\\.$#"
+			count: 1
+			path: ../src/Components/Filters/Filter.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Filters\\\\Filter\\:\\:setCondition\\(\\) has parameter \\$condition with no type specified\\.$#"
+			count: 1
+			path: ../src/Components/Filters/Filter.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Filters\\\\Filter\\:\\:setWhere\\(\\) has parameter \\$callback with no signature specified for callable\\.$#"
+			count: 1
+			path: ../src/Components/Filters/Filter.php
+
+		-
+			message: "#^Offset mixed on \\*NEVER\\* in isset\\(\\) always exists and is always null\\.$#"
+			count: 1
+			path: ../src/Components/Filters/Filter.php
+
+		-
+			message: "#^Only booleans are allowed in a negated boolean, string given\\.$#"
+			count: 1
+			path: ../src/Components/Filters/Filter.php
+
+		-
+			message: "#^Only booleans are allowed in an if condition, Grido\\\\Components\\\\Columns\\\\Editable given\\.$#"
+			count: 1
+			path: ../src/Components/Filters/Filter.php
+
+		-
+			message: "#^Property Grido\\\\Components\\\\Filters\\\\Filter\\:\\:\\$column type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Components/Filters/Filter.php
+
+		-
+			message: "#^Property Grido\\\\Components\\\\Filters\\\\Filter\\:\\:\\$where type has no signature specified for callable\\.$#"
+			count: 1
+			path: ../src/Components/Filters/Filter.php
+
+		-
+			message: "#^Result of && is always false\\.$#"
+			count: 1
+			path: ../src/Components/Filters/Filter.php
+
+		-
+			message: "#^Strict comparison using \\!\\=\\= between Grido\\\\Components\\\\Filters\\\\Condition and null will always evaluate to true\\.$#"
+			count: 1
+			path: ../src/Components/Filters/Filter.php
+
+		-
+			message: "#^Only booleans are allowed in a ternary operator condition, string given\\.$#"
+			count: 1
+			path: ../src/Components/Filters/Number.php
+
+		-
+			message: "#^Only booleans are allowed in an if condition, int\\|false given\\.$#"
+			count: 1
+			path: ../src/Components/Filters/Number.php
+
+		-
+			message: "#^Parameter \\#1 \\$value \\(string\\) of method Grido\\\\Components\\\\Filters\\\\Number\\:\\:__getCondition\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Grido\\\\Components\\\\Filters\\\\Filter\\:\\:__getCondition\\(\\)$#"
+			count: 1
+			path: ../src/Components/Filters/Number.php
+
+		-
+			message: "#^Strict comparison using \\=\\=\\= between bool\\|Grido\\\\Components\\\\Filters\\\\Condition and null will always evaluate to false\\.$#"
+			count: 1
+			path: ../src/Components/Filters/Number.php
+
+		-
+			message: "#^Call to an undefined method Nette\\\\Forms\\\\Controls\\\\BaseControl\\:\\:setItems\\(\\)\\.$#"
+			count: 1
+			path: ../src/Components/Filters/Select.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Filters\\\\Select\\:\\:__construct\\(\\) has parameter \\$items with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Components/Filters/Select.php
+
+		-
+			message: "#^Call to an undefined method Grido\\\\Components\\\\Filters\\\\Text\\:\\:getName\\(\\)\\.$#"
+			count: 1
+			path: ../src/Components/Filters/Text.php
+
+		-
+			message: "#^Call to an undefined method Grido\\\\Components\\\\Filters\\\\Text\\:\\:getPresenter\\(\\)\\.$#"
+			count: 3
+			path: ../src/Components/Filters/Text.php
+
+		-
+			message: "#^Call to an undefined method Grido\\\\Components\\\\Filters\\\\Text\\:\\:link\\(\\)\\.$#"
+			count: 1
+			path: ../src/Components/Filters/Text.php
+
+		-
+			message: "#^Casting to int something that's already int\\.$#"
+			count: 1
+			path: ../src/Components/Filters/Text.php
+
+		-
+			message: "#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#"
+			count: 1
+			path: ../src/Components/Filters/Text.php
+
+		-
+			message: "#^Loose comparison via \"\\=\\=\" is not allowed\\.$#"
+			count: 1
+			path: ../src/Components/Filters/Text.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Filters\\\\Text\\:\\:getSuggestionCallback\\(\\) has invalid return type Grido\\\\Components\\\\Filters\\\\callback\\.$#"
+			count: 1
+			path: ../src/Components/Filters/Text.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Filters\\\\Text\\:\\:handleSuggest\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: ../src/Components/Filters/Text.php
+
+		-
+			message: "#^Only booleans are allowed in &&, void given on the right side\\.$#"
+			count: 1
+			path: ../src/Components/Filters/Text.php
+
+		-
+			message: "#^Only booleans are allowed in a ternary operator condition, mixed given\\.$#"
+			count: 1
+			path: ../src/Components/Filters/Text.php
+
+		-
+			message: "#^Parameter \\$callback of method Grido\\\\Components\\\\Filters\\\\Text\\:\\:setSuggestionCallback\\(\\) has invalid type Grido\\\\Components\\\\Filters\\\\callback\\.$#"
+			count: 1
+			path: ../src/Components/Filters/Text.php
+
+		-
+			message: "#^Property Grido\\\\Components\\\\Filters\\\\Text\\:\\:\\$suggestionCallback has unknown class Grido\\\\Components\\\\Filters\\\\callback as its type\\.$#"
+			count: 1
+			path: ../src/Components/Filters/Text.php
+
+		-
+			message: "#^Access to an undefined property Grido\\\\Components\\\\Operation\\:\\:\\$presenter\\.$#"
+			count: 1
+			path: ../src/Components/Operation.php
+
+		-
+			message: "#^Argument of an invalid type array\\|Grido\\\\DataSources\\\\IDataSource\\|Nette\\\\Database\\\\Table\\\\Selection supplied for foreach, only iterables are supported\\.$#"
+			count: 1
+			path: ../src/Components/Operation.php
+
+		-
+			message: "#^Cannot call method getHttpData\\(\\) on Nette\\\\Forms\\\\Form\\|null\\.$#"
+			count: 1
+			path: ../src/Components/Operation.php
+
+		-
+			message: "#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#"
+			count: 3
+			path: ../src/Components/Operation.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Operation\\:\\:__construct\\(\\) has parameter \\$operations with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Components/Operation.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Operation\\:\\:addCheckers\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: ../src/Components/Operation.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Operation\\:\\:handleOperations\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: ../src/Components/Operation.php
+
+		-
+			message: "#^Offset 'operations' might not exist on Nette\\\\Forms\\\\Form\\|null\\.$#"
+			count: 3
+			path: ../src/Components/Operation.php
+
+		-
+			message: "#^Only booleans are allowed in &&, mixed given on the right side\\.$#"
+			count: 1
+			path: ../src/Components/Operation.php
+
+		-
+			message: "#^Only booleans are allowed in &&, void given on the right side\\.$#"
+			count: 1
+			path: ../src/Components/Operation.php
+
+		-
+			message: "#^Parameter \\#1 \\$component of method Nette\\\\ComponentModel\\\\Container\\:\\:addComponent\\(\\) expects Nette\\\\ComponentModel\\\\IComponent, \\$this\\(Grido\\\\Components\\\\Operation\\) given\\.$#"
+			count: 1
+			path: ../src/Components/Operation.php
+
+		-
+			message: "#^Parameter \\$onSubmit of method Grido\\\\Components\\\\Operation\\:\\:__construct\\(\\) has invalid type Grido\\\\Components\\\\callback\\.$#"
+			count: 1
+			path: ../src/Components/Operation.php
+
+		-
+			message: "#^Property Grido\\\\Components\\\\Operation\\:\\:\\$onSubmit type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Components/Operation.php
+
+		-
+			message: "#^Right side of && is always true\\.$#"
+			count: 1
+			path: ../src/Components/Operation.php
+
+		-
+			message: "#^Casting to int something that's already int\\.$#"
+			count: 1
+			path: ../src/Components/Paginator.php
+
+		-
+			message: "#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#"
+			count: 1
+			path: ../src/Components/Paginator.php
+
+		-
+			message: "#^Method Grido\\\\Components\\\\Paginator\\:\\:getSteps\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Components/Paginator.php
+
+		-
+			message: "#^Only numeric types are allowed in \\-, int\\|null given on the left side\\.$#"
+			count: 1
+			path: ../src/Components/Paginator.php
+
+		-
+			message: "#^Parameter \\#2 \\$high of function range expects float\\|int\\|string, int\\|null given\\.$#"
+			count: 1
+			path: ../src/Components/Paginator.php
+
+		-
+			message: "#^Property Grido\\\\Components\\\\Paginator\\:\\:\\$steps type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Components/Paginator.php
+
+		-
+			message: "#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#"
+			count: 1
+			path: ../src/Customization.php
+
+		-
+			message: "#^Method Grido\\\\Customization\\:\\:getIconClass\\(\\) should return string but returns array\\|string\\.$#"
+			count: 1
+			path: ../src/Customization.php
+
+		-
+			message: "#^Method Grido\\\\Customization\\:\\:getTemplateFiles\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Customization.php
+
+		-
+			message: "#^Method Grido\\\\Customization\\:\\:setButtonClass\\(\\) has parameter \\$class with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Customization.php
+
+		-
+			message: "#^Method Grido\\\\Customization\\:\\:setIconClass\\(\\) has parameter \\$class with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Customization.php
+
+		-
+			message: "#^Property Grido\\\\Customization\\:\\:\\$buttonClass type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Customization.php
+
+		-
+			message: "#^Property Grido\\\\Customization\\:\\:\\$iconClass type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Customization.php
+
+		-
+			message: "#^Property Grido\\\\Customization\\:\\:\\$templateFiles type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Customization.php
+
+		-
+			message: "#^Call to function array_slice\\(\\) on a separate line has no effect\\.$#"
+			count: 1
+			path: ../src/DataSources/ArraySource.php
+
+		-
+			message: "#^If condition is always true\\.$#"
+			count: 1
+			path: ../src/DataSources/ArraySource.php
+
+		-
+			message: "#^Loose comparison via \"\\!\\=\" is not allowed\\.$#"
+			count: 1
+			path: ../src/DataSources/ArraySource.php
+
+		-
+			message: "#^Loose comparison via \"\\=\\=\" is not allowed\\.$#"
+			count: 1
+			path: ../src/DataSources/ArraySource.php
+
+		-
+			message: "#^Method Grido\\\\DataSources\\\\ArraySource\\:\\:__construct\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/DataSources/ArraySource.php
+
+		-
+			message: "#^Method Grido\\\\DataSources\\\\ArraySource\\:\\:filter\\(\\) has parameter \\$conditions with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/DataSources/ArraySource.php
+
+		-
+			message: "#^Method Grido\\\\DataSources\\\\ArraySource\\:\\:getData\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/DataSources/ArraySource.php
+
+		-
+			message: "#^Method Grido\\\\DataSources\\\\ArraySource\\:\\:makeWhere\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/DataSources/ArraySource.php
+
+		-
+			message: "#^Method Grido\\\\DataSources\\\\ArraySource\\:\\:makeWhere\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/DataSources/ArraySource.php
+
+		-
+			message: "#^Method Grido\\\\DataSources\\\\ArraySource\\:\\:sort\\(\\) has parameter \\$sorting with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/DataSources/ArraySource.php
+
+		-
+			message: "#^Method Grido\\\\DataSources\\\\ArraySource\\:\\:suggest\\(\\) has parameter \\$conditions with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/DataSources/ArraySource.php
+
+		-
+			message: "#^Method Grido\\\\DataSources\\\\ArraySource\\:\\:suggest\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/DataSources/ArraySource.php
+
+		-
+			message: "#^Only booleans are allowed in an if condition, callable given\\.$#"
+			count: 1
+			path: ../src/DataSources/ArraySource.php
+
+		-
+			message: "#^Property Grido\\\\DataSources\\\\ArraySource\\:\\:\\$data type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/DataSources/ArraySource.php
+
+		-
+			message: "#^Strict comparison using \\!\\=\\= between string and null will always evaluate to true\\.$#"
+			count: 1
+			path: ../src/DataSources/ArraySource.php
+
+		-
+			message: "#^Strict comparison using \\=\\=\\= between string and null will always evaluate to false\\.$#"
+			count: 1
+			path: ../src/DataSources/ArraySource.php
+
+		-
+			message: "#^Unreachable statement \\- code above always terminates\\.$#"
+			count: 1
+			path: ../src/DataSources/ArraySource.php
+
+		-
+			message: "#^If condition is always true\\.$#"
+			count: 1
+			path: ../src/DataSources/DibiFluent.php
+
+		-
+			message: "#^Method Grido\\\\DataSources\\\\DibiFluent\\:\\:filter\\(\\) has parameter \\$conditions with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/DataSources/DibiFluent.php
+
+		-
+			message: "#^Method Grido\\\\DataSources\\\\DibiFluent\\:\\:getData\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/DataSources/DibiFluent.php
+
+		-
+			message: "#^Method Grido\\\\DataSources\\\\DibiFluent\\:\\:getRow\\(\\) should return Dibi\\\\Row but returns array\\|Dibi\\\\Row\\|null\\.$#"
+			count: 1
+			path: ../src/DataSources/DibiFluent.php
+
+		-
+			message: "#^Method Grido\\\\DataSources\\\\DibiFluent\\:\\:makeWhere\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: ../src/DataSources/DibiFluent.php
+
+		-
+			message: "#^Method Grido\\\\DataSources\\\\DibiFluent\\:\\:sort\\(\\) has parameter \\$sorting with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/DataSources/DibiFluent.php
+
+		-
+			message: "#^Method Grido\\\\DataSources\\\\DibiFluent\\:\\:suggest\\(\\) has parameter \\$conditions with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/DataSources/DibiFluent.php
+
+		-
+			message: "#^Method Grido\\\\DataSources\\\\DibiFluent\\:\\:suggest\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/DataSources/DibiFluent.php
+
+		-
+			message: "#^Only booleans are allowed in an if condition, callable given\\.$#"
+			count: 1
+			path: ../src/DataSources/DibiFluent.php
+
+		-
+			message: "#^If condition is always true\\.$#"
+			count: 1
+			path: ../src/DataSources/Doctrine.php
+
+		-
+			message: "#^Method Grido\\\\DataSources\\\\Doctrine\\:\\:__construct\\(\\) has parameter \\$filterMapping with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/DataSources/Doctrine.php
+
+		-
+			message: "#^Method Grido\\\\DataSources\\\\Doctrine\\:\\:__construct\\(\\) has parameter \\$sortMapping with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/DataSources/Doctrine.php
+
+		-
+			message: "#^Method Grido\\\\DataSources\\\\Doctrine\\:\\:filter\\(\\) has parameter \\$conditions with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/DataSources/Doctrine.php
+
+		-
+			message: "#^Method Grido\\\\DataSources\\\\Doctrine\\:\\:getData\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/DataSources/Doctrine.php
+
+		-
+			message: "#^Method Grido\\\\DataSources\\\\Doctrine\\:\\:getFilterMapping\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/DataSources/Doctrine.php
+
+		-
+			message: "#^Method Grido\\\\DataSources\\\\Doctrine\\:\\:getSortMapping\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/DataSources/Doctrine.php
+
+		-
+			message: "#^Method Grido\\\\DataSources\\\\Doctrine\\:\\:makeWhere\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: ../src/DataSources/Doctrine.php
+
+		-
+			message: "#^Method Grido\\\\DataSources\\\\Doctrine\\:\\:sort\\(\\) has parameter \\$sorting with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/DataSources/Doctrine.php
+
+		-
+			message: "#^Method Grido\\\\DataSources\\\\Doctrine\\:\\:suggest\\(\\) has parameter \\$conditions with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/DataSources/Doctrine.php
+
+		-
+			message: "#^Method Grido\\\\DataSources\\\\Doctrine\\:\\:suggest\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/DataSources/Doctrine.php
+
+		-
+			message: "#^Only booleans are allowed in &&, array given on the right side\\.$#"
+			count: 1
+			path: ../src/DataSources/Doctrine.php
+
+		-
+			message: "#^Only booleans are allowed in a negated boolean, array given\\.$#"
+			count: 1
+			path: ../src/DataSources/Doctrine.php
+
+		-
+			message: "#^Only booleans are allowed in an if condition, callable given\\.$#"
+			count: 1
+			path: ../src/DataSources/Doctrine.php
+
+		-
+			message: "#^Property Grido\\\\DataSources\\\\Doctrine\\:\\:\\$filterMapping type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/DataSources/Doctrine.php
+
+		-
+			message: "#^Property Grido\\\\DataSources\\\\Doctrine\\:\\:\\$rand type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/DataSources/Doctrine.php
+
+		-
+			message: "#^Property Grido\\\\DataSources\\\\Doctrine\\:\\:\\$sortMapping type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/DataSources/Doctrine.php
+
+		-
+			message: "#^Unreachable statement \\- code above always terminates\\.$#"
+			count: 1
+			path: ../src/DataSources/Doctrine.php
+
+		-
+			message: "#^Method Grido\\\\DataSources\\\\IDataSource\\:\\:filter\\(\\) has parameter \\$condition with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/DataSources/IDataSource.php
+
+		-
+			message: "#^Method Grido\\\\DataSources\\\\IDataSource\\:\\:getData\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/DataSources/IDataSource.php
+
+		-
+			message: "#^Method Grido\\\\DataSources\\\\IDataSource\\:\\:sort\\(\\) has parameter \\$sorting with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/DataSources/IDataSource.php
+
+		-
+			message: "#^Method Grido\\\\DataSources\\\\IDataSource\\:\\:suggest\\(\\) has parameter \\$conditions with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/DataSources/IDataSource.php
+
+		-
+			message: "#^Method Grido\\\\DataSources\\\\IDataSource\\:\\:suggest\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/DataSources/IDataSource.php
+
+		-
+			message: "#^Method Grido\\\\DataSources\\\\Model\\:\\:__call\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: ../src/DataSources/Model.php
+
+		-
+			message: "#^Method Grido\\\\DataSources\\\\Model\\:\\:__call\\(\\) has parameter \\$args with no type specified\\.$#"
+			count: 1
+			path: ../src/DataSources/Model.php
+
+		-
+			message: "#^Method Grido\\\\DataSources\\\\Model\\:\\:__call\\(\\) has parameter \\$method with no type specified\\.$#"
+			count: 1
+			path: ../src/DataSources/Model.php
+
+		-
+			message: "#^Method Grido\\\\DataSources\\\\Model\\:\\:getDataSource\\(\\) has invalid return type IDataSource\\.$#"
+			count: 1
+			path: ../src/DataSources/Model.php
+
+		-
+			message: "#^Method Grido\\\\DataSources\\\\Model\\:\\:getDataSource\\(\\) should return IDataSource but returns Grido\\\\DataSources\\\\IDataSource\\.$#"
+			count: 1
+			path: ../src/DataSources/Model.php
+
+		-
+			message: "#^Parameter \\#1 \\$function of function call_user_func_array expects callable\\(\\)\\: mixed, array\\{Grido\\\\DataSources\\\\IDataSource, mixed\\} given\\.$#"
+			count: 1
+			path: ../src/DataSources/Model.php
+
+		-
+			message: "#^Property Grido\\\\DataSources\\\\Model\\:\\:\\$callback type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/DataSources/Model.php
+
+		-
+			message: "#^Casting to int something that's already int\\<0, max\\>\\.$#"
+			count: 1
+			path: ../src/DataSources/NetteDatabase.php
+
+		-
+			message: "#^If condition is always true\\.$#"
+			count: 1
+			path: ../src/DataSources/NetteDatabase.php
+
+		-
+			message: "#^Method Grido\\\\DataSources\\\\NetteDatabase\\:\\:filter\\(\\) has parameter \\$conditions with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/DataSources/NetteDatabase.php
+
+		-
+			message: "#^Method Grido\\\\DataSources\\\\NetteDatabase\\:\\:getData\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/DataSources/NetteDatabase.php
+
+		-
+			message: "#^Method Grido\\\\DataSources\\\\NetteDatabase\\:\\:getData\\(\\) should return array but returns Nette\\\\Database\\\\Table\\\\Selection\\.$#"
+			count: 1
+			path: ../src/DataSources/NetteDatabase.php
+
+		-
+			message: "#^Method Grido\\\\DataSources\\\\NetteDatabase\\:\\:makeWhere\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: ../src/DataSources/NetteDatabase.php
+
+		-
+			message: "#^Method Grido\\\\DataSources\\\\NetteDatabase\\:\\:sort\\(\\) has parameter \\$sorting with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/DataSources/NetteDatabase.php
+
+		-
+			message: "#^Method Grido\\\\DataSources\\\\NetteDatabase\\:\\:suggest\\(\\) has parameter \\$conditions with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/DataSources/NetteDatabase.php
+
+		-
+			message: "#^Method Grido\\\\DataSources\\\\NetteDatabase\\:\\:suggest\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/DataSources/NetteDatabase.php
+
+		-
+			message: "#^Method Grido\\\\DataSources\\\\NetteDatabase\\:\\:update\\(\\) has parameter \\$values with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/DataSources/NetteDatabase.php
+
+		-
+			message: "#^Only booleans are allowed in &&, Nette\\\\Database\\\\Table\\\\Selection given on the right side\\.$#"
+			count: 1
+			path: ../src/DataSources/NetteDatabase.php
+
+		-
+			message: "#^Only booleans are allowed in an if condition, callable given\\.$#"
+			count: 1
+			path: ../src/DataSources/NetteDatabase.php
+
+		-
+			message: "#^Parameter \\#1 \\$limit of method Nette\\\\Database\\\\Table\\\\Selection\\:\\:limit\\(\\) expects int\\<0, max\\>\\|null, int given\\.$#"
+			count: 2
+			path: ../src/DataSources/NetteDatabase.php
+
+		-
+			message: "#^Parameter \\#2 \\$offset of method Nette\\\\Database\\\\Table\\\\Selection\\:\\:limit\\(\\) expects int\\<0, max\\>\\|null, int given\\.$#"
+			count: 1
+			path: ../src/DataSources/NetteDatabase.php
+
+		-
+			message: "#^Call to an undefined method Nette\\\\Application\\\\UI\\\\ITemplate\\:\\:add\\(\\)\\.$#"
+			count: 9
+			path: ../src/Grid.php
+
+		-
+			message: "#^Call to an undefined method Nette\\\\Application\\\\UI\\\\ITemplate\\:\\:getLatte\\(\\)\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Call to deprecated method getReflection\\(\\) of class Nette\\\\Application\\\\UI\\\\Component\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Call to function in_array\\(\\) requires parameter \\#3 to be set\\.$#"
+			count: 7
+			path: ../src/Grid.php
+
+		-
+			message: "#^Cannot access property \\$name on Nette\\\\Application\\\\UI\\\\Presenter\\|null\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Cannot access property \\$params on Nette\\\\Http\\\\SessionSection\\|null\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Cannot access property \\$value on Nette\\\\ComponentModel\\\\IComponent\\|null\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Cannot call method getSession\\(\\) on Nette\\\\Application\\\\UI\\\\Presenter\\|null\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Cannot call method isSignalReceiver\\(\\) on Nette\\\\Application\\\\UI\\\\Presenter\\|null\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Casting to bool something that's already bool\\.$#"
+			count: 2
+			path: ../src/Grid.php
+
+		-
+			message: "#^Casting to int something that's already int\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Comparison operation \"\\=\\=\" between int and array results in an error\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#"
+			count: 8
+			path: ../src/Grid.php
+
+		-
+			message: "#^Dynamic call to static method Nette\\\\Application\\\\UI\\\\Component\\:\\:getReflection\\(\\)\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^If condition is always true\\.$#"
+			count: 2
+			path: ../src/Grid.php
+
+		-
+			message: "#^Loose comparison via \"\\=\\=\" is not allowed\\.$#"
+			count: 3
+			path: ../src/Grid.php
+
+		-
+			message: "#^Method Grido\\\\Grid\\:\\:__getConditions\\(\\) has parameter \\$filter with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Method Grido\\\\Grid\\:\\:__getConditions\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Method Grido\\\\Grid\\:\\:__triggerUserNotice\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Method Grido\\\\Grid\\:\\:applyFiltering\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Method Grido\\\\Grid\\:\\:applyPaging\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Method Grido\\\\Grid\\:\\:applySorting\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Method Grido\\\\Grid\\:\\:createComponentForm\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Method Grido\\\\Grid\\:\\:createComponentForm\\(\\) has parameter \\$name with no type specified\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Method Grido\\\\Grid\\:\\:createTemplate\\(\\) has invalid return type Nette\\\\Templating\\\\FileTemplate\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Method Grido\\\\Grid\\:\\:createTemplate\\(\\) should return Nette\\\\Templating\\\\FileTemplate but returns Nette\\\\Application\\\\UI\\\\ITemplate\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Method Grido\\\\Grid\\:\\:getClientSideOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Method Grido\\\\Grid\\:\\:getData\\(\\) has Grido\\\\Exception in PHPDoc @throws tag but it's not thrown\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Method Grido\\\\Grid\\:\\:getData\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Method Grido\\\\Grid\\:\\:getDefaultFilter\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Method Grido\\\\Grid\\:\\:getDefaultPerPage\\(\\) should return int but returns array\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Method Grido\\\\Grid\\:\\:getDefaultSort\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Method Grido\\\\Grid\\:\\:getItemsForCountSelect\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Method Grido\\\\Grid\\:\\:getItemsForCountSelect\\(\\) should return array but returns array\\|false\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Method Grido\\\\Grid\\:\\:getPerPageList\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Method Grido\\\\Grid\\:\\:getProperty\\(\\) has parameter \\$object with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Method Grido\\\\Grid\\:\\:getRowCallback\\(\\) has invalid return type Grido\\\\callback\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Method Grido\\\\Grid\\:\\:getTranslator\\(\\) should return Grido\\\\Translations\\\\FileTranslator but returns Nette\\\\Localization\\\\ITranslator\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Method Grido\\\\Grid\\:\\:handleFilter\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Method Grido\\\\Grid\\:\\:handlePage\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Method Grido\\\\Grid\\:\\:handlePerPage\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Method Grido\\\\Grid\\:\\:handleRefresh\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Method Grido\\\\Grid\\:\\:handleReset\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Method Grido\\\\Grid\\:\\:handleSort\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Method Grido\\\\Grid\\:\\:handleSort\\(\\) has parameter \\$sort with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Method Grido\\\\Grid\\:\\:loadState\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Method Grido\\\\Grid\\:\\:render\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Method Grido\\\\Grid\\:\\:saveRememberState\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Method Grido\\\\Grid\\:\\:saveState\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Method Grido\\\\Grid\\:\\:saveState\\(\\) with return type void returns void but should not return anything\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Method Grido\\\\Grid\\:\\:setClientSideOptions\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Method Grido\\\\Grid\\:\\:setCustomization\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Method Grido\\\\Grid\\:\\:setDefaultFilter\\(\\) has parameter \\$filter with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Method Grido\\\\Grid\\:\\:setDefaultSort\\(\\) has parameter \\$sort with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Method Grido\\\\Grid\\:\\:setPerPageList\\(\\) has parameter \\$perPageList with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Method Grido\\\\Grid\\:\\:setRowCallback\\(\\) has parameter \\$callback with no type specified\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Method Nette\\\\Application\\\\UI\\\\Component\\:\\:saveState\\(\\) invoked with 2 parameters, 1 required\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Negated boolean expression is always false\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Only booleans are allowed in &&, Nette\\\\Application\\\\UI\\\\Presenter\\|null given on the left side\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Only booleans are allowed in &&, Nette\\\\Http\\\\SessionSection\\|null given on the left side\\.$#"
+			count: 2
+			path: ../src/Grid.php
+
+		-
+			message: "#^Only booleans are allowed in &&, Nette\\\\Http\\\\SessionSection\\|null given on the right side\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Only booleans are allowed in &&, mixed given on the right side\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Only booleans are allowed in &&, void given on the right side\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Only booleans are allowed in a negated boolean, Grido\\\\Components\\\\Columns\\\\Editable given\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Only booleans are allowed in a ternary operator condition, Grido\\\\Components\\\\Columns\\\\Editable given\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Only booleans are allowed in a ternary operator condition, array given\\.$#"
+			count: 2
+			path: ../src/Grid.php
+
+		-
+			message: "#^Only booleans are allowed in a ternary operator condition, mixed given\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Only booleans are allowed in an if condition, Grido\\\\Components\\\\Filters\\\\Filter given\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Only booleans are allowed in an if condition, Nette\\\\Http\\\\SessionSection\\|null given\\.$#"
+			count: 2
+			path: ../src/Grid.php
+
+		-
+			message: "#^Only booleans are allowed in an if condition, bool\\|Grido\\\\Components\\\\Filters\\\\Condition given\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Parameter \\#1 \\$function of function call_user_func_array expects callable\\(\\)\\: mixed, Grido\\\\callback given\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Parameter \\#1 \\$name of method Grido\\\\Components\\\\Container\\:\\:getColumn\\(\\) expects string, \\(int\\|string\\) given\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Parameter \\#1 \\$name of method Grido\\\\Components\\\\Container\\:\\:getFilter\\(\\) expects string, \\(int\\|string\\) given\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Parameter \\#2 \\$high of function range expects float\\|int\\|string, int\\|null given\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Parameter \\#2 \\$limit of method Grido\\\\DataSources\\\\IDataSource\\:\\:limit\\(\\) expects int, int\\|null given\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: """
+				#^Parameter \\$reflection of method Grido\\\\Grid\\:\\:saveState\\(\\) has typehint with deprecated class Nette\\\\Application\\\\UI\\\\PresenterComponentReflection\\:
+				use Nette\\\\Application\\\\UI\\\\ComponentReflection$#
+			"""
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Property Grido\\\\Grid\\:\\:\\$defaultFilter type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Property Grido\\\\Grid\\:\\:\\$defaultPerPage \\(array\\) does not accept int\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Property Grido\\\\Grid\\:\\:\\$defaultSort type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Property Grido\\\\Grid\\:\\:\\$filter type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Property Grido\\\\Grid\\:\\:\\$model \\(Grido\\\\DataSources\\\\IDataSource\\) does not accept Grido\\\\DataSources\\\\IDataSource\\|Grido\\\\DataSources\\\\Model\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Property Grido\\\\Grid\\:\\:\\$onFetchData type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Property Grido\\\\Grid\\:\\:\\$onRegistered type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Property Grido\\\\Grid\\:\\:\\$onRender type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Property Grido\\\\Grid\\:\\:\\$options type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Property Grido\\\\Grid\\:\\:\\$perPage \\(int\\) does not accept int\\|null\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Property Grido\\\\Grid\\:\\:\\$perPage \\(int\\) does not accept null\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Property Grido\\\\Grid\\:\\:\\$perPageList type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Property Grido\\\\Grid\\:\\:\\$rememberStateSectionName \\(string\\) does not accept string\\|null\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Property Grido\\\\Grid\\:\\:\\$rowCallback has unknown class Grido\\\\callback as its type\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Property Grido\\\\Grid\\:\\:\\$sort type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Result of method Nette\\\\Application\\\\UI\\\\Component\\:\\:saveState\\(\\) \\(void\\) is used\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Return type \\(Nette\\\\Templating\\\\FileTemplate\\) of method Grido\\\\Grid\\:\\:createTemplate\\(\\) should be covariant with return type \\(Nette\\\\Application\\\\UI\\\\ITemplate\\) of method Nette\\\\Application\\\\UI\\\\Control\\:\\:createTemplate\\(\\)$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Strict comparison using \\!\\=\\= between int and null will always evaluate to true\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Strict comparison using \\=\\=\\= between Grido\\\\DataSources\\\\IDataSource and null will always evaluate to false\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Ternary operator condition is always true\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Variable property access on \\$this\\(Grido\\\\Grid\\)\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Variable property access on object\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Method Grido\\\\Translations\\\\FileTranslator\\:\\:__construct\\(\\) has parameter \\$translations with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Translations/FileTranslator.php
+
+		-
+			message: "#^Method Grido\\\\Translations\\\\FileTranslator\\:\\:getTranslationsFromFile\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Translations/FileTranslator.php
+
+		-
+			message: "#^Method Grido\\\\Translations\\\\FileTranslator\\:\\:setLang\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: ../src/Translations/FileTranslator.php
+
+		-
+			message: "#^Parameter \\#1 \\$message \\(string\\) of method Grido\\\\Translations\\\\FileTranslator\\:\\:translate\\(\\) should be contravariant with parameter \\$message \\(mixed\\) of method Nette\\\\Localization\\\\ITranslator\\:\\:translate\\(\\)$#"
+			count: 1
+			path: ../src/Translations/FileTranslator.php
+
+		-
+			message: "#^Parameter \\#2 \\$count \\(int\\) of method Grido\\\\Translations\\\\FileTranslator\\:\\:translate\\(\\) should be contravariant with parameter \\$count \\(mixed\\) of method Nette\\\\Localization\\\\ITranslator\\:\\:translate\\(\\)$#"
+			count: 1
+			path: ../src/Translations/FileTranslator.php
+
+		-
+			message: "#^Property Grido\\\\Translations\\\\FileTranslator\\:\\:\\$translations type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../src/Translations/FileTranslator.php
+
+		-
+			message: "#^Access to an undefined property Grido\\\\Components\\\\Columns\\\\Editable\\:\\:\\$name\\.$#"
+			count: 1
+			path: ../tests/DataSources/TestCase.php
+
+		-
+			message: "#^Method Grido\\\\Tests\\\\DataSourceTestCase\\:\\:editableCallbackTest\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: ../tests/DataSources/TestCase.php
+
+		-
+			message: "#^Method Grido\\\\Tests\\\\DataSourceTestCase\\:\\:editableCallbackTest\\(\\) has parameter \\$id with no type specified\\.$#"
+			count: 1
+			path: ../tests/DataSources/TestCase.php
+
+		-
+			message: "#^Method Grido\\\\Tests\\\\DataSourceTestCase\\:\\:editableCallbackTest\\(\\) has parameter \\$newValue with no type specified\\.$#"
+			count: 1
+			path: ../tests/DataSources/TestCase.php
+
+		-
+			message: "#^Method Grido\\\\Tests\\\\DataSourceTestCase\\:\\:editableCallbackTest\\(\\) has parameter \\$oldValue with no type specified\\.$#"
+			count: 1
+			path: ../tests/DataSources/TestCase.php
+
+		-
+			message: "#^Method Grido\\\\Tests\\\\DataSourceTestCase\\:\\:testEditable\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: ../tests/DataSources/TestCase.php
+
+		-
+			message: "#^Method Grido\\\\Tests\\\\DataSourceTestCase\\:\\:testExport\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: ../tests/DataSources/TestCase.php
+
+		-
+			message: "#^Method Grido\\\\Tests\\\\DataSourceTestCase\\:\\:testNullableForeignKey\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: ../tests/DataSources/TestCase.php
+
+		-
+			message: "#^Method Grido\\\\Tests\\\\DataSourceTestCase\\:\\:testRender\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: ../tests/DataSources/TestCase.php
+
+		-
+			message: "#^Method Grido\\\\Tests\\\\DataSourceTestCase\\:\\:testSetWhere\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: ../tests/DataSources/TestCase.php
+
+		-
+			message: "#^Method Grido\\\\Tests\\\\DataSourceTestCase\\:\\:testSuggest\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: ../tests/DataSources/TestCase.php
+
+		-
+			message: "#^Property Grido\\\\Tests\\\\DataSourceTestCase\\:\\:\\$params type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../tests/DataSources/TestCase.php
+
+		-
+			message: "#^Property Grido\\\\Tests\\\\Entities\\\\Country\\:\\:\\$users has unknown class Grido\\\\Tests\\\\Entities\\\\ArrayCollection as its type\\.$#"
+			count: 1
+			path: ../tests/DataSources/files/doctrine/entities/Country.php
+
+		-
+			message: "#^Access to property \\$onStartUp on an unknown class TestPresenter\\.$#"
+			count: 4
+			path: ../tests/Helper.php
+
+		-
+			message: "#^Cannot access an offset on Nette\\\\Application\\\\IRouter\\.$#"
+			count: 1
+			path: ../tests/Helper.php
+
+		-
+			message: "#^Class Grido\\\\Tests\\\\TestPresenter constructor invoked with 1 parameter, 0 required\\.$#"
+			count: 1
+			path: ../tests/Helper.php
+
+		-
+			message: "#^Method Grido\\\\Tests\\\\Helper\\:\\:assertTypeError\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: ../tests/Helper.php
+
+		-
+			message: "#^Method Grido\\\\Tests\\\\Helper\\:\\:assertTypeError\\(\\) has parameter \\$function with no type specified\\.$#"
+			count: 1
+			path: ../tests/Helper.php
+
+		-
+			message: "#^Method Grido\\\\Tests\\\\Helper\\:\\:createPresenter\\(\\) has invalid return type TestPresenter\\.$#"
+			count: 1
+			path: ../tests/Helper.php
+
+		-
+			message: "#^Method Grido\\\\Tests\\\\Helper\\:\\:createPresenter\\(\\) should return TestPresenter but returns Grido\\\\Tests\\\\TestPresenter\\.$#"
+			count: 1
+			path: ../tests/Helper.php
+
+		-
+			message: "#^Method Grido\\\\Tests\\\\Helper\\:\\:grid\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: ../tests/Helper.php
+
+		-
+			message: "#^Method Grido\\\\Tests\\\\Helper\\:\\:grid\\(\\) has parameter \\$definition with no signature specified for Closure\\.$#"
+			count: 1
+			path: ../tests/Helper.php
+
+		-
+			message: "#^Method Grido\\\\Tests\\\\Helper\\:\\:request\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../tests/Helper.php
+
+		-
+			message: "#^Method Grido\\\\Tests\\\\Helper\\:\\:run\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../tests/Helper.php
+
+		-
+			message: "#^Property Grido\\\\Tests\\\\TestPresenter\\:\\:\\$onStartUp type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../tests/Helper.php
+
+		-
+			message: "#^Static property Grido\\\\Tests\\\\Helper\\:\\:\\$presenter \\(Grido\\\\Tests\\\\TestPresenter\\) does not accept TestPresenter\\.$#"
+			count: 1
+			path: ../tests/Helper.php
+
+		-
+			message: "#^Access to deprecated static property \\$maxLen of class Tracy\\\\Debugger\\.$#"
+			count: 1
+			path: ../tests/bootstrap.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:runTest\\(\\)\\.$#"
+			count: 1
+			path: ../tests/bootstrap.php
+
+		-
+			message: "#^Function before\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: ../tests/bootstrap.php
+
+		-
+			message: "#^Function before\\(\\) has parameter \\$function with no signature specified for Closure\\.$#"
+			count: 1
+			path: ../tests/bootstrap.php
+
+		-
+			message: "#^Function id\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: ../tests/bootstrap.php
+
+		-
+			message: "#^Function id\\(\\) has parameter \\$val with no type specified\\.$#"
+			count: 1
+			path: ../tests/bootstrap.php
+
+		-
+			message: "#^Function mock\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: ../tests/bootstrap.php
+
+		-
+			message: "#^Function run\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: ../tests/bootstrap.php
+
+		-
+			message: "#^Function run\\(\\) has parameter \\$name with no type specified\\.$#"
+			count: 1
+			path: ../tests/bootstrap.php
+
+		-
+			message: "#^Function run\\(\\) has parameter \\$path with no type specified\\.$#"
+			count: 1
+			path: ../tests/bootstrap.php
+
+		-
+			message: "#^Function test\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: ../tests/bootstrap.php
+
+		-
+			message: "#^Function test\\(\\) has parameter \\$function with no signature specified for Closure\\.$#"
+			count: 1
+			path: ../tests/bootstrap.php
+
+		-
+			message: "#^Loose comparison via \"\\=\\=\" is not allowed\\.$#"
+			count: 3
+			path: ../tests/bootstrap.php
+
+		-
+			message: "#^Only booleans are allowed in a negated boolean, int\\<0, max\\> given\\.$#"
+			count: 1
+			path: ../tests/bootstrap.php
+
+		-
+			message: "#^Parameter \\#1 \\$source of function token_get_all expects string, string\\|false given\\.$#"
+			count: 1
+			path: ../tests/bootstrap.php
