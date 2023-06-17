@@ -20,6 +20,8 @@ use Nette;
  * @package     Grido
  * @subpackage  Translations
  * @author      Petr Bugyík
+ *
+ * @property string $lang
  */
 class FileTranslator implements \Nette\Localization\ITranslator
 {

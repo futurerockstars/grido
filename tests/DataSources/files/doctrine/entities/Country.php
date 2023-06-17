@@ -2,8 +2,8 @@
 
 namespace Grido\Tests\Entities;
 
-use Nette\Object;
 use Doctrine\ORM\Mapping as ORM;
+use Nette\SmartObject;
 
 /**
  * Country entity.
@@ -14,8 +14,11 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="country")
  */
-class Country extends Object
+class Country
 {
+
+	use SmartObject;
+
     /**
      * @var string
      * @ORM\Id

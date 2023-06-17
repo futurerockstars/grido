@@ -2,6 +2,7 @@
 
 
 
+
 <form action="/test/" method="get" id="frm-grid-form" class="ajax grido" data-grido-refresh-handler="/test/?do=grid-refresh">
     <div class="filter outer">
         <div class="items">
@@ -28,8 +29,10 @@
         </div>
         <div class="buttons">
                     <input type="submit" name="buttons[search]" value="Search" style="display:none">
+
         </div>
     </div>
+
 
 <table id="grid" data-grido-options='{"editable":true}'>
     <thead>
@@ -67,6 +70,7 @@
                     <span class="count">
                         <label>Items 4 - 6 of 6</label>
                             <select name="count" title="Items per page" id="frm-grid-form-count"><option value="3" selected>3</option><option value="10">10</option><option value="20">20</option><option value="30">30</option><option value="50">50</option><option value="100">100</option></select>
+
                         <input type="submit" name="buttons[perPage]" value="Items per page" class="hide">
                     </span>
                     <span class="export">
@@ -133,6 +137,7 @@
             </tr>
     </tbody>
 </table>
+
 <input type="hidden" name="do" value="grid-form-submit"></form>
 
 </div>

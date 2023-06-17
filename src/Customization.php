@@ -21,6 +21,7 @@ use Nette;
  *
  * @property string|array $buttonClass
  * @property string|array $iconClass
+ * @property array $templateFiles
  */
 class Customization
 {

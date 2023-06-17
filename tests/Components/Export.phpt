@@ -9,6 +9,7 @@
 
 namespace Grido\Tests;
 
+use Nette\SmartObject;
 use Tester\Assert,
     Grido\Grid,
     Grido\Tests\Helper,
@@ -17,8 +18,11 @@ use Tester\Assert,
 
 require_once __DIR__ . '/../bootstrap.php';
 
-class Response extends \Nette\Object implements \Nette\Http\IResponse
+class Response implements \Nette\Http\IResponse
 {
+
+	use SmartObject;
+
     public static $headers = [];
 
     function setHeader($name, $value)

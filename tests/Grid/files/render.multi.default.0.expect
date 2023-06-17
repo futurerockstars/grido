@@ -2,6 +2,7 @@
 
 
 
+
 <form action="/test/" method="get" id="frm-grid-form" class="ajax grido" data-grido-refresh-handler="/test/?do=grid-refresh">
 
 <table id="grid">
@@ -48,6 +49,7 @@
                     <span class="count">
                         <label>Items 1 - 2 of 50</label>
                             <select name="count" title="Items per page" id="frm-grid-form-count"><option value="2" selected>2</option><option value="10">10</option><option value="20">20</option><option value="30">30</option><option value="50">50</option><option value="100">100</option></select>
+
                         <input type="submit" name="buttons[perPage]" value="Items per page" class="hide">
                     </span>
                     <span class="reset">
@@ -77,7 +79,7 @@
                             Marij
                     </td>
                     <td class="grid-cell-surname">
-                            Rašpolić Příliš, žluťoučký &quot;kůň&quot; úpěl &#039;ďábelské&#039; ódy.
+                            Rašpolić Příliš, žluťoučký &quot;kůň&quot; úpěl &apos;ďábelské&apos; ódy.
 and newline &quot;test&quot;;
                     </td>
                     <td class="grid-cell-gender">
@@ -89,10 +91,13 @@ and newline &quot;test&quot;;
             </tr>
     </tbody>
 </table>
+
 <input type="hidden" name="do" value="grid-form-submit"><!--[if IE]><input type=IEbug disabled style="display:none"><![endif]-->
 </form>
 
-</div><div id="snippet-grid-grid">
+</div>
+<div id="snippet-grid-grid">
+
 
 
 
@@ -143,6 +148,7 @@ and newline &quot;test&quot;;
                     <span class="count">
                         <label>Items 1 - 2 of 50</label>
                             <select name="count" title="Items per page" id="frm-grid-form-count"><option value="2" selected>2</option><option value="10">10</option><option value="20">20</option><option value="30">30</option><option value="50">50</option><option value="100">100</option></select>
+
                         <input type="submit" name="buttons[perPage]" value="Items per page" class="hide">
                     </span>
                     <span class="reset">
@@ -175,7 +181,7 @@ and newline &quot;test&quot;;
                             Marij
                     </td>
                     <td class="grid-cell-surname">
-                            Rašpolić Příliš, žluťoučký &quot;kůň&quot; úpěl &#039;ďábelské&#039; ódy.
+                            Rašpolić Příliš, žluťoučký &quot;kůň&quot; úpěl &apos;ďábelské&apos; ódy.
 and newline &quot;test&quot;;
                     </td>
                     <td class="grid-cell-gender">
@@ -190,10 +196,13 @@ and newline &quot;test&quot;;
             </tr>
     </tbody>
 </table>
+
 <input type="hidden" name="do" value="grid-form-submit"><!--[if IE]><input type=IEbug disabled style="display:none"><![endif]-->
 </form>
 
-</div><div id="snippet-grid-grid">
+</div>
+<div id="snippet-grid-grid">
+
 
 
 
@@ -219,18 +228,22 @@ and newline &quot;test&quot;;
 
                     <th class="grid-filter-firstname">
                             <input type="text" name="filters[firstname]" class="text" id="frm-grid-form-filters-firstname">
+
                     </th>
 
                     <th class="grid-filter-surname">
                             <input type="text" name="filters[surname]" class="text" id="frm-grid-form-filters-surname">
+
                     </th>
 
                     <th class="grid-filter-gender">
                             <input type="text" name="filters[gender]" class="text" id="frm-grid-form-filters-gender">
+
                     </th>
 
                     <th class="grid-filter-birthday">
                             <input type="text" name="filters[birthday]" class="text date" autocomplete="off" id="frm-grid-form-filters-birthday">
+
                     </th>
 
         </tr>
@@ -262,6 +275,7 @@ and newline &quot;test&quot;;
                     <span class="count">
                         <label>Items 1 - 2 of 50</label>
                             <select name="count" title="Items per page" id="frm-grid-form-count"><option value="2" selected>2</option><option value="10">10</option><option value="20">20</option><option value="30">30</option><option value="50">50</option><option value="100">100</option></select>
+
                         <input type="submit" name="buttons[perPage]" value="Items per page" class="hide">
                     </span>
                     <span class="reset">
@@ -291,7 +305,7 @@ and newline &quot;test&quot;;
                             Marij
                     </td>
                     <td class="grid-cell-surname">
-                            Rašpolić Příliš, žluťoučký &quot;kůň&quot; úpěl &#039;ďábelské&#039; ódy.
+                            Rašpolić Příliš, žluťoučký &quot;kůň&quot; úpěl &apos;ďábelské&apos; ódy.
 and newline &quot;test&quot;;
                     </td>
                     <td class="grid-cell-gender">
@@ -303,9 +317,12 @@ and newline &quot;test&quot;;
             </tr>
     </tbody>
 </table>
+
 <input type="hidden" name="do" value="grid-form-submit"></form>
 
-</div><div id="snippet-grid-grid">
+</div>
+<div id="snippet-grid-grid">
+
 
 
 
@@ -332,18 +349,22 @@ and newline &quot;test&quot;;
 
                     <th class="grid-filter-firstname">
                             <input type="text" name="filters[firstname]" class="text" id="frm-grid-form-filters-firstname">
+
                     </th>
 
                     <th class="grid-filter-surname">
                             <input type="text" name="filters[surname]" class="text" id="frm-grid-form-filters-surname">
+
                     </th>
 
                     <th class="grid-filter-gender">
                             <input type="text" name="filters[gender]" class="text" id="frm-grid-form-filters-gender">
+
                     </th>
 
                     <th class="grid-filter-birthday">
                             <input type="text" name="filters[birthday]" class="text date" autocomplete="off" id="frm-grid-form-filters-birthday">
+
                     </th>
 
             <th class="actions">
@@ -377,6 +398,7 @@ and newline &quot;test&quot;;
                     <span class="count">
                         <label>Items 1 - 2 of 50</label>
                             <select name="count" title="Items per page" id="frm-grid-form-count"><option value="2" selected>2</option><option value="10">10</option><option value="20">20</option><option value="30">30</option><option value="50">50</option><option value="100">100</option></select>
+
                         <input type="submit" name="buttons[perPage]" value="Items per page" class="hide">
                     </span>
                     <span class="reset">
@@ -409,7 +431,7 @@ and newline &quot;test&quot;;
                             Marij
                     </td>
                     <td class="grid-cell-surname">
-                            Rašpolić Příliš, žluťoučký &quot;kůň&quot; úpěl &#039;ďábelské&#039; ódy.
+                            Rašpolić Příliš, žluťoučký &quot;kůň&quot; úpěl &apos;ďábelské&apos; ódy.
 and newline &quot;test&quot;;
                     </td>
                     <td class="grid-cell-gender">
@@ -424,6 +446,7 @@ and newline &quot;test&quot;;
             </tr>
     </tbody>
 </table>
+
 <input type="hidden" name="do" value="grid-form-submit"></form>
 
 </div>
