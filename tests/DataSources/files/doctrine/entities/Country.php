@@ -8,9 +8,6 @@ use Nette\SmartObject;
 /**
  * Country entity.
  *
- * @package     Entities
- * @author      Josef Kříž <pepakriz@gmail.com>
- *
  * @ORM\Entity
  * @ORM\Table(name="country")
  */
@@ -19,28 +16,31 @@ class Country
 
 	use SmartObject;
 
-    /**
-     * @var string
-     * @ORM\Id
-     * @ORM\Column(length=2)
-     */
-    public $code;
+	/**
+	 * @var string
+	 *
+	 * @ORM\Id
+	 * @ORM\Column(length=2)
+	 */
+	public $code;
 
-    /**
-     * @var string
-     * @ORM\Column()
-     */
-    public $title;
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column()
+	 */
+	public $title;
 
-    /**
-     * @var ArrayCollection|User[]
-     * @ORM\OneToMany(targetEntity="User", mappedBy="country")
-     */
-    public $users;
+	/**
+	 * @var ArrayCollection|array<User>
+	 *
+	 * @ORM\OneToMany(targetEntity="User", mappedBy="country")
+	 */
+	public $users;
 
+	public function __toString()
+	{
+		return $this->title;
+	}
 
-    public function __toString()
-    {
-        return $this->title;
-    }
 }

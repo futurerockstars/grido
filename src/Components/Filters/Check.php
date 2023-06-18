@@ -11,64 +11,66 @@
 
 namespace Grido\Components\Filters;
 
+use Nette\Forms\Controls\Checkbox;
+
 /**
  * Check box filter.
- *
- * @package     Grido
- * @subpackage  Components\Filters
- * @author      Petr Bugyík
  */
 class Check extends Filter
 {
-    /* representation TRUE in URI */
-    const TRUE = '✓';
 
-    /** @var string */
-    protected $condition = 'IS NOT NULL';
+	/* representation TRUE in URI */
+	const TRUE = '✓';
 
-    /**
-     * @return \Nette\Forms\Controls\Checkbox
-     */
-    protected function getFormControl()
-    {
-        $control = new \Nette\Forms\Controls\Checkbox($this->label);
-        $control->getControlPrototype()->class[] = 'checkbox';
-        return $control;
-    }
+	/** @var string */
+	protected $condition = 'IS NOT NULL';
 
-    /**
-     * @param string $value
-     * @return Condition|bool
-     * @internal
-     */
-    public function __getCondition($value)
-    {
-        $value = $value == self::TRUE
-            ? TRUE
-            : FALSE;
+	/**
+	 * @return Checkbox
+	 */
+	protected function getFormControl()
+	{
+		$control = new Checkbox($this->label);
+		$control->getControlPrototype()->class[] = 'checkbox';
 
-        return parent::__getCondition($value);
-    }
+		return $control;
+	}
 
-    /**
-     * @param bool $value
-     * @return NULL
-     * @internal
-     */
-    public function formatValue($value)
-    {
-        return NULL;
-    }
+	/**
+	 * @param string $value
+	 * @return Condition|bool
+	 *
+	 * @internal
+	 */
+	public function __getCondition($value)
+	{
+		$value = $value == self::TRUE;
 
-    /**
-     * @param bool $value
-     * @return string
-     * @internal
-     */
-    public function changeValue($value)
-    {
-        return (bool) $value === TRUE
-            ? self::TRUE
-            : $value;
-    }
+		return parent::__getCondition($value);
+	}
+
+	/**
+	 * @param bool $value
+	 * @return NULL
+	 *
+	 * @internal
+	 */
+	public function formatValue($value)
+	{
+		return null;
+	}
+
+	/**
+	 * @param bool $value
+	 * @return string
+	 *
+	 * @internal
+	 */
+	public function changeValue($value)
+	{
+		return (bool) $value === true
+			? self::TRUE
+			: $value;
+	}
+
 }

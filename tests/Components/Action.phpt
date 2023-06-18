@@ -16,7 +16,7 @@ require_once __DIR__ . '/../bootstrap.php';
 
 class ActionTest extends \Tester\TestCase
 {
-    function testSetElementPrototype()
+    public function testSetElementPrototype()
     {
         Helper::grid(function(Grid $grid){
             $element = \Nette\Utils\Html::el('a')
@@ -31,7 +31,7 @@ class ActionTest extends \Tester\TestCase
         Assert::same('<a class="action" href="/test/edit/11">Edit</a>', $output);
     }
 
-    function testSetCustomRender()
+    public function testSetCustomRender()
     {
         $testRow = ['id' => 11, 'column' => 'value'];
         Helper::grid(function(Grid $grid) use ($testRow) {
@@ -50,7 +50,7 @@ class ActionTest extends \Tester\TestCase
         Assert::same('<a href="/test/edit/11">TEST</a>', $output);
     }
 
-    function testSetPrimaryKey()
+    public function testSetPrimaryKey()
     {
         Helper::grid(function(Grid $grid){
             $grid->addActionHref('edit', 'Edit')
@@ -67,7 +67,7 @@ class ActionTest extends \Tester\TestCase
         }, 'Symfony\Component\PropertyAccess\Exception\NoSuchIndexException');
     }
 
-    function testSetDisable()
+    public function testSetDisable()
     {
         Helper::grid(function(Grid $grid){
             $grid->addActionHref('delete', 'Delete')
@@ -87,7 +87,7 @@ class ActionTest extends \Tester\TestCase
         Assert::same('<a class="grid-action-delete" href="/test/delete/3">Delete</a>', $output);
     }
 
-    function testSetConfirm()
+    public function testSetConfirm()
     {
         //test string
         Helper::grid(function(Grid $grid){
@@ -131,14 +131,14 @@ class ActionTest extends \Tester\TestCase
         Assert::same('<a class="grid-action-delete" data-grido-confirm="Opravdu chceš smazat uživatele Lucie?" href="/test/delete/2">Delete</a>', $output);
     }
 
-    function testSetIcon()
+    public function testSetIcon()
     {
         $grid = new Grid;
         $action = $grid->addActionHref('delete', 'Delete')->setIcon('delete');
         Assert::same('delete', $action->getOption('icon'));
     }
 
-    function testSetOption()
+    public function testSetOption()
     {
         $grid = new Grid;
         $action = $grid->addActionHref('delete', 'Delete')
@@ -150,7 +150,7 @@ class ActionTest extends \Tester\TestCase
 
     /**********************************************************************************************/
 
-    function testHasActions()
+    public function testHasActions()
     {
         $grid = new Grid;
         Assert::false($grid->hasActions());
@@ -160,7 +160,7 @@ class ActionTest extends \Tester\TestCase
         Assert::true($grid->hasActions(FALSE));
     }
 
-    function testAddAction() //addAction*()
+    public function testAddAction() //addAction*()
     {
         $grid = new Grid;
         $label = 'Action';

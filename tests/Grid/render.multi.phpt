@@ -149,28 +149,28 @@ class Multirender extends \Tester\TestCase
         return [$firstPart, $secondPart];
     }
 
-    function testTemplateDefaultFirstPart()
+    public function testTemplateDefaultFirstPart()
     {
         $part = 0;
         $template = Customization::TEMPLATE_DEFAULT;
         Assert::matchFile(__DIR__ . "/files/render.multi.$template.$part.expect", $this->helper($template)[$part]);
     }
 
-    function testTemplateDefaultSecondPart()
+    public function testTemplateDefaultSecondPart()
     {
         $part = 1;
         $template = Customization::TEMPLATE_DEFAULT;
         Assert::matchFile(__DIR__ . "/files/render.multi.$template.$part.expect", $this->helper($template)[$part]);
     }
 
-    function testTemplateBootstrapFirstPart()
+    public function testTemplateBootstrapFirstPart()
     {
         $part = 0;
         $template = Customization::TEMPLATE_BOOTSTRAP;
         Assert::matchFile(__DIR__ . "/files/render.multi.$template.$part.expect", $this->helper($template)[$part]);
     }
 
-    function testTemplateBootstrapSecondPart()
+    public function testTemplateBootstrapSecondPart()
     {
         $part = 1;
         $template = Customization::TEMPLATE_BOOTSTRAP;

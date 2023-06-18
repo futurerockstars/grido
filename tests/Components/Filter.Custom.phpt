@@ -16,7 +16,7 @@ require_once __DIR__ . '/../bootstrap.php';
 
 class FilterCustomTest extends \Tester\TestCase
 {
-    function testFormControl()
+    public function testFormControl()
     {
         $grid = new Grid;
         $control = new \Nette\Forms\Controls\TextArea;
@@ -24,7 +24,7 @@ class FilterCustomTest extends \Tester\TestCase
         Assert::same($control, $filter->control);
     }
 
-    function testGetCondition()
+    public function testGetCondition()
     {
         $grid = new Grid;
         $control = new \Nette\Forms\Controls\TextArea;

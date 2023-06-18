@@ -17,7 +17,7 @@ use Tester\Assert,
 
 class FilterTest extends \Tester\TestCase
 {
-    function testSetColumn() //+ getColumn()
+    public function testSetColumn() //+ getColumn()
     {
         $grid = new Grid;
 
@@ -43,7 +43,7 @@ class FilterTest extends \Tester\TestCase
         Assert::same(['columnX'], $filter->column);
     }
 
-    function testSetCondition() //+ __getCondition()
+    public function testSetCondition() //+ __getCondition()
     {
         $grid = new Grid;
         $filter = $grid->addFilterText('filter', 'Filter');
@@ -91,7 +91,7 @@ class FilterTest extends \Tester\TestCase
         Assert::same(['0 = 1'], $filter->__getCondition('value')->__toArray());
     }
 
-    function testSetWhere()
+    public function testSetWhere()
     {
         $grid = new Grid;
         $where = function() {};
@@ -104,14 +104,14 @@ class FilterTest extends \Tester\TestCase
         Assert::same('value', $condition->value);
     }
 
-    function testChangeValue()
+    public function testChangeValue()
     {
         $grid = new Grid;
         $filter = $grid->addFilterText('filter', 'Filter');
         Assert::same('TEST', $filter->changeValue('TEST'));
     }
 
-    function testFormatValue()
+    public function testFormatValue()
     {
         $grid = new Grid;
         $filter = $grid->addFilterText('filter', 'Filter')
@@ -120,7 +120,7 @@ class FilterTest extends \Tester\TestCase
         Assert::same(['filter LIKE ?', '%TEST%'], $filter->__getCondition('TEST')->__toArray());
     }
 
-    function testSetDefaufaulValue()
+    public function testSetDefaufaulValue()
     {
         $grid = new Grid;
         $grid->addFilterText('filter', 'Filter')
@@ -132,7 +132,7 @@ class FilterTest extends \Tester\TestCase
         Assert::same(['filter' => 'default', 'filter2' => 'default2'], $grid->defaultFilter);
     }
 
-    function testGetWrapperPrototype()
+    public function testGetWrapperPrototype()
     {
         $grid = new Grid;
         $filter = $grid->addFilterText('filter', 'Filter');
@@ -141,7 +141,7 @@ class FilterTest extends \Tester\TestCase
 
     /**********************************************************************************************/
 
-    function testHasFilters()
+    public function testHasFilters()
     {
         $grid = new Grid;
         Assert::false($grid->hasFilters());
@@ -151,7 +151,7 @@ class FilterTest extends \Tester\TestCase
         Assert::true($grid->hasFilters(FALSE));
     }
 
-    function testAddFilter() //addFilter*()
+    public function testAddFilter() //addFilter*()
     {
         $grid = new Grid;
         $label = 'Filter';

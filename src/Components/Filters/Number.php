@@ -11,54 +11,60 @@
 
 namespace Grido\Components\Filters;
 
+use Exception;
+use Nette\Forms\Controls\TextInput;
+use function preg_match;
+use function rand;
+use function sprintf;
+use function str_replace;
+
 /**
  * Number input filter.
- *
- * @package     Grido
- * @subpackage  Components\Filters
- * @author      Petr Bugyík
  */
 class Number extends Text
 {
-    /** @var string */
-    protected $condition;
 
-    /**
-     * @return \Nette\Forms\Controls\TextInput
-     */
-    protected function getFormControl()
-    {
-        $control = parent::getFormControl();
-        $hint = 'Grido.HintNumber';
-        $control->getControlPrototype()->title = sprintf($this->translate($hint), rand(1, 9));
-        $control->getControlPrototype()->class[] = 'number';
+	/** @var string */
+	protected $condition;
 
-        return $control;
-    }
+	/**
+	 * @return TextInput
+	 */
+	protected function getFormControl()
+	{
+		$control = parent::getFormControl();
+		$hint = 'Grido.HintNumber';
+		$control->getControlPrototype()->title = sprintf($this->translate($hint), rand(1, 9));
+		$control->getControlPrototype()->class[] = 'number';
 
-    /**
-     * @param string $value
-     * @return Condition|bool
-     * @throws \Exception
-     * @internal
-     */
-    public function __getCondition($value)
-    {
-        $condition = parent::__getCondition($value);
+		return $control;
+	}
 
-        if ($condition === NULL) {
-            $condition = Condition::setupEmpty();
+	/**
+	 * @param string $value
+	 * @return Condition|bool
+	 * @throws Exception
+	 *
+	 * @internal
+	 */
+	public function __getCondition($value)
+	{
+		$condition = parent::__getCondition($value);
 
-            if (preg_match('/(<>|[<|>]=?)?([-0-9,|.]+)/', $value, $matches)) {
-                $value = str_replace(',', '.', $matches[2]);
-                $operator = $matches[1]
-                    ? $matches[1]
-                    : '=';
+		if ($condition === null) {
+			$condition = Condition::setupEmpty();
 
-                $condition = Condition::setup($this->getColumn(), $operator . ' ?', $value);
-            }
-        }
+			if (preg_match('/(<>|[<|>]=?)?([-0-9,|.]+)/', $value, $matches)) {
+				$value = str_replace(',', '.', $matches[2]);
+				$operator = $matches[1]
+					? $matches[1]
+					: '=';
 
-        return $condition;
-    }
+				$condition = Condition::setup($this->getColumn(), $operator . ' ?', $value);
+			}
+		}
+
+		return $condition;
+	}
+
 }

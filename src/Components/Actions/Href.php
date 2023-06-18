@@ -11,12 +11,12 @@
 
 namespace Grido\Components\Actions;
 
+use Grido\Grid;
+use Nette\Utils\Html;
+use function call_user_func_array;
+
 /**
  * Href action.
- *
- * @package     Grido
- * @subpackage  Components\Actions
- * @author      Petr Bugyík
  *
  * @property-write array $customHref
  * @property-read string $destination
@@ -24,86 +24,91 @@ namespace Grido\Components\Actions;
  */
 class Href extends Action
 {
-    /** @var string first param for method $presenter->link() */
-    protected $destination;
 
-    /** @var array second param for method $presenter->link() */
-    protected $arguments = [];
+	/** @var string first param for method $presenter->link() */
+	protected $destination;
 
-    /** @var callback for custom href attribute creating */
-    protected $customHref;
+	/** @var array second param for method $presenter->link() */
+	protected $arguments = [];
 
-    /**
-     * @param \Grido\Grid $grid
-     * @param string $name
-     * @param string $label
-     * @param string $destination - first param for method $presenter->link()
-     * @param array $arguments - second param for method $presenter->link()
-     */
-    public function __construct($grid, $name, $label, $destination = NULL, array $arguments = [])
-    {
-        parent::__construct($grid, $name, $label);
+	/** @var callback for custom href attribute creating */
+	protected $customHref;
 
-        $this->destination = $destination;
-        $this->arguments = $arguments;
-    }
+	/**
+	 * @param Grid $grid
+	 * @param string $name
+	 * @param string $label
+	 * @param string $destination - first param for method $presenter->link()
+	 * @param array $arguments - second param for method $presenter->link()
+	 */
+	public function __construct($grid, $name, $label, $destination = null, array $arguments = [])
+	{
+		parent::__construct($grid, $name, $label);
 
-    /**
-     * Sets callback for custom link creating.
-     * @param callback $callback
-     * @return Href
-     */
-    public function setCustomHref($callback)
-    {
-        $this->customHref = $callback;
-        return $this;
-    }
+		$this->destination = $destination;
+		$this->arguments = $arguments;
+	}
 
-    /**********************************************************************************************/
+	/**
+	 * Sets callback for custom link creating.
+	 *
+	 * @param callback $callback
+	 * @return Href
+	 */
+	public function setCustomHref($callback)
+	{
+		$this->customHref = $callback;
 
-    /**
-     * @param mixed $row
-     * @return \Nette\Utils\Html
-     * @internal
-     */
-    public function getElement($row)
-    {
-        $element = parent::getElement($row);
+		return $this;
+	}
 
-        if ($this->customHref) {
-            $href = call_user_func_array($this->customHref, [$row]);
-        } else {
-            $primaryKey = $this->getPrimaryKey();
-            $primaryValue = $this->grid->getProperty($row, $primaryKey);
+	/**
+	 * @param mixed $row
+	 * @return Html
+	 *
+	 * @internal
+	 */
+	public function getElement($row)
+	{
+		$element = parent::getElement($row);
 
-            $this->arguments[$primaryKey] = $primaryValue;
-            $href = $this->presenter->link($this->getDestination(), $this->arguments);
-        }
+		if ($this->customHref) {
+			$href = call_user_func_array($this->customHref, [$row]);
+		} else {
+			$primaryKey = $this->getPrimaryKey();
+			$primaryValue = $this->grid->getProperty($row, $primaryKey);
 
-        $element->href($href);
+			$this->arguments[$primaryKey] = $primaryValue;
+			$href = $this->presenter->link($this->getDestination(), $this->arguments);
+		}
 
-        return $element;
-    }
+		$element->href($href);
 
-    /**
-     * @return string
-     * @internal
-     */
-    public function getDestination()
-    {
-        if ($this->destination === NULL) {
-            $this->destination = $this->getName();
-        }
+		return $element;
+	}
 
-        return $this->destination;
-    }
+	/**
+	 * @return string
+	 *
+	 * @internal
+	 */
+	public function getDestination()
+	{
+		if ($this->destination === null) {
+			$this->destination = $this->getName();
+		}
 
-    /**
-     * @return array
-     * @internal
-     */
-    public function getArguments()
-    {
-        return $this->arguments;
-    }
+		return $this->destination;
+	}
+
+	/**
+	 * @return array
+	 *
+	 * @internal
+	 */
+	public function getArguments()
+	{
+		return $this->arguments;
+	}
+
 }

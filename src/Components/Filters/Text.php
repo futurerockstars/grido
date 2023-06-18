@@ -12,156 +12,163 @@
 namespace Grido\Components\Filters;
 
 use Grido\Exception;
+use Nette\Application\Responses\JsonResponse;
+use Nette\Forms\Controls\TextInput;
+use function call_user_func_array;
+use function current;
+use function is_array;
 
 /**
  * Text input filter.
- *
- * @package     Grido
- * @subpackage  Components\Filters
- * @author      Petr Bugyík
  *
  * @property int $suggestionLimit
  * @property-write callback $suggestionCallback
  */
 class Text extends Filter
 {
-    /** @var string */
-    protected $condition = 'LIKE ?';
 
-    /** @var string */
-    protected $formatValue = '%%value%';
+	/** @var string */
+	protected $condition = 'LIKE ?';
 
-    /** @var bool */
-    protected $suggestion = FALSE;
+	/** @var string */
+	protected $formatValue = '%%value%';
 
-    /** @var mixed */
-    protected $suggestionColumn;
+	/** @var bool */
+	protected $suggestion = false;
 
-    /** @var int */
-    protected $suggestionLimit = 10;
+	/** @var mixed */
+	protected $suggestionColumn;
 
-    /** @var callback */
-    protected $suggestionCallback;
+	/** @var int */
+	protected $suggestionLimit = 10;
 
-    /**
-     * Allows suggestion.
-     * @param mixed $column
-     * @return Text
-     */
-    public function setSuggestion($column = NULL)
-    {
-        $this->suggestion = TRUE;
-        $this->suggestionColumn = $column;
+	/** @var callback */
+	protected $suggestionCallback;
 
-        $prototype = $this->getControl()->getControlPrototype();
-        $prototype->attrs['autocomplete'] = 'off';
-        $prototype->class[] = 'suggest';
+	/**
+	 * Allows suggestion.
+	 *
+	 * @param mixed $column
+	 * @return Text
+	 */
+	public function setSuggestion($column = null)
+	{
+		$this->suggestion = true;
+		$this->suggestionColumn = $column;
 
-        $this->grid->onRender[] = function() use ($prototype) {
-            $replacement = '-query-';
-            $prototype->setAttribute('data-grido-suggest-replacement', $replacement);
-            $prototype->setAttribute('data-grido-suggest-limit', $this->suggestionLimit);
-            $prototype->setAttribute('data-grido-suggest-handler', $this->link('suggest!', [
-                'query' => $replacement
-            ]));
-        };
+		$prototype = $this->getControl()->getControlPrototype();
+		$prototype->attrs['autocomplete'] = 'off';
+		$prototype->class[] = 'suggest';
 
-        return $this;
-    }
+		$this->grid->onRender[] = function () use ($prototype) {
+			$replacement = '-query-';
+			$prototype->setAttribute('data-grido-suggest-replacement', $replacement);
+			$prototype->setAttribute('data-grido-suggest-limit', $this->suggestionLimit);
+			$prototype->setAttribute('data-grido-suggest-handler', $this->link('suggest!', [
+				'query' => $replacement,
+			]));
+		};
 
-    /**
-     * Sets a limit for suggestion select.
-     * @param int $limit
-     * @return \Grido\Components\Filters\Text
-     */
-    public function setSuggestionLimit($limit)
-    {
-        $this->suggestionLimit = (int) $limit;
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Sets custom data callback.
-     * @param callback $callback
-     * @return \Grido\Components\Filters\Text
-     */
-    public function setSuggestionCallback($callback)
-    {
-        $this->suggestionCallback = $callback;
-        return $this;
-    }
+	/**
+	 * Sets a limit for suggestion select.
+	 *
+	 * @param int $limit
+	 * @return Text
+	 */
+	public function setSuggestionLimit($limit)
+	{
+		$this->suggestionLimit = (int) $limit;
 
-    /**********************************************************************************************/
+		return $this;
+	}
 
-    /**
-     * @return int
-     */
-    public function getSuggestionLimit()
-    {
-        return $this->suggestionLimit;
-    }
+	/**
+	 * Sets custom data callback.
+	 *
+	 * @param callback $callback
+	 * @return Text
+	 */
+	public function setSuggestionCallback($callback)
+	{
+		$this->suggestionCallback = $callback;
 
-    /**
-     * @return callback
-     */
-    public function getSuggestionCallback()
-    {
-        return $this->suggestionCallback;
-    }
+		return $this;
+	}
 
-    /**
-     * @return string
-     */
-    public function getSuggestionColumn()
-    {
-        return $this->suggestionColumn;
-    }
+	/**
+	 * @return int
+	 */
+	public function getSuggestionLimit()
+	{
+		return $this->suggestionLimit;
+	}
 
-    /**
-     * @param string $query - value from input
-     * @internal
-     * @throws Exception
-     */
-    public function handleSuggest($query)
-    {
-        !empty($this->grid->onRegistered) && $this->grid->onRegistered($this->grid);
-        $name = $this->getName();
+	/**
+	 * @return callback
+	 */
+	public function getSuggestionCallback()
+	{
+		return $this->suggestionCallback;
+	}
 
-        if (!$this->getPresenter()->isAjax() || !$this->suggestion || $query == '') {
-            $this->getPresenter()->terminate();
-        }
+	/**
+	 * @return string
+	 */
+	public function getSuggestionColumn()
+	{
+		return $this->suggestionColumn;
+	}
 
-        $actualFilter = $this->grid->getActualFilter();
-        if (isset($actualFilter[$name])) {
-            unset($actualFilter[$name]);
-        }
+	/**
+	 * @param string $query - value from input
+	 * @throws Exception
+	 *
+	 * @internal
+	 */
+	public function handleSuggest($query)
+	{
+		!empty($this->grid->onRegistered) && $this->grid->onRegistered($this->grid);
+		$name = $this->getName();
 
-        $conditions = $this->grid->__getConditions($actualFilter);
+		if (!$this->getPresenter()->isAjax() || !$this->suggestion || $query == '') {
+			$this->getPresenter()->terminate();
+		}
 
-        if ($this->suggestionCallback === NULL) {
-            $conditions[] = $this->__getCondition($query);
+		$actualFilter = $this->grid->getActualFilter();
+		if (isset($actualFilter[$name])) {
+			unset($actualFilter[$name]);
+		}
 
-            $column = $this->suggestionColumn ? $this->suggestionColumn : current($this->getColumn());
-            $items = $this->grid->model->suggest($column, $conditions, $this->suggestionLimit);
+		$conditions = $this->grid->__getConditions($actualFilter);
 
-        } else {
-            $items = call_user_func_array($this->suggestionCallback, [$query, $actualFilter, $conditions, $this]);
-            if (!is_array($items)) {
-                throw new Exception('Items must be an array.');
-            }
-        }
+		if ($this->suggestionCallback === null) {
+			$conditions[] = $this->__getCondition($query);
 
-        $this->getPresenter()->sendResponse(new \Nette\Application\Responses\JsonResponse($items));
-    }
+			$column = $this->suggestionColumn ? $this->suggestionColumn : current($this->getColumn());
+			$items = $this->grid->model->suggest($column, $conditions, $this->suggestionLimit);
 
-    /**
-     * @return \Nette\Forms\Controls\TextInput
-     */
-    protected function getFormControl()
-    {
-        $control = new \Nette\Forms\Controls\TextInput($this->label);
-        $control->getControlPrototype()->class[] = 'text';
+		} else {
+			$items = call_user_func_array($this->suggestionCallback, [$query, $actualFilter, $conditions, $this]);
+			if (!is_array($items)) {
+				throw new Exception('Items must be an array.');
+			}
+		}
 
-        return $control;
-    }
+		$this->getPresenter()->sendResponse(new JsonResponse($items));
+	}
+
+	/**
+	 * @return TextInput
+	 */
+	protected function getFormControl()
+	{
+		$control = new TextInput($this->label);
+		$control->getControlPrototype()->class[] = 'text';
+
+		return $control;
+	}
+
 }

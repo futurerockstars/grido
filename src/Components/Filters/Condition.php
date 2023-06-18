@@ -13,13 +13,16 @@ namespace Grido\Components\Filters;
 
 use Grido\Exception;
 use Nette;
+use function array_merge;
+use function array_values;
+use function count;
+use function implode;
+use function in_array;
+use function is_array;
+use function strtoupper;
 
 /**
  * Builds filter condition.
- *
- * @package     Grido
- * @subpackage  Components\Filters
- * @author      Petr Bugyík
  *
  * @property array $column
  * @property array $condition
@@ -29,252 +32,253 @@ use Nette;
 class Condition
 {
 
-    use Nette\SmartObject;
+	use Nette\SmartObject;
 
-    const OPERATOR_OR = 'OR';
-    const OPERATOR_AND = 'AND';
+	const OPERATOR_OR = 'OR';
 
-    /** @var array */
-    protected $column;
+	const OPERATOR_AND = 'AND';
 
-    /** @var array */
-    protected $condition;
+	/** @var array */
+	protected $column;
 
-    /** @var mixed */
-    protected $value;
+	/** @var array */
+	protected $condition;
 
-    /** @var callable */
-    protected $callback;
+	/** @var mixed */
+	protected $value;
 
-    /**
-     * @param mixed $column
-     * @param mixed $condition
-     * @param mixed $value
-     */
-    public function __construct($column, $condition, $value = NULL)
-    {
-        $this->setColumn($column);
-        $this->setCondition($condition);
-        $this->setValue($value);
-    }
+	/** @var callable */
+	protected $callback;
 
-    /**
-     * @param mixed $column
-     * @throws Exception
-     * @return Condition
-     */
-    public function setColumn($column)
-    {
-        if (is_array($column)) {
-            $count = count($column);
+	/**
+	 * @param mixed $column
+	 * @param mixed $condition
+	 * @param mixed $value
+	 */
+	public function __construct($column, $condition, $value = null)
+	{
+		$this->setColumn($column);
+		$this->setCondition($condition);
+		$this->setValue($value);
+	}
 
-            //check validity
-            if ($count % 2 === 0) {
-                throw new Exception('Count of column must be odd.');
-            }
+	/**
+	 * @param mixed $column
+	 * @param string $condition
+	 * @param mixed $value
+	 * @return Condition
+	 */
+	public static function setup($column, $condition, $value)
+	{
+		return new self($column, $condition, $value);
+	}
 
-            for ($i = 0; $i < $count; $i++) {
-                $item = $column[$i];
-                if ($i & 1 && !self::isOperator($item)) {
-                    $msg = "The even values of column must be 'AND' or 'OR', '$item' given.";
-                    throw new Exception($msg);
-                }
-            }
-        } else {
-            $column = (array) $column;
-        }
+	/**
+	 * @return Condition
+	 */
+	public static function setupEmpty()
+	{
+		return new self(null, '0 = 1');
+	}
 
-        $this->column = $column;
-        return $this;
-    }
+	/**
+	 * @param array $condition
+	 * @return Condition
+	 * @throws Exception
+	 */
+	public static function setupFromArray(array $condition)
+	{
+		if (count($condition) !== 3) {
+			throw new Exception('Condition array must contain 3 items.');
+		}
 
-    /**
-     * @param mixed $condition
-     * @return Condition
-     */
-    public function setCondition($condition)
-    {
-        $this->condition = (array) $condition;
-        return $this;
-    }
+		return new self($condition[0], $condition[1], $condition[2]);
+	}
 
-    /**
-     * @param mixed $value
-     * @return Condition
-     */
-    public function setValue($value)
-    {
-        $this->value = (array) $value;
-        return $this;
-    }
+	/**
+	 * @param callable $callback
+	 * @param mixed $value
+	 * @return Condition
+	 */
+	public static function setupFromCallback($callback, $value)
+	{
+		$self = new self(null, null);
+		$self->value = $value;
+		$self->callback = $callback;
 
-    /**********************************************************************************************/
+		return $self;
+	}
 
-    /**
-     * @return array
-     */
-    public function getColumn()
-    {
-        return $this->column;
-    }
+	/**
+	 * @param mixed $column
+	 * @return Condition
+	 * @throws Exception
+	 */
+	public function setColumn($column)
+	{
+		if (is_array($column)) {
+			$count = count($column);
 
-    /**
-     * @return array
-     */
-    public function getCondition()
-    {
-        return $this->condition;
-    }
+			//check validity
+			if ($count % 2 === 0) {
+				throw new Exception('Count of column must be odd.');
+			}
 
-    /**
-     * @return array
-     */
-    public function getValue()
-    {
-        return $this->value;
-    }
+			for ($i = 0; $i < $count; $i++) {
+				$item = $column[$i];
+				if ($i & 1 && !self::isOperator($item)) {
+					$msg = "The even values of column must be 'AND' or 'OR', '$item' given.";
 
-    /**
-     * @return array
-     */
-    public function getValueForColumn()
-    {
-        if (count($this->condition) > 1) {
-            return $this->value;
-        }
+					throw new Exception($msg);
+				}
+			}
+		} else {
+			$column = (array) $column;
+		}
 
-        $values = [];
-        foreach ($this->getColumn() as $column) {
-            if (!self::isOperator($column)) {
-                foreach ($this->getValue() as $val) {
-                    $values[] = $val;
-                }
-            }
-        }
+		$this->column = $column;
 
-        return $values;
-    }
+		return $this;
+	}
 
-    /**
-     * @return array
-     */
-    public function getColumnWithoutOperator()
-    {
-        $columns = [];
-        foreach ($this->column as $column) {
-            if (!self::isOperator($column)) {
-                $columns[] = $column;
-            }
-        }
+	/**
+	 * @param mixed $condition
+	 * @return Condition
+	 */
+	public function setCondition($condition)
+	{
+		$this->condition = (array) $condition;
 
-        return $columns;
-    }
+		return $this;
+	}
 
-    /**
-     * @return callable
-     */
-    public function getCallback()
-    {
-        return $this->callback;
-    }
+	/**
+	 * @param mixed $value
+	 * @return Condition
+	 */
+	public function setValue($value)
+	{
+		$this->value = (array) $value;
 
-    /**********************************************************************************************/
+		return $this;
+	}
 
-    /**
-     * Returns TRUE if $item is Condition:OPERATOR_AND or Condition:OPERATOR_OR else FALSE.
-     * @param string $item
-     * @return bool
-     */
-    public static function isOperator($item)
-    {
-        return in_array(strtoupper($item), [self::OPERATOR_AND, self::OPERATOR_OR]);
-    }
+	/**
+	 * @return array
+	 */
+	public function getColumn()
+	{
+		return $this->column;
+	}
 
-    /**
-     * @param mixed $column
-     * @param string $condition
-     * @param mixed $value
-     * @return Condition
-     */
-    public static function setup($column, $condition, $value)
-    {
-        return new self($column, $condition, $value);
-    }
+	/**
+	 * @return array
+	 */
+	public function getCondition()
+	{
+		return $this->condition;
+	}
 
-    /**
-     * @return Condition
-     */
-    public static function setupEmpty()
-    {
-        return new self(NULL, '0 = 1');
-    }
+	/**
+	 * @return array
+	 */
+	public function getValue()
+	{
+		return $this->value;
+	}
 
-    /**
-     * @param array $condition
-     * @throws Exception
-     * @return Condition
-     */
-    public static function setupFromArray(array $condition)
-    {
-        if (count($condition) !== 3) {
-            throw new Exception("Condition array must contain 3 items.");
-        }
+	/**
+	 * @return array
+	 */
+	public function getValueForColumn()
+	{
+		if (count($this->condition) > 1) {
+			return $this->value;
+		}
 
-        return new self($condition[0], $condition[1], $condition[2]);
-    }
+		$values = [];
+		foreach ($this->getColumn() as $column) {
+			if (!self::isOperator($column)) {
+				foreach ($this->getValue() as $val) {
+					$values[] = $val;
+				}
+			}
+		}
 
-    /**
-     * @param callable $callback
-     * @param mixed $value
-     * @return Condition
-     */
-    public static function setupFromCallback($callback, $value)
-    {
-        $self = new self(NULL, NULL);
-        $self->value = $value;
-        $self->callback = $callback;
+		return $values;
+	}
 
-        return $self;
-    }
+	/**
+	 * @return array
+	 */
+	public function getColumnWithoutOperator()
+	{
+		$columns = [];
+		foreach ($this->column as $column) {
+			if (!self::isOperator($column)) {
+				$columns[] = $column;
+			}
+		}
 
-    /**********************************************************************************************/
+		return $columns;
+	}
 
-    /**
-     * @param string $prefix - column prefix
-     * @param string $suffix - column suffix
-     * @param bool $brackets - add brackets when multiple where
-     * @throws Exception
-     * @return array
-     */
-    public function __toArray($prefix = NULL, $suffix = NULL, $brackets = TRUE)
-    {
-        $condition = [];
-        $addBrackets = $brackets && count($this->column) > 1;
+	/**
+	 * @return callable
+	 */
+	public function getCallback()
+	{
+		return $this->callback;
+	}
 
-        if ($addBrackets) {
-            $condition[] = '(';
-        }
+	/**
+	 * Returns TRUE if $item is Condition:OPERATOR_AND or Condition:OPERATOR_OR else FALSE.
+	 *
+	 * @param string $item
+	 * @return bool
+	 */
+	public static function isOperator($item)
+	{
+		return in_array(strtoupper($item), [self::OPERATOR_AND, self::OPERATOR_OR]);
+	}
 
-        $i = 0;
-        foreach ($this->column as $column) {
-            if (self::isOperator($column)) {
-                $operator = strtoupper($column);
-                $condition[] = " $operator ";
+	/**
+	 * @param string $prefix - column prefix
+	 * @param string $suffix - column suffix
+	 * @param bool $brackets - add brackets when multiple where
+	 * @return array
+	 * @throws Exception
+	 */
+	public function __toArray($prefix = null, $suffix = null, $brackets = true)
+	{
+		$condition = [];
+		$addBrackets = $brackets && count($this->column) > 1;
 
-            } else {
-                $i = count($this->condition) > 1 ? $i : 0;
-                $condition[] = "{$prefix}$column{$suffix} {$this->condition[$i]}";
+		if ($addBrackets) {
+			$condition[] = '(';
+		}
 
-                $i++;
-            }
-        }
+		$i = 0;
+		foreach ($this->column as $column) {
+			if (self::isOperator($column)) {
+				$operator = strtoupper($column);
+				$condition[] = " $operator ";
 
-        if ($addBrackets) {
-            $condition[] = ')';
-        }
+			} else {
+				$i = count($this->condition) > 1 ? $i : 0;
+				$condition[] = "{$prefix}$column{$suffix} {$this->condition[$i]}";
 
-        return $condition
-            ? array_values(array_merge([implode('', $condition)], $this->getValueForColumn()))
-            : $this->condition;
-    }
+				$i++;
+			}
+		}
+
+		if ($addBrackets) {
+			$condition[] = ')';
+		}
+
+		return $condition
+			? array_values(array_merge([implode('', $condition)], $this->getValueForColumn()))
+			: $this->condition;
+	}
+
 }

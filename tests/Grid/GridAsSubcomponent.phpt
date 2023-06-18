@@ -19,7 +19,7 @@ class SubComponent extends \Nette\Application\UI\Control {}
 class GridInSubcomponentTest extends \Tester\TestCase
 {
 
-    function testSessionsInDifferentGridsWithTheSameNameAreIndenpendent()
+    public function testSessionsInDifferentGridsWithTheSameNameAreIndenpendent()
     {
         Helper::grid(function(){})->run();
         $presenter = Helper::$presenter;

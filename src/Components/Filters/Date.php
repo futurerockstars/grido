@@ -11,95 +11,106 @@
 
 namespace Grido\Components\Filters;
 
+use DateTime;
+use Exception;
+use Nette\Forms\Controls\TextInput;
+use function is_string;
+
 /**
  * Date input filter.
- *
- * @package     Grido
- * @subpackage  Components\Filters
- * @author      Petr Bugyík
  *
  * @property string $dateFormatInput
  * @property string $dateFormatOutput
  */
 class Date extends Text
 {
-    /** @var string */
-    protected $formatValue;
 
-    /** @var string */
-    protected $dateFormatInput = 'd.m.Y';
+	/** @var string */
+	protected $formatValue;
 
-    /** @var string */
-    protected $dateFormatOutput = 'Y-m-d%';
+	/** @var string */
+	protected $dateFormatInput = 'd.m.Y';
 
-    /**
-     * Sets date-input format.
-     * @param string $format
-     * @return Date
-     */
-    public function setDateFormatInput($format)
-    {
-        $this->dateFormatInput = $format;
-        return $this;
-    }
+	/** @var string */
+	protected $dateFormatOutput = 'Y-m-d%';
 
-    /**
-     * Returns date-input format.
-     * @return string
-     */
-    public function getDateFormatInput()
-    {
-        return $this->dateFormatInput;
-    }
+	/**
+	 * Sets date-input format.
+	 *
+	 * @param string $format
+	 * @return Date
+	 */
+	public function setDateFormatInput($format)
+	{
+		$this->dateFormatInput = $format;
 
-    /**
-     * Sets date-output format.
-     * @param string $format
-     * @return Date
-     */
-    public function setDateFormatOutput($format)
-    {
-        $this->dateFormatOutput = $format;
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Returns date-output format.
-     * @return string
-     */
-    public function getDateFormatOutput()
-    {
-        return $this->dateFormatOutput;
-    }
+	/**
+	 * Returns date-input format.
+	 *
+	 * @return string
+	 */
+	public function getDateFormatInput()
+	{
+		return $this->dateFormatInput;
+	}
 
-    /**
-     * @return \Nette\Forms\Controls\TextInput
-     */
-    protected function getFormControl()
-    {
-        $control = parent::getFormControl();
-        $control->getControlPrototype()->class[] = 'date';
-        $control->getControlPrototype()->attrs['autocomplete'] = 'off';
+	/**
+	 * Sets date-output format.
+	 *
+	 * @param string $format
+	 * @return Date
+	 */
+	public function setDateFormatOutput($format)
+	{
+		$this->dateFormatOutput = $format;
 
-        return $control;
-    }
+		return $this;
+	}
 
-    /**
-     * @param string $value
-     * @return Condition|bool
-     * @throws \Exception
-     * @internal
-     */
-    public function __getCondition($value)
-    {
-        $condition = $this->condition;
-        if ($this->where === NULL && is_string($condition)) {
-            $column = $this->getColumn();
-            return ($date = \DateTime::createFromFormat($this->dateFormatInput, $value))
-                ? Condition::setupFromArray([$column, $condition, $date->format($this->dateFormatOutput)])
-                : Condition::setupEmpty();
-        }
+	/**
+	 * Returns date-output format.
+	 *
+	 * @return string
+	 */
+	public function getDateFormatOutput()
+	{
+		return $this->dateFormatOutput;
+	}
 
-        return parent::__getCondition($value);
-    }
+	/**
+	 * @return TextInput
+	 */
+	protected function getFormControl()
+	{
+		$control = parent::getFormControl();
+		$control->getControlPrototype()->class[] = 'date';
+		$control->getControlPrototype()->attrs['autocomplete'] = 'off';
+
+		return $control;
+	}
+
+	/**
+	 * @param string $value
+	 * @return Condition|bool
+	 * @throws Exception
+	 *
+	 * @internal
+	 */
+	public function __getCondition($value)
+	{
+		$condition = $this->condition;
+		if ($this->where === null && is_string($condition)) {
+			$column = $this->getColumn();
+
+			return ($date = DateTime::createFromFormat($this->dateFormatInput, $value))
+				? Condition::setupFromArray([$column, $condition, $date->format($this->dateFormatOutput)])
+				: Condition::setupEmpty();
+		}
+
+		return parent::__getCondition($value);
+	}
+
 }

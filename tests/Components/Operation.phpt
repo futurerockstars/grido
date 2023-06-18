@@ -17,7 +17,7 @@ use Tester\Assert,
 
 class OperationTest extends \Tester\TestCase
 {
-    function testSetConfirm()
+    public function testSetConfirm()
     {
         Helper::grid(function(Grid $grid) {
             $grid->setModel([]);
@@ -33,7 +33,7 @@ class OperationTest extends \Tester\TestCase
 
     /**********************************************************************************************/
 
-    function testGetPrimaryKey()
+    public function testGetPrimaryKey()
     {
         $grid = new Grid;
         $operation = $grid->setOperation([], []);
@@ -46,7 +46,7 @@ class OperationTest extends \Tester\TestCase
 
     /**********************************************************************************************/
 
-    function testHandleOperations()
+    public function testHandleOperations()
     {
         $definition = function(Grid $grid, $strictMode = TRUE) {
             $grid->setStrictMode($strictMode);
@@ -95,7 +95,7 @@ class OperationTest extends \Tester\TestCase
 
     /**********************************************************************************************/
 
-    function testHasOperations()
+    public function testHasOperations()
     {
         $grid = new Grid;
         Assert::false($grid->hasOperation());
@@ -105,7 +105,7 @@ class OperationTest extends \Tester\TestCase
         Assert::true($grid->hasOperation(FALSE));
     }
 
-    function testSetOperations()
+    public function testSetOperations()
     {
         $grid = new Grid;
         $operations = ['print' => 'Print', 'delete' => 'Delete'];

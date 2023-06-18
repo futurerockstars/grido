@@ -16,7 +16,7 @@ use Tester\Assert,
 
 class FilterDateTest extends \Tester\TestCase
 {
-    function testFormControl()
+    public function testFormControl()
     {
         $grid = new Grid;
         $filter = $grid->addFilterDate('date', 'Date');
@@ -25,7 +25,7 @@ class FilterDateTest extends \Tester\TestCase
         Assert::same(['text', 'date'], $filter->control->controlPrototype->class);
     }
 
-    function testGetCondition()
+    public function testGetCondition()
     {
         $grid = new Grid;
         $filter = $grid->addFilterDate('date', 'Date');

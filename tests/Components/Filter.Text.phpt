@@ -16,7 +16,7 @@ use Tester\Assert,
 
 class FilterTextTest extends \Tester\TestCase
 {
-    function testSetSuggestion()
+    public function testSetSuggestion()
     {
         Helper::grid(function(Grid $grid) {
             $grid->setModel([
@@ -86,14 +86,14 @@ class FilterTextTest extends \Tester\TestCase
         Assert::same('["test1","test2"]', $output);
     }
 
-    function testFormControl()
+    public function testFormControl()
     {
         $grid = new Grid;
         $filter = $grid->addFilterText('text', 'Text');
         Assert::type('Nette\Forms\Controls\TextInput', $filter->control);
     }
 
-    function testGetCondition()
+    public function testGetCondition()
     {
         $grid = new Grid;
         $filter = $grid->addFilterText('text', 'Text');

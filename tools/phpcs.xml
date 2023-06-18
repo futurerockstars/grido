@@ -16,19 +16,33 @@
 		<properties>
 			<property name="rootNamespaces" type="array">
 				<element key="src" value="Grido"/>
-				<element key="tests" value="Grido\Tests"/>
 			</property>
 		</properties>
+		<exclude-pattern>tests/**</exclude-pattern>
 	</rule>
 
-	<exclude-pattern>tests/temp/**</exclude-pattern>
+	<exclude-pattern>tests/tmp/**</exclude-pattern>
 
-	<!-- Multiple classes in one file -->
-	<rule ref="SlevomatCodingStandard.Files.TypeNameMatchesFileName.NoMatchBetweenTypeNameAndFileName">
-		<exclude-pattern>src/exceptions.php</exclude-pattern>
+	<!-- PHPStan duplicates -->
+	<rule ref="SlevomatCodingStandard.ControlStructures.DisallowShortTernaryOperator.DisallowedShortTernaryOperator">
+		<exclude name="SlevomatCodingStandard.ControlStructures.DisallowShortTernaryOperator.DisallowedShortTernaryOperator"/>
 	</rule>
-	<rule ref="PSR1.Classes.ClassDeclaration.MultipleClasses">
-		<exclude-pattern>src/exceptions.php</exclude-pattern>
+	<rule ref="Squiz.Commenting.FunctionComment.MissingParamName">
+		<exclude name="Squiz.Commenting.FunctionComment.MissingParamName"/>
+	</rule>
+
+	<!-- Needs manual fixes -->
+	<rule ref="SlevomatCodingStandard.Classes.ClassConstantVisibility.MissingConstantVisibility">
+		<exclude name="SlevomatCodingStandard.Classes.ClassConstantVisibility.MissingConstantVisibility"/>
+	</rule>
+	<rule ref="PSR1.Files.SideEffects.FoundWithSymbols">
+		<exclude-pattern>tests/**</exclude-pattern>
+	</rule>
+	<rule ref="Generic.NamingConventions.CamelCapsFunctionName.MethodDoubleUnderscore">
+		<exclude name="Generic.NamingConventions.CamelCapsFunctionName.MethodDoubleUnderscore"/>
+	</rule>
+	<rule ref="SlevomatCodingStandard.Numbers.RequireNumericLiteralSeparator.RequiredNumericLiteralSeparator">
+		<exclude-pattern>tests/**</exclude-pattern>
 	</rule>
 
 	<!-- Strict naming -->

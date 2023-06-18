@@ -1,17 +1,7 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Call to an undefined method Grido\\\\Components\\\\Actions\\\\Action\\:\\:getName\\(\\)\\.$#"
-			count: 1
-			path: ../src/Components/Actions/Action.php
-
-		-
-			message: "#^Cannot assign offset string to string\\.$#"
-			count: 1
-			path: ../src/Components/Actions/Action.php
-
-		-
-			message: "#^Cannot unset offset string on string\\.$#"
+			message: "#^Grido\\\\Components\\\\Actions\\\\Action\\:\\:__construct\\(\\) does not call parent constructor from Nette\\\\ComponentModel\\\\Component\\.$#"
 			count: 1
 			path: ../src/Components/Actions/Action.php
 
@@ -26,27 +16,17 @@ parameters:
 			path: ../src/Components/Actions/Action.php
 
 		-
-			message: "#^Method Grido\\\\Components\\\\Actions\\\\Action\\:\\:getOptions\\(\\) should return array but returns string\\.$#"
-			count: 1
-			path: ../src/Components/Actions/Action.php
-
-		-
 			message: "#^Method Grido\\\\Components\\\\Actions\\\\Action\\:\\:render\\(\\) has Grido\\\\Exception in PHPDoc @throws tag but it's not thrown\\.$#"
 			count: 1
 			path: ../src/Components/Actions/Action.php
 
 		-
-			message: "#^Method Grido\\\\Components\\\\Actions\\\\Action\\:\\:setCustomRender\\(\\) has parameter \\$callback with no type specified\\.$#"
+			message: "#^Method Grido\\\\Components\\\\Actions\\\\Action\\:\\:setCustomRender\\(\\) has parameter \\$callback with no signature specified for callable\\.$#"
 			count: 1
 			path: ../src/Components/Actions/Action.php
 
 		-
-			message: "#^Method Grido\\\\Components\\\\Actions\\\\Action\\:\\:setDisable\\(\\) has parameter \\$callback with no type specified\\.$#"
-			count: 1
-			path: ../src/Components/Actions/Action.php
-
-		-
-			message: "#^Offset string on string in isset\\(\\) does not exist\\.$#"
+			message: "#^Method Grido\\\\Components\\\\Actions\\\\Action\\:\\:setDisable\\(\\) has parameter \\$callback with no signature specified for callable\\.$#"
 			count: 1
 			path: ../src/Components/Actions/Action.php
 
@@ -66,27 +46,17 @@ parameters:
 			path: ../src/Components/Actions/Action.php
 
 		-
-			message: "#^PHPDoc tag @param has invalid value \\(callback\\)\\: Unexpected token \"\\\\n     \\* \", expected variable at offset 142 on line 4$#"
-			count: 1
-			path: ../src/Components/Actions/Action.php
-
-		-
-			message: "#^PHPDoc tag @param has invalid value \\(callback\\)\\: Unexpected token \"\\\\n     \\* \", expected variable at offset 69 on line 3$#"
-			count: 1
-			path: ../src/Components/Actions/Action.php
-
-		-
 			message: "#^Parameter \\$confirm of method Grido\\\\Components\\\\Actions\\\\Action\\:\\:setConfirm\\(\\) has invalid type Grido\\\\Components\\\\Actions\\\\callback\\.$#"
 			count: 1
 			path: ../src/Components/Actions/Action.php
 
 		-
-			message: "#^Property Grido\\\\Components\\\\Actions\\\\Action\\:\\:\\$customRender has unknown class Grido\\\\Components\\\\Actions\\\\callback as its type\\.$#"
+			message: "#^Property Grido\\\\Components\\\\Actions\\\\Action\\:\\:\\$customRender type has no signature specified for callable\\.$#"
 			count: 1
 			path: ../src/Components/Actions/Action.php
 
 		-
-			message: "#^Property Grido\\\\Components\\\\Actions\\\\Action\\:\\:\\$disable has unknown class Grido\\\\Components\\\\Actions\\\\callback as its type\\.$#"
+			message: "#^Property Grido\\\\Components\\\\Actions\\\\Action\\:\\:\\$disable type has no signature specified for callable\\.$#"
 			count: 1
 			path: ../src/Components/Actions/Action.php
 
@@ -96,14 +66,9 @@ parameters:
 			path: ../src/Components/Actions/Action.php
 
 		-
-			message: "#^Access to an undefined property Grido\\\\Components\\\\Actions\\\\Event\\:\\:\\$name\\.$#"
+			message: "#^Property Grido\\\\Components\\\\Actions\\\\Action\\:\\:\\$options type has no value type specified in iterable type array\\.$#"
 			count: 1
-			path: ../src/Components/Actions/Event.php
-
-		-
-			message: "#^Call to an undefined method Grido\\\\Components\\\\Actions\\\\Event\\:\\:link\\(\\)\\.$#"
-			count: 1
-			path: ../src/Components/Actions/Event.php
+			path: ../src/Components/Actions/Action.php
 
 		-
 			message: "#^Method Grido\\\\Components\\\\Actions\\\\Event\\:\\:__construct\\(\\) has Grido\\\\Exception in PHPDoc @throws tag but it's not thrown\\.$#"
@@ -136,16 +101,6 @@ parameters:
 			path: ../src/Components/Actions/Event.php
 
 		-
-			message: "#^Access to an undefined property Grido\\\\Components\\\\Actions\\\\Href\\:\\:\\$presenter\\.$#"
-			count: 1
-			path: ../src/Components/Actions/Href.php
-
-		-
-			message: "#^Call to an undefined method Grido\\\\Components\\\\Actions\\\\Href\\:\\:getName\\(\\)\\.$#"
-			count: 1
-			path: ../src/Components/Actions/Href.php
-
-		-
 			message: "#^Method Grido\\\\Components\\\\Actions\\\\Href\\:\\:__construct\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: ../src/Components/Actions/Href.php
@@ -176,22 +131,7 @@ parameters:
 			path: ../src/Components/Actions/Href.php
 
 		-
-			message: "#^Access to an undefined property Grido\\\\Components\\\\Button\\:\\:\\$presenter\\.$#"
-			count: 1
-			path: ../src/Components/Button.php
-
-		-
-			message: "#^Call to an undefined method Grido\\\\Components\\\\Button\\:\\:getName\\(\\)\\.$#"
-			count: 2
-			path: ../src/Components/Button.php
-
-		-
-			message: "#^Cannot assign offset string to string\\.$#"
-			count: 1
-			path: ../src/Components/Button.php
-
-		-
-			message: "#^Cannot unset offset string on string\\.$#"
+			message: "#^Grido\\\\Components\\\\Button\\:\\:__construct\\(\\) does not call parent constructor from Nette\\\\ComponentModel\\\\Component\\.$#"
 			count: 1
 			path: ../src/Components/Button.php
 
@@ -216,37 +156,7 @@ parameters:
 			path: ../src/Components/Button.php
 
 		-
-			message: "#^Method Grido\\\\Components\\\\Button\\:\\:getOptions\\(\\) should return array but returns string\\.$#"
-			count: 1
-			path: ../src/Components/Button.php
-
-		-
 			message: "#^Method Grido\\\\Components\\\\Button\\:\\:render\\(\\) has Grido\\\\Components\\\\Exception in PHPDoc @throws tag but it's not thrown\\.$#"
-			count: 1
-			path: ../src/Components/Button.php
-
-		-
-			message: "#^Method Grido\\\\Components\\\\Button\\:\\:setIcon\\(\\) has invalid return type Grido\\\\Components\\\\Action\\.$#"
-			count: 1
-			path: ../src/Components/Button.php
-
-		-
-			message: "#^Method Grido\\\\Components\\\\Button\\:\\:setIcon\\(\\) should return Grido\\\\Components\\\\Action but returns \\$this\\(Grido\\\\Components\\\\Button\\)\\.$#"
-			count: 1
-			path: ../src/Components/Button.php
-
-		-
-			message: "#^Method Grido\\\\Components\\\\Button\\:\\:setOption\\(\\) has invalid return type Grido\\\\Components\\\\Action\\.$#"
-			count: 1
-			path: ../src/Components/Button.php
-
-		-
-			message: "#^Method Grido\\\\Components\\\\Button\\:\\:setOption\\(\\) should return Grido\\\\Components\\\\Action but returns \\$this\\(Grido\\\\Components\\\\Button\\)\\.$#"
-			count: 1
-			path: ../src/Components/Button.php
-
-		-
-			message: "#^Offset string on string in isset\\(\\) does not exist\\.$#"
 			count: 1
 			path: ../src/Components/Button.php
 
@@ -271,11 +181,6 @@ parameters:
 			path: ../src/Components/Button.php
 
 		-
-			message: "#^Call to an undefined method Grido\\\\Components\\\\Columns\\\\Column\\:\\:getName\\(\\)\\.$#"
-			count: 13
-			path: ../src/Components/Columns/Column.php
-
-		-
 			message: "#^Call to function is_callable\\(\\) with \\*NEVER\\* will always evaluate to true\\.$#"
 			count: 1
 			path: ../src/Components/Columns/Column.php
@@ -287,6 +192,11 @@ parameters:
 
 		-
 			message: "#^Casting to bool something that's already bool\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Column.php
+
+		-
+			message: "#^Grido\\\\Components\\\\Columns\\\\Column\\:\\:__construct\\(\\) does not call parent constructor from Nette\\\\ComponentModel\\\\Component\\.$#"
 			count: 1
 			path: ../src/Components/Columns/Column.php
 
@@ -327,6 +237,46 @@ parameters:
 
 		-
 			message: "#^Parameter \\#1 \\$message of method Grido\\\\Components\\\\Component\\:\\:translate\\(\\) expects string, bool\\|float\\|int\\|string given\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Column.php
+
+		-
+			message: "#^Parameter \\#1 \\$name of method Grido\\\\Components\\\\Container\\:\\:addFilterCheck\\(\\) expects string, string\\|null given\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Column.php
+
+		-
+			message: "#^Parameter \\#1 \\$name of method Grido\\\\Components\\\\Container\\:\\:addFilterCustom\\(\\) expects string, string\\|null given\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Column.php
+
+		-
+			message: "#^Parameter \\#1 \\$name of method Grido\\\\Components\\\\Container\\:\\:addFilterDate\\(\\) expects string, string\\|null given\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Column.php
+
+		-
+			message: "#^Parameter \\#1 \\$name of method Grido\\\\Components\\\\Container\\:\\:addFilterDateRange\\(\\) expects string, string\\|null given\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Column.php
+
+		-
+			message: "#^Parameter \\#1 \\$name of method Grido\\\\Components\\\\Container\\:\\:addFilterNumber\\(\\) expects string, string\\|null given\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Column.php
+
+		-
+			message: "#^Parameter \\#1 \\$name of method Grido\\\\Components\\\\Container\\:\\:addFilterSelect\\(\\) expects string, string\\|null given\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Column.php
+
+		-
+			message: "#^Parameter \\#1 \\$name of method Grido\\\\Components\\\\Container\\:\\:addFilterText\\(\\) expects string, string\\|null given\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Column.php
+
+		-
+			message: "#^Parameter \\#1 \\$name of method Grido\\\\Components\\\\Container\\:\\:getFilter\\(\\) expects string, string\\|null given\\.$#"
 			count: 1
 			path: ../src/Components/Columns/Column.php
 
@@ -389,21 +339,6 @@ parameters:
 			message: "#^Unreachable statement \\- code above always terminates\\.$#"
 			count: 1
 			path: ../src/Components/Columns/Date.php
-
-		-
-			message: "#^Access to an undefined property Grido\\\\Components\\\\Columns\\\\Editable\\:\\:\\$presenter\\.$#"
-			count: 6
-			path: ../src/Components/Columns/Editable.php
-
-		-
-			message: "#^Call to an undefined method Grido\\\\Components\\\\Columns\\\\Editable\\:\\:getName\\(\\)\\.$#"
-			count: 2
-			path: ../src/Components/Columns/Editable.php
-
-		-
-			message: "#^Call to an undefined method Grido\\\\Components\\\\Columns\\\\Editable\\:\\:link\\(\\)\\.$#"
-			count: 2
-			path: ../src/Components/Columns/Editable.php
 
 		-
 			message: "#^Call to an undefined method Grido\\\\DataSources\\\\IDataSource\\:\\:getRow\\(\\)\\.$#"
@@ -618,14 +553,6 @@ parameters:
 		-
 			message: "#^Access to undefined constant Grido\\\\Components\\\\Component\\:\\:ID\\.$#"
 			count: 3
-			path: ../src/Components/Component.php
-
-		-
-			message: """
-				#^Class Grido\\\\Components\\\\Component extends deprecated class Nette\\\\Application\\\\UI\\\\PresenterComponent\\:
-				use Nette\\\\Application\\\\UI\\\\Component$#
-			"""
-			count: 1
 			path: ../src/Components/Component.php
 
 		-
@@ -849,6 +776,11 @@ parameters:
 			path: ../src/Components/Export.php
 
 		-
+			message: "#^Grido\\\\Components\\\\Export\\:\\:__construct\\(\\) does not call parent constructor from Nette\\\\ComponentModel\\\\Component\\.$#"
+			count: 1
+			path: ../src/Components/Export.php
+
+		-
 			message: "#^Method Grido\\\\Components\\\\Export\\:\\:handleExport\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: ../src/Components/Export.php
@@ -875,11 +807,6 @@ parameters:
 
 		-
 			message: "#^Only booleans are allowed in \\|\\|, int\\|false given on the left side\\.$#"
-			count: 1
-			path: ../src/Components/Export.php
-
-		-
-			message: "#^Parameter \\#1 \\$component of method Nette\\\\ComponentModel\\\\Container\\:\\:addComponent\\(\\) expects Nette\\\\ComponentModel\\\\IComponent, \\$this\\(Grido\\\\Components\\\\Export\\) given\\.$#"
 			count: 1
 			path: ../src/Components/Export.php
 
@@ -1064,16 +991,6 @@ parameters:
 			path: ../src/Components/Filters/DateRange.php
 
 		-
-			message: "#^Access to an undefined property Grido\\\\Components\\\\Filters\\\\Filter\\:\\:\\$name\\.$#"
-			count: 1
-			path: ../src/Components/Filters/Filter.php
-
-		-
-			message: "#^Call to an undefined method Grido\\\\Components\\\\Filters\\\\Filter\\:\\:getName\\(\\)\\.$#"
-			count: 4
-			path: ../src/Components/Filters/Filter.php
-
-		-
 			message: "#^Call to function is_array\\(\\) with Grido\\\\Components\\\\Filters\\\\Condition will always evaluate to false\\.$#"
 			count: 1
 			path: ../src/Components/Filters/Filter.php
@@ -1090,6 +1007,11 @@ parameters:
 
 		-
 			message: "#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#"
+			count: 1
+			path: ../src/Components/Filters/Filter.php
+
+		-
+			message: "#^Grido\\\\Components\\\\Filters\\\\Filter\\:\\:__construct\\(\\) does not call parent constructor from Nette\\\\ComponentModel\\\\Component\\.$#"
 			count: 1
 			path: ../src/Components/Filters/Filter.php
 
@@ -1139,7 +1061,7 @@ parameters:
 			path: ../src/Components/Filters/Filter.php
 
 		-
-			message: "#^Offset mixed on \\*NEVER\\* in isset\\(\\) always exists and is always null\\.$#"
+			message: "#^Offset mixed on \\*NEVER\\* on left side of \\?\\? always exists and is always null\\.$#"
 			count: 1
 			path: ../src/Components/Filters/Filter.php
 
@@ -1150,6 +1072,11 @@ parameters:
 
 		-
 			message: "#^Only booleans are allowed in an if condition, Grido\\\\Components\\\\Columns\\\\Editable given\\.$#"
+			count: 1
+			path: ../src/Components/Filters/Filter.php
+
+		-
+			message: "#^Parameter \\#1 \\$name of method Grido\\\\Components\\\\Container\\:\\:getColumn\\(\\) expects string, string\\|null given\\.$#"
 			count: 1
 			path: ../src/Components/Filters/Filter.php
 
@@ -1204,17 +1131,17 @@ parameters:
 			path: ../src/Components/Filters/Select.php
 
 		-
-			message: "#^Call to an undefined method Grido\\\\Components\\\\Filters\\\\Text\\:\\:getName\\(\\)\\.$#"
+			message: "#^Cannot call method isAjax\\(\\) on Nette\\\\Application\\\\UI\\\\Presenter\\|null\\.$#"
 			count: 1
 			path: ../src/Components/Filters/Text.php
 
 		-
-			message: "#^Call to an undefined method Grido\\\\Components\\\\Filters\\\\Text\\:\\:getPresenter\\(\\)\\.$#"
-			count: 3
+			message: "#^Cannot call method sendResponse\\(\\) on Nette\\\\Application\\\\UI\\\\Presenter\\|null\\.$#"
+			count: 1
 			path: ../src/Components/Filters/Text.php
 
 		-
-			message: "#^Call to an undefined method Grido\\\\Components\\\\Filters\\\\Text\\:\\:link\\(\\)\\.$#"
+			message: "#^Cannot call method terminate\\(\\) on Nette\\\\Application\\\\UI\\\\Presenter\\|null\\.$#"
 			count: 1
 			path: ../src/Components/Filters/Text.php
 
@@ -1264,11 +1191,6 @@ parameters:
 			path: ../src/Components/Filters/Text.php
 
 		-
-			message: "#^Access to an undefined property Grido\\\\Components\\\\Operation\\:\\:\\$presenter\\.$#"
-			count: 1
-			path: ../src/Components/Operation.php
-
-		-
 			message: "#^Argument of an invalid type array\\|Grido\\\\DataSources\\\\IDataSource\\|Nette\\\\Database\\\\Table\\\\Selection supplied for foreach, only iterables are supported\\.$#"
 			count: 1
 			path: ../src/Components/Operation.php
@@ -1281,6 +1203,11 @@ parameters:
 		-
 			message: "#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#"
 			count: 3
+			path: ../src/Components/Operation.php
+
+		-
+			message: "#^Grido\\\\Components\\\\Operation\\:\\:__construct\\(\\) does not call parent constructor from Nette\\\\ComponentModel\\\\Component\\.$#"
+			count: 1
 			path: ../src/Components/Operation.php
 
 		-
@@ -1310,11 +1237,6 @@ parameters:
 
 		-
 			message: "#^Only booleans are allowed in &&, void given on the right side\\.$#"
-			count: 1
-			path: ../src/Components/Operation.php
-
-		-
-			message: "#^Parameter \\#1 \\$component of method Nette\\\\ComponentModel\\\\Container\\:\\:addComponent\\(\\) expects Nette\\\\ComponentModel\\\\IComponent, \\$this\\(Grido\\\\Components\\\\Operation\\) given\\.$#"
 			count: 1
 			path: ../src/Components/Operation.php
 
@@ -2029,7 +1951,7 @@ parameters:
 			path: ../src/Grid.php
 
 		-
-			message: "#^Method Grido\\\\Grid\\:\\:setRowCallback\\(\\) has parameter \\$callback with no type specified\\.$#"
+			message: "#^Method Grido\\\\Grid\\:\\:setRowCallback\\(\\) has parameter \\$callback with no signature specified for callable\\.$#"
 			count: 1
 			path: ../src/Grid.php
 
@@ -2182,22 +2104,17 @@ parameters:
 			path: ../src/Grid.php
 
 		-
-			message: "#^Property Grido\\\\Grid\\:\\:\\$perPage \\(int\\) does not accept int\\|null\\.$#"
-			count: 1
-			path: ../src/Grid.php
-
-		-
-			message: "#^Property Grido\\\\Grid\\:\\:\\$perPage \\(int\\) does not accept null\\.$#"
-			count: 1
-			path: ../src/Grid.php
-
-		-
 			message: "#^Property Grido\\\\Grid\\:\\:\\$perPageList type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: ../src/Grid.php
 
 		-
 			message: "#^Property Grido\\\\Grid\\:\\:\\$rememberStateSectionName \\(string\\) does not accept string\\|null\\.$#"
+			count: 1
+			path: ../src/Grid.php
+
+		-
+			message: "#^Property Grido\\\\Grid\\:\\:\\$rowCallback \\(Grido\\\\callback\\) does not accept callable\\.$#"
 			count: 1
 			path: ../src/Grid.php
 
@@ -2280,11 +2197,6 @@ parameters:
 			message: "#^Property Grido\\\\Translations\\\\FileTranslator\\:\\:\\$translations type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: ../src/Translations/FileTranslator.php
-
-		-
-			message: "#^Access to an undefined property Grido\\\\Components\\\\Columns\\\\Editable\\:\\:\\$name\\.$#"
-			count: 1
-			path: ../tests/DataSources/TestCase.php
 
 		-
 			message: "#^Method Grido\\\\Tests\\\\DataSourceTestCase\\:\\:editableCallbackTest\\(\\) has no return type specified\\.$#"

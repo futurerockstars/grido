@@ -11,39 +11,40 @@
 
 namespace Grido\Components\Filters;
 
+use Grido\Grid;
+use Nette\Forms\IControl;
+
 /**
  * Filter with custom form control.
  *
- * @package     Grido
- * @subpackage  Components\Filters
- * @author      Petr Bugyík
- *
- * @property-read \Nette\Forms\IControl $formControl
+ * @property-read IControl $formControl
  */
 class Custom extends Filter
 {
-    /** @var \Nette\Forms\IControl */
-    protected $formControl;
 
-    /**
-     * @param \Grido\Grid $grid
-     * @param string $name
-     * @param string $label
-     * @param \Nette\Forms\IControl $formControl
-     */
-    public function __construct($grid, $name, $label, \Nette\Forms\IControl $formControl)
-    {
-        $this->formControl = $formControl;
+	/** @var IControl */
+	protected $formControl;
 
-        parent::__construct($grid, $name, $label);
-    }
+	/**
+	 * @param Grid $grid
+	 * @param string $name
+	 * @param string $label
+	 */
+	public function __construct($grid, $name, $label, IControl $formControl)
+	{
+		$this->formControl = $formControl;
 
-    /**
-     * @return \Nette\Forms\IControl
-     * @internal
-     */
-    public function getFormControl()
-    {
-        return $this->formControl;
-    }
+		parent::__construct($grid, $name, $label);
+	}
+
+	/**
+	 * @return IControl
+	 *
+	 * @internal
+	 */
+	public function getFormControl()
+	{
+		return $this->formControl;
+	}
+
 }

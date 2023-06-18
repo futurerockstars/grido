@@ -11,70 +11,72 @@
 
 namespace Grido\Components\Columns;
 
+use Nette\Utils\Html;
+use function preg_match;
+use function preg_replace;
+
 /**
  * Link column.
- *
- * @package     Grido
- * @subpackage  Components\Columns
- * @author      Petr Bugyík
  */
 class Link extends Text
 {
-    /**
-     * @param mixed $value
-     * @return \Nette\Utils\Html
-     */
-    protected function formatValue($value)
-    {
-        return $this->getAnchor($value);
-    }
 
-    /**
-     * @param string $value
-     * @return string
-     */
-    protected function formatHref($value)
-    {
-        if (!preg_match('~^\w+://~i', $value)) {
-            $value = "http://" . $value;
-        }
+	/**
+	 * @param mixed $value
+	 * @return Html
+	 */
+	protected function formatValue($value)
+	{
+		return $this->getAnchor($value);
+	}
 
-        return $value;
-    }
+	/**
+	 * @param string $value
+	 * @return string
+	 */
+	protected function formatHref($value)
+	{
+		if (!preg_match('~^\w+://~i', $value)) {
+			$value = 'http://' . $value;
+		}
 
-    /**
-     * @param string $value
-     * @return string
-     */
-    protected function formatText($value)
-    {
-        return preg_replace('~^https?://~i', '', $value);
-    }
+		return $value;
+	}
 
-    /**
-     * @param mixed $value
-     * @return \Nette\Utils\Html
-     */
-    protected function getAnchor($value)
-    {
-        $truncate = $this->truncate;
-        $this->truncate = NULL;
+	/**
+	 * @param string $value
+	 * @return string
+	 */
+	protected function formatText($value)
+	{
+		return preg_replace('~^https?://~i', '', $value);
+	}
 
-        $value = parent::formatValue($value);
-        $href = $this->formatHref($value);
-        $text = $this->formatText($value);
+	/**
+	 * @param mixed $value
+	 * @return Html
+	 */
+	protected function getAnchor($value)
+	{
+		$truncate = $this->truncate;
+		$this->truncate = null;
 
-        $anchor = \Nette\Utils\Html::el('a')
-            ->setHref($href)
-            ->setText($text)
-            ->setTarget('_blank')
-            ->setRel('noreferrer');
+		$value = parent::formatValue($value);
+		$href = $this->formatHref($value);
+		$text = $this->formatText($value);
 
-        if ($truncate) {
-            $anchor->setText($truncate($text))
-                ->setTitle($value);
-        }
+		$anchor = Html::el('a')
+			->setHref($href)
+			->setText($text)
+			->setTarget('_blank')
+			->setRel('noreferrer');
 
-        return $anchor;
-    }
+		if ($truncate) {
+			$anchor->setText($truncate($text))
+				->setTitle($value);
+		}
+
+		return $anchor;
+	}
+
 }

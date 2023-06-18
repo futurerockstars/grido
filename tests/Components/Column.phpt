@@ -18,7 +18,7 @@ require_once __DIR__ . '/../bootstrap.php';
 
 class ColumnTest extends \Tester\TestCase
 {
-    function testSetSortable()
+    public function testSetSortable()
     {
         $grid = new Grid;
         $column = $grid->addColumnText('column', 'Column')->setSortable();
@@ -28,7 +28,7 @@ class ColumnTest extends \Tester\TestCase
         Assert::false($column->isSortable());
     }
 
-    function testSetReplacement()
+    public function testSetReplacement()
     {
         $grid = new Grid;
         $column = $grid->addColumnText('column', 'Column')->setReplacement(['value' => 'new_value', 'replace' => '%value it!']);
@@ -53,7 +53,7 @@ class ColumnTest extends \Tester\TestCase
         Assert::same('žena', $column->render(['column' => 'f']));
     }
 
-    function testSetColumn()
+    public function testSetColumn()
     {
         $grid = new Grid;
         $column = $grid->addColumnText('column', 'Column');
@@ -63,14 +63,14 @@ class ColumnTest extends \Tester\TestCase
         Assert::same('new_column', $column->column);
     }
 
-    function testSetDefaultSort()
+    public function testSetDefaultSort()
     {
         $grid = new Grid;
         $grid->addColumnText('column', 'Column')->setDefaultSort(Column::ORDER_DESC);
         Assert::same(['column' => Column::ORDER_DESC], $grid->defaultSort);
     }
 
-    function testSetCustomRender()
+    public function testSetCustomRender()
     {
         $grid = new Grid;
         $testCustomVariables = ['var' => 'TEST'];
@@ -92,7 +92,7 @@ class ColumnTest extends \Tester\TestCase
         Assert::same('TEST-CUSTOM_TEMPLATE-TEST', trim((string) $node[0]));
     }
 
-    function testSetCustomRenderExport()
+    public function testSetCustomRenderExport()
     {
         $grid = new Grid;
         $test = ['column' => 'TEST'];
@@ -103,7 +103,7 @@ class ColumnTest extends \Tester\TestCase
         Assert::same('CUSTOM_RENDER_EXPORT-TEST', $column->renderExport($test));
     }
 
-    function testSetTruncate()
+    public function testSetTruncate()
     {
         $grid = new Grid;
         $column = $grid->addColumnText('column', 'Column')->setTruncate(5);
@@ -114,7 +114,7 @@ class ColumnTest extends \Tester\TestCase
         Assert::same('val--', $column->render(['column' => 'valuee']));
     }
 
-    function testSetCellCallback()
+    public function testSetCellCallback()
     {
         Helper::grid(function(Grid $grid) {
             $testRow = ['id' => 1, 'column' => 'Value'];
@@ -133,7 +133,7 @@ class ColumnTest extends \Tester\TestCase
         Assert::same('grid-cell-column test_class', (string) $node[0]->attributes());
     }
 
-    function testGetCellPrototype()
+    public function testGetCellPrototype()
     {
         $grid = new Grid;
         $column = $grid->addColumnText('column', 'Column');
@@ -141,7 +141,7 @@ class ColumnTest extends \Tester\TestCase
         Assert::same('td', $column->getCellPrototype()->getName());
     }
 
-    function testGetHeaderPrototype()
+    public function testGetHeaderPrototype()
     {
         $grid = new Grid;
         $column = $grid->addColumnText('column', 'Column');
@@ -149,7 +149,7 @@ class ColumnTest extends \Tester\TestCase
         Assert::same('th', $column->getHeaderPrototype()->getName());
     }
 
-    function testGetSort()
+    public function testGetSort()
     {
         $grid = new Grid;
         $column = $grid->addColumnText('column', 'Column');
@@ -164,7 +164,7 @@ class ColumnTest extends \Tester\TestCase
         Assert::same(Column::ORDER_ASC, Helper::$grid->getColumn('column')->sort);
     }
 
-    function testHasFilter()
+    public function testHasFilter()
     {
         $grid = new Grid;
         $column = $grid->addColumnText('column', 'Column');
@@ -175,7 +175,7 @@ class ColumnTest extends \Tester\TestCase
         Assert::true($grid->getColumn('column')->hasFilter());
     }
 
-    function testRender()
+    public function testRender()
     {
         $grid = new Grid;
         $column = $grid->addColumnText('column', 'Column');
@@ -183,7 +183,7 @@ class ColumnTest extends \Tester\TestCase
         Assert::same('&lt;script&gt;alert(&quot;XSS&quot;)&lt;/script&gt;', $column->render(['column' => '<script>alert("XSS")</script>']));
     }
 
-    function testRenderExport()
+    public function testRenderExport()
     {
         $grid = new Grid;
         $column = $grid->addColumnText('column', 'Column')->setReplacement([
@@ -196,7 +196,7 @@ class ColumnTest extends \Tester\TestCase
 
     /**********************************************************************************************/
 
-    function testHasColumns()
+    public function testHasColumns()
     {
         $grid = new Grid;
         Assert::false($grid->hasColumns());
@@ -206,7 +206,7 @@ class ColumnTest extends \Tester\TestCase
         Assert::true($grid->hasColumns(FALSE));
     }
 
-    function testAddColumn() //addColumn*()
+    public function testAddColumn() //addColumn*()
     {
         $grid = new Grid;
         $label = 'Column';
@@ -273,7 +273,7 @@ class ColumnTest extends \Tester\TestCase
         Assert::null($grid->getColumn('column'));
     }
 
-    function testSetFilter() //setFilter*()
+    public function testSetFilter() //setFilter*()
     {
         $name = 'column';
         $label = 'Column';

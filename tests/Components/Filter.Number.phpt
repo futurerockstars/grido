@@ -16,7 +16,7 @@ use Tester\Assert,
 
 class FilterNumberTest extends \Tester\TestCase
 {
-    function testFormControl()
+    public function testFormControl()
     {
         $grid = new Grid;
         $filter = $grid->addFilterNumber('number', 'Number');
@@ -25,7 +25,7 @@ class FilterNumberTest extends \Tester\TestCase
         Assert::same(['text', 'number'], $filter->control->controlPrototype->class);
     }
 
-    function testGetCondition()
+    public function testGetCondition()
     {
         $grid = new Grid;
         $filter = $grid->addFilterNumber('number', 'Number');

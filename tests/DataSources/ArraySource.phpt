@@ -64,7 +64,7 @@ class ArraySourceTest extends DataSourceTestCase
         })->run();
     }
 
-    function testCompare()
+    public function testCompare()
     {
         $source = new ArraySource([]);
 
@@ -103,7 +103,7 @@ class ArraySourceTest extends DataSourceTestCase
         }, 'Grido\Exception', "Condition 'SOMETHING ?' is not implemented yet.");
     }
 
-    function testMakeWhere()
+    public function testMakeWhere()
     {
         $data = [
             ['name' => 'AA', 'surname' => 'BB', 'city' => 'CC'],

@@ -11,169 +11,170 @@
 
 namespace Grido\Components;
 
+use Grido\Exception;
 use Grido\Grid;
 use Grido\Helpers;
-use Grido\Exception;
+use Nette\Forms\Container;
+use Nette\Forms\Controls\Checkbox;
+use Nette\Forms\Controls\SubmitButton;
+use Throwable;
 
 /**
  * Operation with one or more rows.
- *
- * @package     Grido
- * @subpackage  Components
- * @author      Petr Bugyík
  *
  * @property-read string $primaryKey
  * @method void onSubmit(string $operation, array $ids) Description
  */
 class Operation extends Component
 {
-    const ID = 'operations';
 
-    /** @var array callback on operation submit */
-    public $onSubmit;
+	const ID = 'operations';
 
-    /** @var string */
-    protected $primaryKey;
+	/** @var array callback on operation submit */
+	public $onSubmit;
 
-    /**
-     * @param \Grido\Grid $grid
-     * @param array $operations
-     * @param callback $onSubmit - callback after operation submit
-     */
-    public function __construct($grid, array $operations, $onSubmit)
-    {
-        $this->grid = $grid;
-        $grid->addComponent($this, self::ID);
+	/** @var string */
+	protected $primaryKey;
 
-        $grid['form'][$grid::BUTTONS]->addSubmit(self::ID, 'OK')
-            ->onClick[] = [$this, 'handleOperations'];
+	/**
+	 * @param Grid $grid
+	 * @param array $operations
+	 * @param callback $onSubmit - callback after operation submit
+	 */
+	public function __construct($grid, array $operations, $onSubmit)
+	{
+		$this->grid = $grid;
+		$grid->addComponent($this, self::ID);
 
-        $grid['form']->addContainer(self::ID)
-            ->addSelect(self::ID, 'Selected', $operations)
-            ->setPrompt('Grido.Selected');
+		$grid['form'][$grid::BUTTONS]->addSubmit(self::ID, 'OK')
+			->onClick[] = [$this, 'handleOperations'];
 
-        $grid->onRender[] = function(Grid $grid) {
-            $this->addCheckers($grid['form'][Operation::ID]);
-        };
+		$grid['form']->addContainer(self::ID)
+			->addSelect(self::ID, 'Selected', $operations)
+			->setPrompt('Grido.Selected');
 
-        $this->onSubmit[] = $onSubmit;
-    }
+		$grid->onRender[] = function (Grid $grid) {
+			$this->addCheckers($grid['form'][self::ID]);
+		};
 
-    /**
-     * Sets client side confirm for operation.
-     * @param string $operation
-     * @param string $message
-     * @return Operation
-     */
-    public function setConfirm($operation, $message)
-    {
-        $message = $this->translate($message);
-        $this->grid->onRender[] = function(Grid $grid) use ($operation, $message) {
-            $grid['form'][Operation::ID][Operation::ID]->getControlPrototype()->setAttribute(
-                "data-grido-confirm-$operation", $message
-            );
-        };
+		$this->onSubmit[] = $onSubmit;
+	}
 
-        return $this;
-    }
+	/**
+	 * Sets client side confirm for operation.
+	 *
+	 * @param string $operation
+	 * @param string $message
+	 * @return Operation
+	 */
+	public function setConfirm($operation, $message)
+	{
+		$message = $this->translate($message);
+		$this->grid->onRender[] = function (Grid $grid) use ($operation, $message) {
+			$grid['form'][self::ID][self::ID]->getControlPrototype()->setAttribute(
+				"data-grido-confirm-$operation",
+				$message,
+			);
+		};
 
-    /**
-     * Sets primary key.
-     * @param string $primaryKey
-     * @return Operation
-     */
-    public function setPrimaryKey($primaryKey)
-    {
-        $this->primaryKey = $primaryKey;
-        return $this;
-    }
+		return $this;
+	}
 
-    /**********************************************************************************************/
+	/**
+	 * Sets primary key.
+	 *
+	 * @param string $primaryKey
+	 * @return Operation
+	 */
+	public function setPrimaryKey($primaryKey)
+	{
+		$this->primaryKey = $primaryKey;
 
-    /**
-     * @return string
-     */
-    public function getPrimaryKey()
-    {
-        if ($this->primaryKey === NULL) {
-            $this->primaryKey = $this->grid->primaryKey;
-        }
+		return $this;
+	}
 
-        return $this->primaryKey;
-    }
+	/**
+	 * @return string
+	 */
+	public function getPrimaryKey()
+	{
+		if ($this->primaryKey === null) {
+			$this->primaryKey = $this->grid->primaryKey;
+		}
 
-    /**********************************************************************************************/
+		return $this->primaryKey;
+	}
 
-    /**
-     * @param \Nette\Forms\Controls\SubmitButton $button
-     * @internal
-     */
-    public function handleOperations(\Nette\Forms\Controls\SubmitButton $button)
-    {
-        $grid = $this->getGrid();
-        !empty($grid->onRegistered) && $grid->onRegistered($grid);
-        $form = $button->getForm();
-        $this->addCheckers($form[self::ID]);
+	/**
+	 * @internal
+	 */
+	public function handleOperations(SubmitButton $button)
+	{
+		$grid = $this->getGrid();
+		!empty($grid->onRegistered) && $grid->onRegistered($grid);
+		$form = $button->getForm();
+		$this->addCheckers($form[self::ID]);
 
-        $values = $form[self::ID]->values;
-        if (empty($values[self::ID])) {
-            $httpData = $form->getHttpData();
-            if (!empty($httpData[self::ID][self::ID]) && $operation = $httpData[self::ID][self::ID]) {
-                $grid->__triggerUserNotice("Operation with name '$operation' does not exist.");
-            }
+		$values = $form[self::ID]->values;
+		if (empty($values[self::ID])) {
+			$httpData = $form->getHttpData();
+			if (!empty($httpData[self::ID][self::ID]) && $operation = $httpData[self::ID][self::ID]) {
+				$grid->__triggerUserNotice("Operation with name '$operation' does not exist.");
+			}
 
-            $grid->reload();
-        }
+			$grid->reload();
+		}
 
-        $ids = [];
-        $operation = $values[self::ID];
-        unset($values[self::ID]);
+		$ids = [];
+		$operation = $values[self::ID];
+		unset($values[self::ID]);
 
-        foreach ($values as $key => $val) {
-            if ($val) {
-                $ids[] = $key;
-            }
-        }
+		foreach ($values as $key => $val) {
+			if ($val) {
+				$ids[] = $key;
+			}
+		}
 
-        $this->onSubmit($operation, $ids);
-        $grid->page = 1;
+		$this->onSubmit($operation, $ids);
+		$grid->page = 1;
 
-        if ($this->presenter->isAjax()) {
-            $grid['form'][self::ID][self::ID]->setValue(NULL);
-            $grid->getData(TRUE, FALSE);
-            foreach ($form[self::ID]->getControls() as $ctrl) {
-                if ($ctrl instanceof \Nette\Forms\Controls\Checkbox) {
-                    $ctrl->setValue(false);
-                }
-            }
-        }
+		if ($this->presenter->isAjax()) {
+			$grid['form'][self::ID][self::ID]->setValue(null);
+			$grid->getData(true, false);
+			foreach ($form[self::ID]->getControls() as $ctrl) {
+				if ($ctrl instanceof Checkbox) {
+					$ctrl->setValue(false);
+				}
+			}
+		}
 
-        $grid->reload();
-    }
+		$grid->reload();
+	}
 
-    /**
-     * @param \Nette\Forms\Container $container
-     * @throws Exception
-     * @internal
-     */
-    public function addCheckers(\Nette\Forms\Container $container)
-    {
-        $items = $this->grid->getData();
-        $primaryKey = $this->getPrimaryKey();
+	/**
+	 * @throws Exception
+	 *
+	 * @internal
+	 */
+	public function addCheckers(Container $container)
+	{
+		$items = $this->grid->getData();
+		$primaryKey = $this->getPrimaryKey();
 
-        foreach ($items as $item) {
-            try {
-                $primaryValue = $this->grid->getProperty($item, $primaryKey);
-                if (!isset($container[$primaryValue])) {
-                    $container->addCheckbox(Helpers::formatColumnName($primaryValue))
-                        ->controlPrototype->title = $primaryValue;
-                }
-            } catch (\Exception $e) {
-                throw new Exception(
-                    'You should define some else primary key via $grid->setPrimaryKey() '.
-                    "because currently defined '$primaryKey' key is not suitable for operation feature."
-                );
-            }
-        }
-    }
+		foreach ($items as $item) {
+			try {
+				$primaryValue = $this->grid->getProperty($item, $primaryKey);
+				if (!isset($container[$primaryValue])) {
+					$container->addCheckbox(Helpers::formatColumnName($primaryValue))
+						->controlPrototype->title = $primaryValue;
+				}
+			} catch (Throwable $e) {
+				throw new Exception(
+					'You should define some else primary key via $grid->setPrimaryKey() ' .
+					"because currently defined '$primaryKey' key is not suitable for operation feature.",
+				);
+			}
+		}
+	}
+
 }

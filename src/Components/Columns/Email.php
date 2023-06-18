@@ -11,34 +11,34 @@
 
 namespace Grido\Components\Columns;
 
+use Nette\Utils\Html;
+
 /**
  * Email column.
- *
- * @package     Grido
- * @subpackage  Components\Columns
- * @author      Petr Bugyík
  */
 class Email extends Link
 {
-    /**
-     * @param string $value
-     * @return string
-     */
-    protected function formatHref($value)
-    {
-        return "mailto:" . $value;
-    }
 
-    /**
-     * @param mixed $value
-     * @return \Nette\Utils\Html
-     */
-    protected function getAnchor($value)
-    {
-        $anchor = parent::getAnchor($value);
-        unset($anchor->attrs['target']);
-        unset($anchor->attrs['rel']);
+	/**
+	 * @param string $value
+	 * @return string
+	 */
+	protected function formatHref($value)
+	{
+		return 'mailto:' . $value;
+	}
 
-        return $anchor;
-    }
+	/**
+	 * @param mixed $value
+	 * @return Html
+	 */
+	protected function getAnchor($value)
+	{
+		$anchor = parent::getAnchor($value);
+		unset($anchor->attrs['target']);
+		unset($anchor->attrs['rel']);
+
+		return $anchor;
+	}
+
 }

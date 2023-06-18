@@ -11,170 +11,179 @@
 
 namespace Grido\Components;
 
-use Grido\Grid;
 use Grido\Components\Columns\Column;
+use Grido\Grid;
+use Nette\Application\IResponse;
+use Nette\Http\IRequest;
 use Nette\Utils\Strings;
+use function call_user_func_array;
+use function ceil;
+use function chr;
+use function implode;
+use function preg_match;
+use function str_replace;
+use function ucfirst;
 
 /**
  * Exporting data to CSV.
- *
- * @package     Grido
- * @subpackage  Components
- * @author      Petr Bugyík
  *
  * @property int $fetchLimit
  * @property-write array $header
  * @property-write callable $customData
  */
-class Export extends Component implements \Nette\Application\IResponse
+class Export extends Component implements IResponse
 {
-    const ID = 'export';
 
-    /** @var int */
-    protected $fetchLimit = 100000;
+	const ID = 'export';
 
-    /** @var array */
-    protected $header = [];
+	/** @var int */
+	protected $fetchLimit = 100_000;
 
-    /** @var callable */
-    protected $customData;
+	/** @var array */
+	protected $header = [];
 
-    /**
-     * @param Grid $grid
-     * @param string $label
-     */
-    public function __construct(Grid $grid, $label = NULL)
-    {
-        $this->grid = $grid;
-        $this->label = $label;
+	/** @var callable */
+	protected $customData;
 
-        $grid->addComponent($this, self::ID);
-    }
+	/**
+	 * @param string $label
+	 */
+	public function __construct(Grid $grid, $label = null)
+	{
+		$this->grid = $grid;
+		$this->label = $label;
 
-    /**
-     * @return void
-     */
-    protected function printCsv()
-    {
-        $escape = function($value) {
-            return preg_match("~[\"\n,;\t]~", $value) || $value === ""
-                ? '"' . str_replace('"', '""', $value) . '"'
-                : $value;
-        };
+		$grid->addComponent($this, self::ID);
+	}
 
-        $print = function(array $row) {
-            print implode(',', $row) . "\n";
-        };
+	/**
+	 * @return void
+	 */
+	protected function printCsv()
+	{
+		$escape = fn ($value) => preg_match("~[\"\n,;\t]~", $value) || $value === ''
+				? '"' . str_replace('"', '""', $value) . '"'
+				: $value;
 
-        $columns = $this->grid[Column::ID]->getComponents();
+		$print = function (array $row) {
+			echo implode(',', $row) . "\n";
+		};
 
-        $header = [];
-        $headerItems = $this->header ? $this->header : $columns;
-        foreach ($headerItems as $column) {
-            $header[] = $this->header
-                ? $escape($column)
-                : $escape($column->getLabel());
-        }
+		$columns = $this->grid[Column::ID]->getComponents();
 
-        $print($header);
+		$header = [];
+		$headerItems = $this->header ? $this->header : $columns;
+		foreach ($headerItems as $column) {
+			$header[] = $this->header
+				? $escape($column)
+				: $escape($column->getLabel());
+		}
 
-        $datasource = $this->grid->getData(FALSE, FALSE, FALSE);
-        $iterations = ceil($datasource->getCount() / $this->fetchLimit);
-        for ($i = 0; $i < $iterations; $i++) {
-            $datasource->limit($i * $this->fetchLimit, $this->fetchLimit);
-            $data = $this->customData
-                ? call_user_func_array($this->customData, array($datasource))
-                : $datasource->getData();
+		$print($header);
 
-            foreach ($data as $items) {
-                $row = [];
+		$datasource = $this->grid->getData(false, false, false);
+		$iterations = ceil($datasource->getCount() / $this->fetchLimit);
+		for ($i = 0; $i < $iterations; $i++) {
+			$datasource->limit($i * $this->fetchLimit, $this->fetchLimit);
+			$data = $this->customData
+				? call_user_func_array($this->customData, [$datasource])
+				: $datasource->getData();
 
-                $columns = $this->customData
-                    ? $items
-                    : $columns;
+			foreach ($data as $items) {
+				$row = [];
 
-                foreach ($columns as $column) {
-                    $row[] = $this->customData
-                        ? $escape($column)
-                        : $escape($column->renderExport($items));
-                }
+				$columns = $this->customData
+					? $items
+					: $columns;
 
-                $print($row);
-            }
-        }
-    }
+				foreach ($columns as $column) {
+					$row[] = $this->customData
+						? $escape($column)
+						: $escape($column->renderExport($items));
+				}
 
-    /**
-     * Sets a limit which will be used in order to retrieve data from datasource.
-     * @param int $limit
-     * @return \Grido\Components\Export
-     */
-    public function setFetchLimit($limit)
-    {
-        $this->fetchLimit = (int) $limit;
-        return $this;
-    }
+				$print($row);
+			}
+		}
+	}
 
-    /**
-     * @return int
-     */
-    public function getFetchLimit()
-    {
-        return $this->fetchLimit;
-    }
+	/**
+	 * Sets a limit which will be used in order to retrieve data from datasource.
+	 *
+	 * @param int $limit
+	 * @return Export
+	 */
+	public function setFetchLimit($limit)
+	{
+		$this->fetchLimit = (int) $limit;
 
-    /**
-     * Sets a custom header of result CSV file (list of field names).
-     * @param array $header
-     * @return \Grido\Components\Export
-     */
-    public function setHeader(array $header)
-    {
-        $this->header = $header;
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Sets a callback to modify output data. This callback must return a list of items. (array) function($datasource)
-     * DEBUG? You probably need to comment lines started with $httpResponse->setHeader in Grido\Components\Export.php
-     * @param callable $callback
-     * @return \Grido\Components\Export
-     */
-    public function setCustomData($callback)
-    {
-        $this->customData = $callback;
-        return $this;
-    }
+	/**
+	 * @return int
+	 */
+	public function getFetchLimit()
+	{
+		return $this->fetchLimit;
+	}
 
-    /**
-     * @internal
-     */
-    public function handleExport()
-    {
-        !empty($this->grid->onRegistered) && $this->grid->onRegistered($this->grid);
-        $this->grid->presenter->sendResponse($this);
-    }
+	/**
+	 * Sets a custom header of result CSV file (list of field names).
+	 *
+	 * @param array $header
+	 * @return Export
+	 */
+	public function setHeader(array $header)
+	{
+		$this->header = $header;
 
-    /*************************** interface \Nette\Application\IResponse ***************************/
+		return $this;
+	}
 
-    /**
-     * Sends response to output.
-     * @param \Nette\Http\IRequest $httpRequest
-     * @param \Nette\Http\IResponse $httpResponse
-     * @return void
-     */
-    public function send(\Nette\Http\IRequest $httpRequest, \Nette\Http\IResponse $httpResponse)
-    {
-        $encoding = 'utf-8';
-        $label = $this->label
-            ? ucfirst(Strings::webalize($this->label))
-            : ucfirst($this->grid->getName());
+	/**
+	 * Sets a callback to modify output data. This callback must return a list of items. (array) function($datasource)
+	 * DEBUG? You probably need to comment lines started with $httpResponse->setHeader in Grido\Components\Export.php
+	 *
+	 * @param callable $callback
+	 * @return Export
+	 */
+	public function setCustomData($callback)
+	{
+		$this->customData = $callback;
 
-        $httpResponse->setHeader('Content-Encoding', $encoding);
-        $httpResponse->setHeader('Content-Type', "text/csv; charset=$encoding");
-        $httpResponse->setHeader('Content-Disposition', "attachment; filename=\"$label.csv\"");
+		return $this;
+	}
 
-        print chr(0xEF) . chr(0xBB) . chr(0xBF); //UTF-8 BOM
-        $this->printCsv();
-    }
+	/**
+	 * @internal
+	 */
+	public function handleExport()
+	{
+		!empty($this->grid->onRegistered) && $this->grid->onRegistered($this->grid);
+		$this->grid->presenter->sendResponse($this);
+	}
+
+	/*************************** interface \Nette\Application\IResponse ***************************/
+
+	/**
+	 * Sends response to output.
+	 *
+	 * @return void
+	 */
+	public function send(IRequest $httpRequest, \Nette\Http\IResponse $httpResponse)
+	{
+		$encoding = 'utf-8';
+		$label = $this->label
+			? ucfirst(Strings::webalize($this->label))
+			: ucfirst($this->grid->getName());
+
+		$httpResponse->setHeader('Content-Encoding', $encoding);
+		$httpResponse->setHeader('Content-Type', "text/csv; charset=$encoding");
+		$httpResponse->setHeader('Content-Disposition', "attachment; filename=\"$label.csv\"");
+
+		echo chr(0xEF) . chr(0xBB) . chr(0xBF); //UTF-8 BOM
+		$this->printCsv();
+	}
+
 }

@@ -16,7 +16,7 @@ require_once __DIR__ . '/../bootstrap.php';
 
 class FilterConditionTest extends \Tester\TestCase
 {
-    function testSetColumn()
+    public function testSetColumn()
     {
         $condition = new Condition('column', NULL);
         Assert::same(['column'], $condition->column);
@@ -36,7 +36,7 @@ class FilterConditionTest extends \Tester\TestCase
         }, 'Grido\Exception', "The even values of column must be 'AND' or 'OR', 'xxx' given.");
     }
 
-    function testSetCondition()
+    public function testSetCondition()
     {
         $condition = new Condition('column', 'condition');
         Assert::same(['condition'], $condition->condition);
@@ -45,7 +45,7 @@ class FilterConditionTest extends \Tester\TestCase
         Assert::same(['condition'], $condition->condition);
     }
 
-    function testSetValue()
+    public function testSetValue()
     {
         $condition = new Condition(NULL, NULL, 'value');
         Assert::same(['value'], $condition->value);
@@ -54,7 +54,7 @@ class FilterConditionTest extends \Tester\TestCase
         Assert::same(['value', 'value2'], $condition->value);
     }
 
-    function testGetValueForColumn()
+    public function testGetValueForColumn()
     {
         $condition = new Condition(['column'], NULL, ['value']);
         Assert::same(['value'], $condition->getValueForColumn());
@@ -63,14 +63,14 @@ class FilterConditionTest extends \Tester\TestCase
         Assert::same(['value', 'value'], $condition->getValueForColumn());
     }
 
-    function testIsOperator()
+    public function testIsOperator()
     {
         Assert::true(Condition::isOperator('and'));
         Assert::true(Condition::isOperator('OR'));
         Assert::false(Condition::isOperator('xxx'));
     }
 
-    function testSetupEmpty()
+    public function testSetupEmpty()
     {
         $condition = Condition::setupEmpty();
         Assert::same([], $condition->column);
@@ -78,7 +78,7 @@ class FilterConditionTest extends \Tester\TestCase
         Assert::same(['0 = 1'], $condition->__toArray());
     }
 
-    function testSetupFromArray()
+    public function testSetupFromArray()
     {
         $array = ['column', 'condition', 'value'];
         $condition = Condition::setupFromArray($array);
@@ -95,7 +95,7 @@ class FilterConditionTest extends \Tester\TestCase
         }, 'Grido\Exception', 'Condition array must contain 3 items.');
     }
 
-    function testSetupFromCallback()
+    public function testSetupFromCallback()
     {
         $callback = function() {};
         $condition = Condition::setupFromCallback($callback, 'value');
@@ -103,13 +103,13 @@ class FilterConditionTest extends \Tester\TestCase
         Assert::same('value', $condition->value);
     }
 
-    function testGetColumnWithoutOperator()
+    public function testGetColumnWithoutOperator()
     {
         $condition = new Condition(['column', 'and', 'column2'], NULL, ['value']);
         Assert::same(['column', 'column2'], $condition->getColumnWithoutOperator());
     }
 
-    function testToArray()
+    public function testToArray()
     {
         $condition = new Condition('column', '<> ?', 'value');
         Assert::same(['column <> ?', 'value'], $condition->__toArray());

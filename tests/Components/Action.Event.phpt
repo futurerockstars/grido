@@ -18,7 +18,7 @@ require_once __DIR__ . '/../bootstrap.php';
 
 class ActionEventTest extends \Tester\TestCase
 {
-    function testRender()
+    public function testRender()
     {
         Helper::grid(function(Grid $grid) {
             $grid->addActionEvent('delete', 'Delete', function() {});
@@ -30,7 +30,7 @@ class ActionEventTest extends \Tester\TestCase
         Assert::same('<a class="grid-action-delete" href="/test/?grid-actions-delete-id=3&amp;do=grid-actions-delete-click">Delete</a>', $output);
     }
 
-    function testSetOnclick()
+    public function testSetOnclick()
     {
         $parameters = ['grid-actions-delete-id' => 'value', 'do' => 'grid-actions-delete-click'];
         $onClick = function($id, Event $event) {
@@ -57,7 +57,7 @@ class ActionEventTest extends \Tester\TestCase
         })->run($parameters);
     }
 
-    function testError()
+    public function testError()
     {
         Assert::exception(function() {
             Helper::grid(function(Grid $grid) {
@@ -69,7 +69,7 @@ class ActionEventTest extends \Tester\TestCase
         }, '\Grido\Exception', "Callback onClick in action 'delete' must be set.");
     }
 
-    function testHandleClick()
+    public function testHandleClick()
     {
         Helper::grid(function(Grid $grid) {
             $grid->addActionEvent('delete', 'Delete', function($id) {

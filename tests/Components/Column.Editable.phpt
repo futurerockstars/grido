@@ -19,7 +19,7 @@ require_once __DIR__ . '/../DataSources/files/doctrine/entities/User.php';
 
 class EditableTest extends \Tester\TestCase
 {
-    function testSetEditable()
+    public function testSetEditable()
     {
         // NOT EDITABLE
         $grid = new Grid();
@@ -115,7 +115,7 @@ class EditableTest extends \Tester\TestCase
         }
     }
 
-    function testSetEditableValueCallback()
+    public function testSetEditableValueCallback()
     {
         Helper::grid(function(Grid $grid) {
             $row = ['id' => 1, 'name' => 'Lucy'];
@@ -131,7 +131,7 @@ class EditableTest extends \Tester\TestCase
         })->run();
     }
 
-    function testSetEditableRowCallback()
+    public function testSetEditableRowCallback()
     {
         Helper::grid(function(Grid $grid) {
             $grid->setModel([]);
@@ -174,7 +174,7 @@ class EditableTest extends \Tester\TestCase
         Assert::same('{"updated":true,"html":"Lucy-TEST"}', $output);
     }
 
-    function testEditableCallback()
+    public function testEditableCallback()
     {
         $checkException = function($grid) {
             Assert::exception(function() use ($grid) {
@@ -235,7 +235,7 @@ class EditableTest extends \Tester\TestCase
         })->run();
     }
 
-    function testHandleEditable()
+    public function testHandleEditable()
     {
         $oldValue = 'Trommler';
         $newValue = 'Test';
@@ -304,7 +304,7 @@ class EditableTest extends \Tester\TestCase
         unlink($database . $editableSuffix);
     }
 
-    function testHandleEditableControl()
+    public function testHandleEditableControl()
     {
         Helper::grid(function(Grid $grid) {
             $grid->setModel([]);

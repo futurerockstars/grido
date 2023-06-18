@@ -16,7 +16,7 @@ require_once __DIR__ . '/../bootstrap.php';
 
 class ButtonTest extends \Tester\TestCase
 {
-    function testSetElementPrototype()
+    public function testSetElementPrototype()
     {
         Helper::grid(function(Grid $grid){
             $element = \Nette\Utils\Html::el('a')
@@ -31,14 +31,14 @@ class ButtonTest extends \Tester\TestCase
         Assert::same('<a class="button" href="/test/add">Add</a>', $output);
     }
 
-    function testSetIcon()
+    public function testSetIcon()
     {
         $grid = new Grid;
         $action = $grid->addButton('add', 'Add')->setIcon('plus');
         Assert::same('plus', $action->getOption('icon'));
     }
 
-    function testSetOption()
+    public function testSetOption()
     {
         $grid = new Grid;
         $button = $grid->addButton('add', 'Add')
@@ -50,7 +50,7 @@ class ButtonTest extends \Tester\TestCase
         Assert::same(['another' => 'test'], $button->getOptions());
     }
 
-    function testRender()
+    public function testRender()
     {
         Helper::grid(function(Grid $grid) {
             $grid->addButton('add', 'Add');
@@ -64,7 +64,7 @@ class ButtonTest extends \Tester\TestCase
 
     /**********************************************************************************************/
 
-    function testHasButtons()
+    public function testHasButtons()
     {
         $grid = new Grid;
         Assert::false($grid->hasButtons());
@@ -74,7 +74,7 @@ class ButtonTest extends \Tester\TestCase
         Assert::true($grid->hasButtons(FALSE));
     }
 
-    function testAddButton()
+    public function testAddButton()
     {
         $grid = new Grid;
         $label = 'Add';

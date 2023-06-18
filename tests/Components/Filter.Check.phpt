@@ -16,21 +16,21 @@ require_once __DIR__ . '/../bootstrap.php';
 
 class FilterCheckTest extends \Tester\TestCase
 {
-    function testFormControl()
+    public function testFormControl()
     {
         $grid = new Grid;
         $filter = $grid->addFilterCheck('check', 'Check');
         Assert::type('\Nette\Forms\Controls\Checkbox', $filter->control);
     }
 
-    function testGetCondition()
+    public function testGetCondition()
     {
         $grid = new Grid;
         $filter = $grid->addFilterCheck('check', 'Check');
         Assert::same(['check IS NOT NULL'], $filter->__getCondition(TRUE)->__toArray());
     }
 
-    function testChangeValue()
+    public function testChangeValue()
     {
         $grid = new Grid;
         $filter = $grid->addFilterCheck('check', 'Check');

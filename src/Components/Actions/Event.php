@@ -11,91 +11,91 @@
 
 namespace Grido\Components\Actions;
 
-use Grido\Grid;
 use Grido\Exception;
+use Grido\Grid;
+use Nette\Utils\Html;
+use function call_user_func_array;
 
 /**
  * Event action.
- *
- * @package     Grido
- * @subpackage  Components\Actions
- * @author      Josef Kříž <pepakriz@gmail.com>
- * @author      Petr Bugyík
  *
  * @property callable $onClick function($id, Grido\Components\Actions\Event $event)
  */
 class Event extends Action
 {
-    /** @var callable function($id, Grido\Components\Actions\Event $event) */
-    private $onClick;
 
-    /**
-     * @param \Grido\Grid $grid
-     * @param string $name
-     * @param string $label
-     * @param callable $onClick
-     * @throws Exception
-     */
-    public function __construct($grid, $name, $label, $onClick = NULL)
-    {
-        parent::__construct($grid, $name, $label);
+	/** @var callable function($id, Grido\Components\Actions\Event $event) */
+	private $onClick;
 
-        if ($onClick === NULL) {
-            $grid->onRender[] = function(Grid $grid) {
-                if ($this->onClick === NULL) {
-                    throw new Exception("Callback onClick in action '{$this->name}' must be set.");
-                }
-            };
-        } else {
-            $this->setOnClick($onClick);
-        }
-    }
+	/**
+	 * @param Grid $grid
+	 * @param string $name
+	 * @param string $label
+	 * @param callable $onClick
+	 * @throws Exception
+	 */
+	public function __construct($grid, $name, $label, $onClick = null)
+	{
+		parent::__construct($grid, $name, $label);
 
-    /**
-     * Sets on-click handler.
-     * @param callable $onClick function($id, Grido\Components\Actions\Event $event)
-     * @return \Grido\Components\Actions\Event
-     */
-    public function setOnClick(callable $onClick)
-    {
-        $this->onClick = $onClick;
-        return $this;
-    }
+		if ($onClick === null) {
+			$grid->onRender[] = function (Grid $grid) {
+				if ($this->onClick === null) {
+					throw new Exception("Callback onClick in action '{$this->name}' must be set.");
+				}
+			};
+		} else {
+			$this->setOnClick($onClick);
+		}
+	}
 
-    /**
-     * Returns on-click handler.
-     * @return callable
-     */
-    public function getOnClick()
-    {
-        return $this->onClick;
-    }
+	/**
+	 * Sets on-click handler.
+	 *
+	 * @param callable $onClick function($id, Grido\Components\Actions\Event $event)
+	 * @return Event
+	 */
+	public function setOnClick(callable $onClick)
+	{
+		$this->onClick = $onClick;
 
-    /**********************************************************************************************/
+		return $this;
+	}
 
-    /**
-     * @param mixed $row
-     * @return \Nette\Utils\Html
-     * @internal
-     */
-    public function getElement($row)
-    {
-        $element = parent::getElement($row);
+	/**
+	 * Returns on-click handler.
+	 *
+	 * @return callable
+	 */
+	public function getOnClick()
+	{
+		return $this->onClick;
+	}
 
-        $primaryValue = $this->grid->getProperty($row, $this->getPrimaryKey());
-        $element->href($this->link('click!', $primaryValue));
+	/**
+	 * @param mixed $row
+	 * @return Html
+	 *
+	 * @internal
+	 */
+	public function getElement($row)
+	{
+		$element = parent::getElement($row);
 
-        return $element;
-    }
+		$primaryValue = $this->grid->getProperty($row, $this->getPrimaryKey());
+		$element->href($this->link('click!', $primaryValue));
 
-    /**********************************************************************************************/
+		return $element;
+	}
 
-    /**
-     * @param int $id
-     * @internal
-     */
-    public function handleClick($id)
-    {
-        call_user_func_array($this->onClick, [$id, $this]);
-    }
+	/**
+	 * @param int $id
+	 *
+	 * @internal
+	 */
+	public function handleClick($id)
+	{
+		call_user_func_array($this->onClick, [$id, $this]);
+	}
+
 }

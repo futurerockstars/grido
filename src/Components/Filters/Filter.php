@@ -11,274 +11,291 @@
 
 namespace Grido\Components\Filters;
 
-use Grido\Helpers;
+use Grido\Components\Component;
 use Grido\Exception;
+use Grido\Grid;
+use Grido\Helpers;
+use Nette\Forms\Controls\BaseControl;
+use Nette\Utils\Html;
+use function call_user_func_array;
+use function count;
+use function gettype;
+use function is_array;
+use function is_callable;
+use function is_string;
+use function sprintf;
+use function str_replace;
 
 /**
  * Data filtering.
  *
- * @package     Grido
- * @subpackage  Components\Filters
- * @author      Petr Bugyík
- *
  * @property-read array $column
  * @property-read string $wrapperPrototype
- * @property-read \Nette\Forms\Controls\BaseControl $control
+ * @property-read BaseControl $control
  * @property-write string $condition
  * @property-write callable $where
  * @property-write string $formatValue
  * @property-write string $defaultValue
  */
-abstract class Filter extends \Grido\Components\Component
+abstract class Filter extends Component
 {
-    const ID = 'filters';
 
-    const VALUE_IDENTIFIER = '%value';
+	const ID = 'filters';
 
-    const RENDER_INNER = 'inner';
-    const RENDER_OUTER = 'outer';
+	const VALUE_IDENTIFIER = '%value';
 
-    /** @var mixed */
-    protected $optional;
+	const RENDER_INNER = 'inner';
 
-    /** @var array */
-    protected $column = [];
+	const RENDER_OUTER = 'outer';
 
-    /** @var string */
-    protected $condition = '= ?';
+	/** @var mixed */
+	protected $optional;
 
-    /** @var callable */
-    protected $where;
+	/** @var array */
+	protected $column = [];
 
-    /** @var string */
-    protected $formatValue;
+	/** @var string */
+	protected $condition = '= ?';
 
-    /** @var \Nette\Utils\Html */
-    protected $wrapperPrototype;
+	/** @var callable */
+	protected $where;
 
-    /** @var \Nette\Forms\Controls\BaseControl */
-    protected $control;
+	/** @var string */
+	protected $formatValue;
 
-    /**
-     * @param \Grido\Grid $grid
-     * @param string $name
-     * @param string $label
-     */
-    public function __construct($grid, $name, $label)
-    {
-        $name = Helpers::formatColumnName($name);
-        $this->addComponentToGrid($grid, $name);
+	/** @var Html */
+	protected $wrapperPrototype;
 
-        $this->label = $label;
-        $this->type = get_class($this);
+	/** @var BaseControl */
+	protected $control;
 
-        $form = $this->getForm();
-        $filters = $form->getComponent(self::ID, FALSE);
-        if ($filters === NULL) {
-            $filters = $form->addContainer(self::ID);
-        }
+	/**
+	 * @param Grid $grid
+	 * @param string $name
+	 * @param string $label
+	 */
+	public function __construct($grid, $name, $label)
+	{
+		$name = Helpers::formatColumnName($name);
+		$this->addComponentToGrid($grid, $name);
 
-        $filters->addComponent($this->getFormControl(), $name);
-    }
+		$this->label = $label;
+		$this->type = static::class;
 
-    /**********************************************************************************************/
+		$form = $this->getForm();
+		$filters = $form->getComponent(self::ID, false);
+		if ($filters === null) {
+			$filters = $form->addContainer(self::ID);
+		}
 
-    /**
-     * Map to database column.
-     * @param string $column
-     * @param string $operator
-     * @return Filter
-     * @throws Exception
-     */
-    public function setColumn($column, $operator = Condition::OPERATOR_OR)
-    {
-        $columnAlreadySet = count($this->column) > 0;
-        if (!Condition::isOperator($operator) && $columnAlreadySet) {
-            $msg = sprintf("Operator must be '%s' or '%s'.", Condition::OPERATOR_AND, Condition::OPERATOR_OR);
-            throw new Exception($msg);
-        }
+		$filters->addComponent($this->getFormControl(), $name);
+	}
 
-        if ($columnAlreadySet) {
-            $this->column[] = $operator;
-            $this->column[] = $column;
-        } else {
-            $this->column[] = $column;
-        }
+	/**
+	 * Map to database column.
+	 *
+	 * @param string $column
+	 * @param string $operator
+	 * @return Filter
+	 * @throws Exception
+	 */
+	public function setColumn($column, $operator = Condition::OPERATOR_OR)
+	{
+		$columnAlreadySet = count($this->column) > 0;
+		if (!Condition::isOperator($operator) && $columnAlreadySet) {
+			$msg = sprintf("Operator must be '%s' or '%s'.", Condition::OPERATOR_AND, Condition::OPERATOR_OR);
 
-        return $this;
-    }
+			throw new Exception($msg);
+		}
 
-    /**
-     * Sets custom condition.
-     * @param $condition
-     * @return Filter
-     */
-    public function setCondition($condition)
-    {
-        $this->condition = $condition;
-        return $this;
-    }
+		if ($columnAlreadySet) {
+			$this->column[] = $operator;
+			$this->column[] = $column;
+		} else {
+			$this->column[] = $column;
+		}
 
-    /**
-     * Sets custom "sql" where.
-     * @param callable $callback function($value, $source) {}
-     * @return Filter
-     */
-    public function setWhere($callback)
-    {
-        $this->where = $callback;
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Sets custom format value.
-     * @param string $format for example: "%%value%"
-     * @return Filter
-     */
-    public function setFormatValue($format)
-    {
-        $this->formatValue = $format;
-        return $this;
-    }
+	/**
+	 * Sets custom condition.
+	 *
+	 * @param $condition
+	 * @return Filter
+	 */
+	public function setCondition($condition)
+	{
+		$this->condition = $condition;
 
-    /**
-     * Sets default value.
-     * @param string $value
-     * @return Filter
-     */
-    public function setDefaultValue($value)
-    {
-        $this->grid->setDefaultFilter([$this->getName() => $value]);
-        return $this;
-    }
+		return $this;
+	}
 
-    /**********************************************************************************************/
+	/**
+	 * Sets custom "sql" where.
+	 *
+	 * @param callable $callback function($value, $source) {}
+	 * @return Filter
+	 */
+	public function setWhere($callback)
+	{
+		$this->where = $callback;
 
-    /**
-     * @return array
-     * @internal
-     */
-    public function getColumn()
-    {
-        if (empty($this->column)) {
-            $column = $this->getName();
-            if ($columnComponent = $this->grid->getColumn($column, FALSE)) {
-                $column = $columnComponent->column; //use db column from column compoment
-            }
+		return $this;
+	}
 
-            $this->setColumn($column);
-        }
+	/**
+	 * Sets custom format value.
+	 *
+	 * @param string $format for example: "%%value%"
+	 * @return Filter
+	 */
+	public function setFormatValue($format)
+	{
+		$this->formatValue = $format;
 
-        return $this->column;
-    }
+		return $this;
+	}
 
-    /**
-     * @return \Nette\Forms\Controls\BaseControl
-     * @internal
-     */
-    public function getControl()
-    {
-        if ($this->control === NULL) {
-            $this->control = $this->getForm()->getComponent(self::ID)->getComponent($this->getName());
-        }
+	/**
+	 * Sets default value.
+	 *
+	 * @param string $value
+	 * @return Filter
+	 */
+	public function setDefaultValue($value)
+	{
+		$this->grid->setDefaultFilter([$this->getName() => $value]);
 
-        return $this->control;
-    }
+		return $this;
+	}
 
-    /**
-     * @throws Exception
-     */
-    protected function getFormControl()
-    {
-        throw new Exception("Filter {$this->name} cannot be use, because it is not implement getFormControl() method.");
-    }
+	/**
+	 * @return array
+	 *
+	 * @internal
+	 */
+	public function getColumn()
+	{
+		if (empty($this->column)) {
+			$column = $this->getName();
+			if ($columnComponent = $this->grid->getColumn($column, false)) {
+				$column = $columnComponent->column; //use db column from column compoment
+			}
 
-    /**
-     * Returns wrapper prototype (<th> html tag).
-     * @return \Nette\Utils\Html
-     */
-    public function getWrapperPrototype()
-    {
-        if (!$this->wrapperPrototype) {
-            $this->wrapperPrototype = \Nette\Utils\Html::el('th')
-                ->setClass(['grid-filter-' . $this->getName()]);
-        }
+			$this->setColumn($column);
+		}
 
-        return $this->wrapperPrototype;
-    }
+		return $this->column;
+	}
 
-    /**
-     * @return string
-     */
-    public function getCondition()
-    {
-        return $this->condition;
-    }
+	/**
+	 * @return BaseControl
+	 *
+	 * @internal
+	 */
+	public function getControl()
+	{
+		if ($this->control === null) {
+			$this->control = $this->getForm()->getComponent(self::ID)->getComponent($this->getName());
+		}
 
-    /**
-     * @param mixed $value
-     * @return Condition|bool
-     * @throws Exception
-     * @internal
-     */
-    public function __getCondition($value)
-    {
-        if ($value === '' || $value === NULL) {
-            return FALSE; //skip
-        }
+		return $this->control;
+	}
 
-        $condition = $this->getCondition();
+	/**
+	 * @throws Exception
+	 */
+	protected function getFormControl()
+	{
+		throw new Exception("Filter {$this->name} cannot be use, because it is not implement getFormControl() method.");
+	}
 
-        if ($this->where !== NULL) {
-            $condition = Condition::setupFromCallback($this->where, $value);
+	/**
+	 * Returns wrapper prototype (<th> html tag).
+	 *
+	 * @return Html
+	 */
+	public function getWrapperPrototype()
+	{
+		if (!$this->wrapperPrototype) {
+			$this->wrapperPrototype = Html::el('th')
+				->setClass(['grid-filter-' . $this->getName()]);
+		}
 
-        } elseif (is_string($condition)) {
-            $condition = Condition::setup($this->getColumn(), $condition, $this->formatValue($value));
+		return $this->wrapperPrototype;
+	}
 
-        } elseif (is_callable($condition)) {
-            $condition = call_user_func_array($condition, [$value]);
+	/**
+	 * @return string
+	 */
+	public function getCondition()
+	{
+		return $this->condition;
+	}
 
-        } elseif (is_array($condition)) {
-            $condition = isset($condition[$value])
-                ? $condition[$value]
-                : Condition::setupEmpty();
-        }
+	/**
+	 * @param mixed $value
+	 * @return Condition|bool
+	 * @throws Exception
+	 *
+	 * @internal
+	 */
+	public function __getCondition($value)
+	{
+		if ($value === '' || $value === null) {
+			return false; //skip
+		}
 
-        if (is_array($condition)) { //for user-defined condition by array or callback
-            $condition = Condition::setupFromArray($condition);
+		$condition = $this->getCondition();
 
-        } elseif ($condition !== NULL && !$condition instanceof Condition) {
-            $type = gettype($condition);
-            throw new Exception("Condition must be array or Condition object. $type given.");
-        }
+		if ($this->where !== null) {
+			$condition = Condition::setupFromCallback($this->where, $value);
 
-        return $condition;
-    }
+		} elseif (is_string($condition)) {
+			$condition = Condition::setup($this->getColumn(), $condition, $this->formatValue($value));
 
-    /**********************************************************************************************/
+		} elseif (is_callable($condition)) {
+			$condition = call_user_func_array($condition, [$value]);
 
-    /**
-     * Format value for database.
-     * @param string $value
-     * @return string
-     */
-    protected function formatValue($value)
-    {
-        if ($this->formatValue !== NULL) {
-            return str_replace(static::VALUE_IDENTIFIER, $value, $this->formatValue);
-        } else {
-            return $value;
-        }
-    }
+		} elseif (is_array($condition)) {
+			$condition = $condition[$value] ?? Condition::setupEmpty();
+		}
 
-    /**
-     * Value representation in URI.
-     * @param string $value
-     * @return string
-     * @internal
-     */
-    public function changeValue($value)
-    {
-        return $value;
-    }
+		if (is_array($condition)) { //for user-defined condition by array or callback
+			$condition = Condition::setupFromArray($condition);
+
+		} elseif ($condition !== null && !$condition instanceof Condition) {
+			$type = gettype($condition);
+
+			throw new Exception("Condition must be array or Condition object. $type given.");
+		}
+
+		return $condition;
+	}
+
+	/**
+	 * Format value for database.
+	 *
+	 * @param string $value
+	 * @return string
+	 */
+	protected function formatValue($value)
+	{
+		return $this->formatValue !== null ? str_replace(self::VALUE_IDENTIFIER, $value, $this->formatValue) : $value;
+	}
+
+	/**
+	 * Value representation in URI.
+	 *
+	 * @param string $value
+	 * @return string
+	 *
+	 * @internal
+	 */
+	public function changeValue($value)
+	{
+		return $value;
+	}
+
 }

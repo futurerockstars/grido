@@ -11,29 +11,30 @@
 
 namespace Grido;
 
+use function str_replace;
+
 /**
  * Helpers.
- *
- * @package     Grido
- * @author      Josef Kříž <pepakriz@gmail.com>
  */
 class Helpers
 {
-    /**
-     * @param string $name
-     * @return string
-     */
-    public static function formatColumnName($name)
-    {
-        return str_replace('.', '__', $name);
-    }
 
-    /**
-     * @param string $name
-     * @return string
-     */
-    public static function unformatColumnName($name)
-    {
-        return str_replace('__', '.', $name);
-    }
+	/**
+	 * @param string $name
+	 * @return string
+	 */
+	public static function formatColumnName($name)
+	{
+		return str_replace('.', '__', $name);
+	}
+
+	/**
+	 * @param string $name
+	 * @return string
+	 */
+	public static function unformatColumnName($name)
+	{
+		return str_replace('__', '.', $name);
+	}
+
 }

@@ -11,183 +11,187 @@
 
 namespace Grido\DataSources;
 
+use Dibi\Fluent;
+use Dibi\Row;
+use Grido\Components\Filters\Condition;
 use Grido\Exception;
+use Latte\Runtime\Filters;
 use Nette;
+use function array_values;
+use function call_user_func_array;
+use function gettype;
+use function is_callable;
+use function is_string;
+use function sort;
 
 /**
  * Dibi Fluent data source.
  *
- * @package     Grido
- * @subpackage  DataSources
- * @author      Petr Bugyík
- *
- * @property-read \Dibi\Fluent $fluent
+ * @property-read Fluent $fluent
  * @property-read int $limit
  * @property-read int $offset
  * @property-read int $count
  * @property-read array $data
  */
-class DibiFluent  implements IDataSource
+class DibiFluent implements IDataSource
 {
-    use Nette\SmartObject;
 
-    /** @var \Dibi\Fluent */
-    protected $fluent;
+	use Nette\SmartObject;
 
-    /** @var int */
-    protected $limit;
+	/** @var Fluent */
+	protected $fluent;
 
-    /** @var int */
-    protected $offset;
+	/** @var int */
+	protected $limit;
 
-    /**
-     * @param \Dibi\Fluent $fluent
-     */
-    public function __construct(\Dibi\Fluent $fluent)
-    {
-        $this->fluent = $fluent;
-    }
+	/** @var int */
+	protected $offset;
 
-    /**
-     * @return \Dibi\Fluent
-     */
-    public function getFluent()
-    {
-        return $this->fluent;
-    }
+	public function __construct(Fluent $fluent)
+	{
+		$this->fluent = $fluent;
+	}
 
-    /**
-     * @return int
-     */
-    public function getLimit()
-    {
-        return $this->limit;
-    }
+	/**
+	 * @return Fluent
+	 */
+	public function getFluent()
+	{
+		return $this->fluent;
+	}
 
-    /**
-     * @return int
-     */
-    public function getOffset()
-    {
-        return $this->offset;
-    }
+	/**
+	 * @return int
+	 */
+	public function getLimit()
+	{
+		return $this->limit;
+	}
 
-    /**
-     * @param \Grido\Components\Filters\Condition $condition
-     * @param \Dibi\Fluent $fluent
-     */
-    protected function makeWhere(\Grido\Components\Filters\Condition $condition, \Dibi\Fluent $fluent = NULL)
-    {
-        $fluent = $fluent === NULL
-            ? $this->fluent
-            : $fluent;
+	/**
+	 * @return int
+	 */
+	public function getOffset()
+	{
+		return $this->offset;
+	}
 
-        if ($condition->callback) {
-            call_user_func_array($condition->callback, [$condition->value, $fluent]);
-        } else {
-            call_user_func_array([$fluent, 'where'], $condition->__toArray('[', ']'));
-        }
-    }
+	protected function makeWhere(Condition $condition, ?Fluent $fluent = null)
+	{
+		$fluent ??= $this->fluent;
 
-    /********************************** inline editation helpers ************************************/
+		if ($condition->callback) {
+			call_user_func_array($condition->callback, [$condition->value, $fluent]);
+		} else {
+			call_user_func_array([$fluent, 'where'], $condition->__toArray('[', ']'));
+		}
+	}
 
-    /**
-     * Default callback used when an editable column has customRender.
-     * @param mixed $id
-     * @param string $idCol
-     * @return \Dibi\Row
-     */
-    public function getRow($id, $idCol)
-    {
-        $fluent = clone $this->fluent;
-        return $fluent
-            ->where("%n = %s", $idCol, $id)
-            ->fetch();
-    }
+	/********************************** inline editation helpers ************************************/
 
-    /*********************************** interface IDataSource ************************************/
+	/**
+	 * Default callback used when an editable column has customRender.
+	 *
+	 * @param mixed $id
+	 * @param string $idCol
+	 * @return Row
+	 */
+	public function getRow($id, $idCol)
+	{
+		$fluent = clone $this->fluent;
 
-    /**
-     * @return int
-     */
-    public function getCount()
-    {
-        $fluent = clone $this->fluent;
-        return $fluent->count();
-    }
+		return $fluent
+			->where('%n = %s', $idCol, $id)
+			->fetch();
+	}
 
-    /**
-     * @return array
-     */
-    public function getData()
-    {
-        return $this->fluent->fetchAll($this->offset, $this->limit);
-    }
+	/*********************************** interface IDataSource ************************************/
 
-    /**
-     * @param array $conditions
-     */
-    public function filter(array $conditions)
-    {
-        foreach ($conditions as $condition) {
-            $this->makeWhere($condition);
-        }
-    }
+	/**
+	 * @return int
+	 */
+	public function getCount()
+	{
+		$fluent = clone $this->fluent;
 
-    /**
-     * @param int $offset
-     * @param int $limit
-     */
-    public function limit($offset, $limit)
-    {
-        $this->offset = $offset;
-        $this->limit = $limit;
-    }
+		return $fluent->count();
+	}
 
-    /**
-     * @param array $sorting
-     */
-    public function sort(array $sorting)
-    {
-        foreach ($sorting as $column => $sort) {
-            $this->fluent->orderBy("%n", $column, $sort);
-        }
-    }
+	/**
+	 * @return array
+	 */
+	public function getData()
+	{
+		return $this->fluent->fetchAll($this->offset, $this->limit);
+	}
 
-    /**
-     * @param mixed $column
-     * @param array $conditions
-     * @param int $limit
-     * @return array
-     * @throws Exception
-     */
-    public function suggest($column, array $conditions, $limit)
-    {
-        $fluent = clone $this->fluent;
-        if (is_string($column)) {
-            $fluent->removeClause('SELECT')->select("DISTINCT %n", $column)->orderBy("%n", $column, 'ASC');
-        }
+	/**
+	 * @param array $conditions
+	 */
+	public function filter(array $conditions)
+	{
+		foreach ($conditions as $condition) {
+			$this->makeWhere($condition);
+		}
+	}
 
-        foreach ($conditions as $condition) {
-            $this->makeWhere($condition, $fluent);
-        }
+	/**
+	 * @param int $offset
+	 * @param int $limit
+	 */
+	public function limit($offset, $limit)
+	{
+		$this->offset = $offset;
+		$this->limit = $limit;
+	}
 
-        $items = [];
-        $data = $fluent->fetchAll(0, $limit);
-        foreach ($data as $row) {
-            if (is_string($column)) {
-                $value = (string) $row[$column];
-            } elseif (is_callable($column)) {
-                $value = (string) $column($row);
-            } else {
-                $type = gettype($column);
-                throw new Exception("Column of suggestion must be string or callback, $type given.");
-            }
+	/**
+	 * @param array $sorting
+	 */
+	public function sort(array $sorting)
+	{
+		foreach ($sorting as $column => $sort) {
+			$this->fluent->orderBy('%n', $column, $sort);
+		}
+	}
 
-            $items[$value] = \Latte\Runtime\Filters::escapeHtml($value);
-        }
+	/**
+	 * @param mixed $column
+	 * @param array $conditions
+	 * @param int $limit
+	 * @return array
+	 * @throws Exception
+	 */
+	public function suggest($column, array $conditions, $limit)
+	{
+		$fluent = clone $this->fluent;
+		if (is_string($column)) {
+			$fluent->removeClause('SELECT')->select('DISTINCT %n', $column)->orderBy('%n', $column, 'ASC');
+		}
 
-        is_callable($column) && sort($items);
-        return array_values($items);
-    }
+		foreach ($conditions as $condition) {
+			$this->makeWhere($condition, $fluent);
+		}
+
+		$items = [];
+		$data = $fluent->fetchAll(0, $limit);
+		foreach ($data as $row) {
+			if (is_string($column)) {
+				$value = (string) $row[$column];
+			} elseif (is_callable($column)) {
+				$value = (string) $column($row);
+			} else {
+				$type = gettype($column);
+
+				throw new Exception("Column of suggestion must be string or callback, $type given.");
+			}
+
+			$items[$value] = Filters::escapeHtml($value);
+		}
+
+		is_callable($column) && sort($items);
+
+		return array_values($items);
+	}
+
 }

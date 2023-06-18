@@ -46,7 +46,7 @@ class Response implements \Nette\Http\IResponse
 
 class ExportTest extends \Tester\TestCase
 {
-    function testHasExport()
+    public function testHasExport()
     {
         $grid = new Grid;
         Assert::false($grid->hasExport());
@@ -56,7 +56,7 @@ class ExportTest extends \Tester\TestCase
         Assert::true($grid->hasExport(FALSE));
     }
 
-    function testSetExport()
+    public function testSetExport()
     {
         $grid = new Grid;
         $label = 'export';
@@ -73,12 +73,12 @@ class ExportTest extends \Tester\TestCase
         }, 'Nette\InvalidArgumentException');
     }
 
-    function testHandleExport()
+    public function testHandleExport()
     {
         $this->exportScenario('Testovací export');
     }
 
-    function testLabelGeneration()
+    public function testLabelGeneration()
     {
         $this->exportScenario();
     }
@@ -123,7 +123,7 @@ class ExportTest extends \Tester\TestCase
         ], Response::$headers);
     }
 
-    function testCustomData()
+    public function testCustomData()
     {
         Helper::grid(function(Grid $grid) {
             $grid->setModel(new ArraySource([

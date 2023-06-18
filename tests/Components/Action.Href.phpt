@@ -17,7 +17,7 @@ require_once __DIR__ . '/../bootstrap.php';
 
 class ActionHrefTest extends \Tester\TestCase
 {
-    function testRender()
+    public function testRender()
     {
         Helper::grid(function(Grid $grid) {
             $grid->addActionHref('delete', 'Delete');
@@ -49,7 +49,7 @@ class ActionHrefTest extends \Tester\TestCase
         Assert::same('<a class="grid-action-delete" href="/test/delete/0">Delete</a>', $output);
     }
 
-    function testSetCustomHref()
+    public function testSetCustomHref()
     {
         $testRow = ['id' => 2, 'firstname' => 'Lucie'];
         Helper::grid(function(Grid $grid) use ($testRow) {
@@ -66,7 +66,7 @@ class ActionHrefTest extends \Tester\TestCase
         Assert::same('<a class="grid-action-delete" href="/edit/2/Lucie/">Delete</a>', $output);
     }
 
-    function testDestinationAndArguments()
+    public function testDestinationAndArguments()
     {
         Helper::grid(function(Grid $grid) {
             $destination = 'test';

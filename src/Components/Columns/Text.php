@@ -11,45 +11,44 @@
 
 namespace Grido\Components\Columns;
 
+use Closure;
+use Nette\Utils\Strings;
+
 /**
  * Text column.
- *
- * @package     Grido
- * @subpackage  Components\Columns
- * @author      Petr Bugyík
  */
 class Text extends Editable
 {
-    /** @var \Closure */
-    protected $truncate;
 
-    /**
-     * @param string $maxLen UTF-8 encoding
-     * @param string $append UTF-8 encoding
-     * @return Column
-     */
-    public function setTruncate($maxLen, $append = "\xE2\x80\xA6")
-    {
-        $this->truncate = function($string) use ($maxLen, $append) {
-            return \Nette\Utils\Strings::truncate($string, $maxLen, $append);
-        };
+	/** @var Closure */
+	protected $truncate;
 
-        return $this;
-    }
+	/**
+	 * @param string $maxLen UTF-8 encoding
+	 * @param string $append UTF-8 encoding
+	 * @return Column
+	 */
+	public function setTruncate($maxLen, $append = "\xE2\x80\xA6")
+	{
+		$this->truncate = fn ($string) => Strings::truncate($string, $maxLen, $append);
 
-    /**
-     * @param mixed $value
-     * @return mixed
-     */
-    protected function formatValue($value)
-    {
-        $value = parent::formatValue($value);
+		return $this;
+	}
 
-        if ($this->truncate) {
-            $truncate = $this->truncate;
-            $value = $truncate($value);
-        }
+	/**
+	 * @param mixed $value
+	 * @return mixed
+	 */
+	protected function formatValue($value)
+	{
+		$value = parent::formatValue($value);
 
-        return $value;
-    }
+		if ($this->truncate) {
+			$truncate = $this->truncate;
+			$value = $truncate($value);
+		}
+
+		return $value;
+	}
+
 }

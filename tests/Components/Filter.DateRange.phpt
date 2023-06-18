@@ -16,7 +16,7 @@ use Tester\Assert,
 
 class FilterDateRangeTest extends \Tester\TestCase
 {
-    function testFormControl()
+    public function testFormControl()
     {
         $grid = new Grid;
         $filter = $grid->addFilterDateRange('date', 'Daterange');
@@ -25,7 +25,7 @@ class FilterDateRangeTest extends \Tester\TestCase
         Assert::same(['text', 'daterange'], $filter->control->controlPrototype->class);
     }
 
-    function testGetCondition()
+    public function testGetCondition()
     {
         $grid = new Grid;
         $filter = $grid->addFilterDateRange('date', 'Daterange');

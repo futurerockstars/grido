@@ -16,7 +16,7 @@ use Tester\Assert,
 
 class FilterSelectTest extends \Tester\TestCase
 {
-    function testFormControl()
+    public function testFormControl()
     {
         $grid = new Grid;
         $items = ['one' => 'One'];
@@ -25,7 +25,7 @@ class FilterSelectTest extends \Tester\TestCase
         Assert::same($items, $filter->control->items);
     }
 
-    function testGetCondition()
+    public function testGetCondition()
     {
         $grid = new Grid;
         $filter = $grid->addFilterSelect('select', 'Select');

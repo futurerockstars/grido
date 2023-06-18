@@ -11,153 +11,169 @@
 
 namespace Grido\Tests;
 
+use Closure;
+use Grido\Grid;
+use Kdyby\Annotations\DI\AnnotationsExtension;
+use Kdyby\Doctrine\DI\OrmExtension;
+use Kdyby\Events\DI\EventsExtension;
+use Nette\Application\IResponse;
+use Nette\Application\IRouter;
+use Nette\Application\Responses\JsonResponse;
+use Nette\Application\Routers\Route;
+use Nette\Application\UI\Presenter;
+use Nette\Configurator;
+use Nette\Http\Request;
+use Nette\Http\UrlScript;
 use Tester\Assert;
+use const E_RECOVERABLE_ERROR;
+use const PHP_VERSION_ID;
 
 /**
  * Test helper.
- *
- * @author     Petr Bugyík
- * @package    Grido\Tests
  */
 class Helper
 {
-    const GRID_NAME = 'grid';
 
-    /** @var \Grido\Grid */
-    public static $grid;
+	const GRID_NAME = 'grid';
 
-    /** @var TestPresenter */
-    public static $presenter;
+	/** @var Grid */
+	public static $grid;
 
-    /**
-     * @param \Closure $definition of grid; function(Grid $grid, TestPresenter $presenter) { };
-     */
-    public static function grid(\Closure $definition)
-    {
-        $self = new self;
+	/** @var TestPresenter */
+	public static $presenter;
 
-        if (self::$presenter === NULL) {
-            self::$presenter = $self->createPresenter();
-        }
+	/**
+	 * @param Closure $definition of grid; function(Grid $grid, TestPresenter $presenter) { };
+	 */
+	public static function grid(Closure $definition)
+	{
+		$self = new self();
 
-        self::$presenter->onStartUp = [];
-        self::$presenter->onStartUp[] = function(TestPresenter $presenter) use ($definition) {
-            if (isset($presenter[Helper::GRID_NAME])) {
-                unset($presenter[Helper::GRID_NAME]);
-            }
+		if (self::$presenter === null) {
+			self::$presenter = $self->createPresenter();
+		}
 
-            $definition(new \Grido\Grid($presenter, Helper::GRID_NAME), $presenter);
-        };
+		self::$presenter->onStartUp = [];
+		self::$presenter->onStartUp[] = function (TestPresenter $presenter) use ($definition) {
+			if (isset($presenter[self::GRID_NAME])) {
+				unset($presenter[self::GRID_NAME]);
+			}
 
-        return $self;
-    }
+			$definition(new Grid($presenter, self::GRID_NAME), $presenter);
+		};
 
-    /**
-     * @param array $params
-     * @param string $method
-     * @return \Nette\Application\IResponse
-     */
-    public static function request(array $params = [], $method = \Nette\Http\Request::GET)
-    {
-        $request = new \Nette\Application\Request('Test', $method, $params);
-        $response = self::$presenter->run($request);
+		return $self;
+	}
 
-        self::$grid = self::$presenter[self::GRID_NAME];
+	/**
+	 * @param array $params
+	 * @param string $method
+	 * @return IResponse
+	 */
+	public static function request(array $params = [], $method = Request::GET)
+	{
+		$request = new \Nette\Application\Request('Test', $method, $params);
+		$response = self::$presenter->run($request);
 
-        return $response;
-    }
+		self::$grid = self::$presenter[self::GRID_NAME];
 
-    /**
-     * @param array $params
-     * @param string $method
-     * @return \Nette\Application\IResponse
-     */
-    public function run(array $params = [], $method = \Nette\Http\Request::GET)
-    {
-        return self::request($params, $method);
-    }
+		return $response;
+	}
 
-    public static function assertTypeError($function)
-    {
-        if (PHP_VERSION_ID < 70000) {
-            Assert::error($function, E_RECOVERABLE_ERROR);
-        } else {
-            Assert::exception($function, '\TypeError');
-        }
-    }
+	/**
+	 * @param array $params
+	 * @param string $method
+	 * @return IResponse
+	 */
+	public function run(array $params = [], $method = Request::GET)
+	{
+		return self::request($params, $method);
+	}
 
-    /**
-     * @return \TestPresenter
-     */
-    private function createPresenter()
-    {
-        $url = new \Nette\Http\UrlScript('http://localhost/');
-        $url->setScriptPath('/');
+	public static function assertTypeError($function)
+	{
+		if (PHP_VERSION_ID < 70000) {
+			Assert::error($function, E_RECOVERABLE_ERROR);
+		} else {
+			Assert::exception($function, '\TypeError');
+		}
+	}
 
-        $configurator = new \Nette\Configurator;
-        $configurator->addConfig(__DIR__ . '/config.neon');
-        \Kdyby\Events\DI\EventsExtension::register($configurator);
-        \Kdyby\Annotations\DI\AnnotationsExtension::register($configurator);
-        \Kdyby\Doctrine\DI\OrmExtension::register($configurator);
+	/**
+	 * @return \TestPresenter
+	 */
+	private function createPresenter()
+	{
+		$url = new UrlScript('http://localhost/');
+		$url->setScriptPath('/');
 
-        $container = $configurator
-            ->setTempDirectory(TEMP_DIR)
-            ->createContainer();
-        $container->removeService('httpRequest');
-        $container->addService('httpRequest', new \Nette\Http\Request($url));
+		$configurator = new Configurator();
+		$configurator->addConfig(__DIR__ . '/config.neon');
+		EventsExtension::register($configurator);
+		AnnotationsExtension::register($configurator);
+		OrmExtension::register($configurator);
 
-        $router = $container->getByType(\Nette\Application\IRouter::class);
-        $router[] = new \Nette\Application\Routers\Route('<presenter>/<action>[/<id>]', 'Dashboard:default');
+		$container = $configurator
+			->setTempDirectory(TEMP_DIR)
+			->createContainer();
+		$container->removeService('httpRequest');
+		$container->addService('httpRequest', new Request($url));
 
-        $presenter = new TestPresenter($container);
-        $container->callInjects($presenter);
-        $presenter->invalidLinkMode = $presenter::INVALID_LINK_WARNING;
-        $presenter->autoCanonicalize = FALSE;
+		$router = $container->getByType(IRouter::class);
+		$router[] = new Route('<presenter>/<action>[/<id>]', 'Dashboard:default');
 
-        return $presenter;
-    }
+		$presenter = new TestPresenter($container);
+		$container->callInjects($presenter);
+		$presenter->invalidLinkMode = $presenter::INVALID_LINK_WARNING;
+		$presenter->autoCanonicalize = false;
+
+		return $presenter;
+	}
+
 }
 
-class TestPresenter extends \Nette\Application\UI\Presenter
+class TestPresenter extends Presenter
 {
-    /** @var array */
-    public $onStartUp;
 
-    /** @var bool */
-    public $forceAjaxMode = FALSE;
+	/** @var array */
+	public $onStartUp;
 
-    public function startup()
-    {
-        parent::startup();
+	/** @var bool */
+	public $forceAjaxMode = false;
 
-        $this->onStartUp($this);
-    }
+	public function startup()
+	{
+		parent::startup();
 
-    public function sendTemplate()
-    {
-        //parent::sendTemplate(); intentionally
-    }
+		$this->onStartUp($this);
+	}
 
-    public function sendResponse(\Nette\Application\IResponse $response)
-    {
-        if($response instanceof \Nette\Application\Responses\JsonResponse){
-            $response->send($this->getHttpRequest(), $this->getHttpResponse());
-        } else {
-            parent::sendResponse($response);
-        }
-    }
+	public function sendTemplate()
+	{
+		//parent::sendTemplate(); intentionally
+	}
 
-    public function isAjax()
-    {
-        return $this->forceAjaxMode === TRUE
-            ? TRUE
-            : parent::isAjax();
-    }
+	public function sendResponse(IResponse $response)
+	{
+		if ($response instanceof JsonResponse) {
+			$response->send($this->getHttpRequest(), $this->getHttpResponse());
+		} else {
+			parent::sendResponse($response);
+		}
+	}
 
-    public function terminate()
-    {
-        if ($this->forceAjaxMode === FALSE) {
-            parent::terminate();
-        }
-    }
+	public function isAjax()
+	{
+		return $this->forceAjaxMode === true
+			? true
+			: parent::isAjax();
+	}
+
+	public function terminate()
+	{
+		if ($this->forceAjaxMode === false) {
+			parent::terminate();
+		}
+	}
+
 }
