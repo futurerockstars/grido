@@ -16,15 +16,17 @@ use Grido\Components\Button;
 use Grido\Components\Columns\Column;
 use Grido\Components\Filters\Filter;
 use Grido\Components\Paginator;
+use Nette\Application\UI\ComponentReflection;
 use Nette\Application\UI\Form;
-use Nette\Application\UI\PresenterComponentReflection;
+use Nette\Application\UI\Presenter;
+use Nette\Application\UI\Template;
+use Nette\Bridges\ApplicationLatte\DefaultTemplate;
 use Nette\Database\Table\IRow;
 use Nette\Database\Table\Selection;
 use Nette\Forms\Controls\SubmitButton;
 use Nette\Http\SessionSection;
 use Nette\InvalidArgumentException;
 use Nette\Localization\ITranslator;
-use Nette\Templating\FileTemplate;
 use Nette\Utils\Html;
 use Nette\Utils\Strings;
 use Symfony\Component\PropertyAccess\PropertyAccessor;
@@ -72,6 +74,7 @@ use const E_USER_NOTICE;
  * @method void onRegistered(Grid $grid)
  * @method void onRender(Grid $grid)
  * @method void onFetchData(Grid $grid)
+ * @method DefaultTemplate getTemplate()
  */
 class Grid extends Components\Container
 {
@@ -163,7 +166,6 @@ class Grid extends Components\Container
 
 	public function __construct()
 	{
-		parent::__construct();
 		[$parent, $name] = func_get_args() + [null, null];
 		if ($parent !== null) {
 			$parent->addComponent($this, $name);
@@ -762,7 +764,7 @@ class Grid extends Components\Container
 	 *
 	 * @internal
 	 */
-	public function loadState(array $params)
+	public function loadState(array $params): void
 	{
 		//loads state from session
 		$session = $this->getRememberSession();
@@ -778,16 +780,14 @@ class Grid extends Components\Container
 	/**
 	 * Saves state informations for next request.
 	 *
-	 * @param array                                              $params
-	 * @param PresenterComponentReflection $reflection (internal, used by Presenter)
+	 * @param array $params
 	 *
 	 * @internal
 	 */
-	public function saveState(array &$params, $reflection = null)
+	public function saveState(array &$params): void
 	{
 		!empty($this->onRegistered) && $this->onRegistered($this);
-
-		return parent::saveState($params, $reflection);
+		parent::saveState($params);
 	}
 
 	/**
@@ -894,13 +894,12 @@ class Grid extends Components\Container
 	}
 
 	/**
-	 * @return FileTemplate
-	 *
 	 * @internal
 	 */
-	public function createTemplate()
+	public function createTemplate(): Template
 	{
 		$template = parent::createTemplate();
+		assert($template instanceof \Nette\Bridges\ApplicationLatte\Template);
 		$template->setFile($this->getCustomization()->getTemplateFiles()[Customization::TEMPLATE_DEFAULT]);
 		$template->getLatte()->addFilter('translate', [$this->getTranslator(), 'translate']);
 
@@ -1095,7 +1094,7 @@ class Grid extends Components\Container
 	 */
 	public function __triggerUserNotice($message)
 	{
-		if ($this->getPresenter(false) && $session = $this->getRememberSession()) {
+		if ($this->lookup(Presenter::class, FALSE) && $session = $this->getRememberSession()) {
 			$session->remove();
 		}
 

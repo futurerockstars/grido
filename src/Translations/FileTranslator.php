@@ -66,14 +66,9 @@ class FileTranslator implements ITranslator
 
 	/************************* interface \Nette\Localization\ITranslator **************************/
 
-	/**
-	 * @param string $message
-	 * @param int $count plural
-	 * @return string
-	 */
-	public function translate($message, $count = null)
+	public function translate($message, ...$parameters): string
 	{
-		return $this->translations[$message] ?? $message;
+		return $this->translations[$message] ?? (string) $message;
 	}
 
 }

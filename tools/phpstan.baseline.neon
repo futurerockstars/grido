@@ -1,11 +1,6 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Grido\\\\Components\\\\Actions\\\\Action\\:\\:__construct\\(\\) does not call parent constructor from Nette\\\\ComponentModel\\\\Component\\.$#"
-			count: 1
-			path: ../src/Components/Actions/Action.php
-
-		-
 			message: "#^Method Grido\\\\Components\\\\Actions\\\\Action\\:\\:getElementPrototype\\(\\) has Grido\\\\Exception in PHPDoc @throws tag but it's not thrown\\.$#"
 			count: 1
 			path: ../src/Components/Actions/Action.php
@@ -131,11 +126,6 @@ parameters:
 			path: ../src/Components/Actions/Href.php
 
 		-
-			message: "#^Grido\\\\Components\\\\Button\\:\\:__construct\\(\\) does not call parent constructor from Nette\\\\ComponentModel\\\\Component\\.$#"
-			count: 1
-			path: ../src/Components/Button.php
-
-		-
 			message: "#^Method Grido\\\\Components\\\\Button\\:\\:__construct\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: ../src/Components/Button.php
@@ -192,11 +182,6 @@ parameters:
 
 		-
 			message: "#^Casting to bool something that's already bool\\.$#"
-			count: 1
-			path: ../src/Components/Columns/Column.php
-
-		-
-			message: "#^Grido\\\\Components\\\\Columns\\\\Column\\:\\:__construct\\(\\) does not call parent constructor from Nette\\\\ComponentModel\\\\Component\\.$#"
 			count: 1
 			path: ../src/Components/Columns/Column.php
 
@@ -467,6 +452,11 @@ parameters:
 
 		-
 			message: "#^Property Grido\\\\Components\\\\Columns\\\\Editable\\:\\:\\$editableCallback has unknown class Grido\\\\Components\\\\Columns\\\\callback as its type\\.$#"
+			count: 1
+			path: ../src/Components/Columns/Editable.php
+
+		-
+			message: "#^Property Grido\\\\Components\\\\Columns\\\\Editable\\:\\:\\$editableControl \\(Nette\\\\Forms\\\\IControl\\) does not accept Nette\\\\Forms\\\\Controls\\\\TextInput\\.$#"
 			count: 1
 			path: ../src/Components/Columns/Editable.php
 
@@ -776,11 +766,6 @@ parameters:
 			path: ../src/Components/Export.php
 
 		-
-			message: "#^Grido\\\\Components\\\\Export\\:\\:__construct\\(\\) does not call parent constructor from Nette\\\\ComponentModel\\\\Component\\.$#"
-			count: 1
-			path: ../src/Components/Export.php
-
-		-
 			message: "#^Method Grido\\\\Components\\\\Export\\:\\:handleExport\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: ../src/Components/Export.php
@@ -961,6 +946,11 @@ parameters:
 			path: ../src/Components/Filters/DateRange.php
 
 		-
+			message: "#^Cannot use array destructuring on array\\|null\\.$#"
+			count: 1
+			path: ../src/Components/Filters/DateRange.php
+
+		-
 			message: "#^Only booleans are allowed in &&, DateTime\\|false given on the left side\\.$#"
 			count: 2
 			path: ../src/Components/Filters/DateRange.php
@@ -971,7 +961,7 @@ parameters:
 			path: ../src/Components/Filters/DateRange.php
 
 		-
-			message: "#^Only booleans are allowed in a negated boolean, mixed given\\.$#"
+			message: "#^Only booleans are allowed in a negated boolean, array\\|null given\\.$#"
 			count: 1
 			path: ../src/Components/Filters/DateRange.php
 
@@ -1007,11 +997,6 @@ parameters:
 
 		-
 			message: "#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#"
-			count: 1
-			path: ../src/Components/Filters/Filter.php
-
-		-
-			message: "#^Grido\\\\Components\\\\Filters\\\\Filter\\:\\:__construct\\(\\) does not call parent constructor from Nette\\\\ComponentModel\\\\Component\\.$#"
 			count: 1
 			path: ../src/Components/Filters/Filter.php
 
@@ -1131,21 +1116,6 @@ parameters:
 			path: ../src/Components/Filters/Select.php
 
 		-
-			message: "#^Cannot call method isAjax\\(\\) on Nette\\\\Application\\\\UI\\\\Presenter\\|null\\.$#"
-			count: 1
-			path: ../src/Components/Filters/Text.php
-
-		-
-			message: "#^Cannot call method sendResponse\\(\\) on Nette\\\\Application\\\\UI\\\\Presenter\\|null\\.$#"
-			count: 1
-			path: ../src/Components/Filters/Text.php
-
-		-
-			message: "#^Cannot call method terminate\\(\\) on Nette\\\\Application\\\\UI\\\\Presenter\\|null\\.$#"
-			count: 1
-			path: ../src/Components/Filters/Text.php
-
-		-
 			message: "#^Casting to int something that's already int\\.$#"
 			count: 1
 			path: ../src/Components/Filters/Text.php
@@ -1203,11 +1173,6 @@ parameters:
 		-
 			message: "#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#"
 			count: 3
-			path: ../src/Components/Operation.php
-
-		-
-			message: "#^Grido\\\\Components\\\\Operation\\:\\:__construct\\(\\) does not call parent constructor from Nette\\\\ComponentModel\\\\Component\\.$#"
-			count: 1
 			path: ../src/Components/Operation.php
 
 		-
@@ -1676,17 +1641,7 @@ parameters:
 			path: ../src/DataSources/NetteDatabase.php
 
 		-
-			message: "#^Call to an undefined method Nette\\\\Application\\\\UI\\\\ITemplate\\:\\:add\\(\\)\\.$#"
-			count: 9
-			path: ../src/Grid.php
-
-		-
-			message: "#^Call to an undefined method Nette\\\\Application\\\\UI\\\\ITemplate\\:\\:getLatte\\(\\)\\.$#"
-			count: 1
-			path: ../src/Grid.php
-
-		-
-			message: "#^Call to deprecated method getReflection\\(\\) of class Nette\\\\Application\\\\UI\\\\Component\\.$#"
+			message: "#^Access to an undefined property Nette\\\\ComponentModel\\\\IComponent\\:\\:\\$value\\.$#"
 			count: 1
 			path: ../src/Grid.php
 
@@ -1696,27 +1651,7 @@ parameters:
 			path: ../src/Grid.php
 
 		-
-			message: "#^Cannot access property \\$name on Nette\\\\Application\\\\UI\\\\Presenter\\|null\\.$#"
-			count: 1
-			path: ../src/Grid.php
-
-		-
 			message: "#^Cannot access property \\$params on Nette\\\\Http\\\\SessionSection\\|null\\.$#"
-			count: 1
-			path: ../src/Grid.php
-
-		-
-			message: "#^Cannot access property \\$value on Nette\\\\ComponentModel\\\\IComponent\\|null\\.$#"
-			count: 1
-			path: ../src/Grid.php
-
-		-
-			message: "#^Cannot call method getSession\\(\\) on Nette\\\\Application\\\\UI\\\\Presenter\\|null\\.$#"
-			count: 1
-			path: ../src/Grid.php
-
-		-
-			message: "#^Cannot call method isSignalReceiver\\(\\) on Nette\\\\Application\\\\UI\\\\Presenter\\|null\\.$#"
 			count: 1
 			path: ../src/Grid.php
 
@@ -1792,16 +1727,6 @@ parameters:
 
 		-
 			message: "#^Method Grido\\\\Grid\\:\\:createComponentForm\\(\\) has parameter \\$name with no type specified\\.$#"
-			count: 1
-			path: ../src/Grid.php
-
-		-
-			message: "#^Method Grido\\\\Grid\\:\\:createTemplate\\(\\) has invalid return type Nette\\\\Templating\\\\FileTemplate\\.$#"
-			count: 1
-			path: ../src/Grid.php
-
-		-
-			message: "#^Method Grido\\\\Grid\\:\\:createTemplate\\(\\) should return Nette\\\\Templating\\\\FileTemplate but returns Nette\\\\Application\\\\UI\\\\ITemplate\\.$#"
 			count: 1
 			path: ../src/Grid.php
 
@@ -1921,11 +1846,6 @@ parameters:
 			path: ../src/Grid.php
 
 		-
-			message: "#^Method Grido\\\\Grid\\:\\:saveState\\(\\) with return type void returns void but should not return anything\\.$#"
-			count: 1
-			path: ../src/Grid.php
-
-		-
 			message: "#^Method Grido\\\\Grid\\:\\:setClientSideOptions\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: ../src/Grid.php
@@ -1956,17 +1876,12 @@ parameters:
 			path: ../src/Grid.php
 
 		-
-			message: "#^Method Nette\\\\Application\\\\UI\\\\Component\\:\\:saveState\\(\\) invoked with 2 parameters, 1 required\\.$#"
-			count: 1
-			path: ../src/Grid.php
-
-		-
 			message: "#^Negated boolean expression is always false\\.$#"
 			count: 1
 			path: ../src/Grid.php
 
 		-
-			message: "#^Only booleans are allowed in &&, Nette\\\\Application\\\\UI\\\\Presenter\\|null given on the left side\\.$#"
+			message: "#^Only booleans are allowed in &&, Nette\\\\ComponentModel\\\\IComponent\\|null given on the left side\\.$#"
 			count: 1
 			path: ../src/Grid.php
 
@@ -1977,11 +1892,6 @@ parameters:
 
 		-
 			message: "#^Only booleans are allowed in &&, Nette\\\\Http\\\\SessionSection\\|null given on the right side\\.$#"
-			count: 1
-			path: ../src/Grid.php
-
-		-
-			message: "#^Only booleans are allowed in &&, mixed given on the right side\\.$#"
 			count: 1
 			path: ../src/Grid.php
 
@@ -2042,19 +1952,6 @@ parameters:
 
 		-
 			message: "#^Parameter \\#2 \\$high of function range expects float\\|int\\|string, int\\|null given\\.$#"
-			count: 1
-			path: ../src/Grid.php
-
-		-
-			message: "#^Parameter \\#2 \\$limit of method Grido\\\\DataSources\\\\IDataSource\\:\\:limit\\(\\) expects int, int\\|null given\\.$#"
-			count: 1
-			path: ../src/Grid.php
-
-		-
-			message: """
-				#^Parameter \\$reflection of method Grido\\\\Grid\\:\\:saveState\\(\\) has typehint with deprecated class Nette\\\\Application\\\\UI\\\\PresenterComponentReflection\\:
-				use Nette\\\\Application\\\\UI\\\\ComponentReflection$#
-			"""
 			count: 1
 			path: ../src/Grid.php
 
@@ -2129,16 +2026,6 @@ parameters:
 			path: ../src/Grid.php
 
 		-
-			message: "#^Result of method Nette\\\\Application\\\\UI\\\\Component\\:\\:saveState\\(\\) \\(void\\) is used\\.$#"
-			count: 1
-			path: ../src/Grid.php
-
-		-
-			message: "#^Return type \\(Nette\\\\Templating\\\\FileTemplate\\) of method Grido\\\\Grid\\:\\:createTemplate\\(\\) should be covariant with return type \\(Nette\\\\Application\\\\UI\\\\ITemplate\\) of method Nette\\\\Application\\\\UI\\\\Control\\:\\:createTemplate\\(\\)$#"
-			count: 1
-			path: ../src/Grid.php
-
-		-
 			message: "#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#"
 			count: 1
 			path: ../src/Grid.php
@@ -2180,16 +2067,6 @@ parameters:
 
 		-
 			message: "#^Method Grido\\\\Translations\\\\FileTranslator\\:\\:setLang\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: ../src/Translations/FileTranslator.php
-
-		-
-			message: "#^Parameter \\#1 \\$message \\(string\\) of method Grido\\\\Translations\\\\FileTranslator\\:\\:translate\\(\\) should be contravariant with parameter \\$message \\(mixed\\) of method Nette\\\\Localization\\\\ITranslator\\:\\:translate\\(\\)$#"
-			count: 1
-			path: ../src/Translations/FileTranslator.php
-
-		-
-			message: "#^Parameter \\#2 \\$count \\(int\\) of method Grido\\\\Translations\\\\FileTranslator\\:\\:translate\\(\\) should be contravariant with parameter \\$count \\(mixed\\) of method Nette\\\\Localization\\\\ITranslator\\:\\:translate\\(\\)$#"
 			count: 1
 			path: ../src/Translations/FileTranslator.php
 
@@ -2259,11 +2136,6 @@ parameters:
 			path: ../tests/DataSources/files/doctrine/entities/Country.php
 
 		-
-			message: "#^Access to property \\$onStartUp on an unknown class TestPresenter\\.$#"
-			count: 4
-			path: ../tests/Helper.php
-
-		-
 			message: "#^Cannot access an offset on Nette\\\\Application\\\\IRouter\\.$#"
 			count: 1
 			path: ../tests/Helper.php
@@ -2274,22 +2146,17 @@ parameters:
 			path: ../tests/Helper.php
 
 		-
+			message: "#^Instanceof between Nette\\\\Application\\\\IResponse and Nette\\\\Application\\\\Responses\\\\JsonResponse will always evaluate to false\\.$#"
+			count: 1
+			path: ../tests/Helper.php
+
+		-
 			message: "#^Method Grido\\\\Tests\\\\Helper\\:\\:assertTypeError\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: ../tests/Helper.php
 
 		-
 			message: "#^Method Grido\\\\Tests\\\\Helper\\:\\:assertTypeError\\(\\) has parameter \\$function with no type specified\\.$#"
-			count: 1
-			path: ../tests/Helper.php
-
-		-
-			message: "#^Method Grido\\\\Tests\\\\Helper\\:\\:createPresenter\\(\\) has invalid return type TestPresenter\\.$#"
-			count: 1
-			path: ../tests/Helper.php
-
-		-
-			message: "#^Method Grido\\\\Tests\\\\Helper\\:\\:createPresenter\\(\\) should return TestPresenter but returns Grido\\\\Tests\\\\TestPresenter\\.$#"
 			count: 1
 			path: ../tests/Helper.php
 
@@ -2309,6 +2176,11 @@ parameters:
 			path: ../tests/Helper.php
 
 		-
+			message: "#^Method Grido\\\\Tests\\\\Helper\\:\\:request\\(\\) should return Nette\\\\Application\\\\IResponse but returns Nette\\\\Application\\\\Response\\.$#"
+			count: 1
+			path: ../tests/Helper.php
+
+		-
 			message: "#^Method Grido\\\\Tests\\\\Helper\\:\\:run\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: ../tests/Helper.php
@@ -2317,16 +2189,6 @@ parameters:
 			message: "#^Property Grido\\\\Tests\\\\TestPresenter\\:\\:\\$onStartUp type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: ../tests/Helper.php
-
-		-
-			message: "#^Static property Grido\\\\Tests\\\\Helper\\:\\:\\$presenter \\(Grido\\\\Tests\\\\TestPresenter\\) does not accept TestPresenter\\.$#"
-			count: 1
-			path: ../tests/Helper.php
-
-		-
-			message: "#^Access to deprecated static property \\$maxLen of class Tracy\\\\Debugger\\.$#"
-			count: 1
-			path: ../tests/bootstrap.php
 
 		-
 			message: "#^Call to an undefined method object\\:\\:runTest\\(\\)\\.$#"

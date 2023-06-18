@@ -164,12 +164,13 @@ class EditableTest extends \Tester\TestCase
         });
 
         ob_start();
-            Helper::request([
+            $response = Helper::request([
                 'do' => 'grid-columns-firstname-editable',
                 'grid-columns-firstname-id' => $testedId,
                 'grid-columns-firstname-newValue' => 'newValue',
                 'grid-columns-firstname-oldValue' => 'oldValue',
             ]);
+			$response->send(Helper::$presenter->getHttpRequest(), Helper::$presenter->getHttpResponse());
         $output = ob_get_clean();
         Assert::same('{"updated":true,"html":"Lucy-TEST"}', $output);
     }
@@ -194,7 +195,7 @@ class EditableTest extends \Tester\TestCase
 
         //dibi
         Helper::grid(function(Grid $grid, TestPresenter $presenter) use ($checkException) {
-            $fluent = $presenter->context->getService('dibi_sqlite')
+            $fluent = @$presenter->context->getService('dibi_sqlite')
                 ->select('u.*, c.title AS country')
                 ->from('[user] u')
                 ->join('[country] c')->on('u.country_code = c.code');
@@ -207,7 +208,7 @@ class EditableTest extends \Tester\TestCase
 
         //doctrine
         Helper::grid(function(Grid $grid, TestPresenter $presenter) use ($checkException) {
-            $entityManager = $presenter->context->getByType('Doctrine\ORM\EntityManager');
+            $entityManager = @$presenter->context->getByType('Doctrine\ORM\EntityManager');
             $repository = $entityManager->getRepository('Grido\Tests\Entities\User');
             $model = new \Grido\DataSources\Doctrine(
                 $repository->createQueryBuilder('a') // We need to create query builder with inner join.
@@ -224,7 +225,7 @@ class EditableTest extends \Tester\TestCase
 
         //nette database
         Helper::grid(function(Grid $grid, TestPresenter $presenter) {
-            $database = $presenter->context->getByType('Nette\Database\Context');
+            $database = @$presenter->context->getByType('Nette\Database\Context');
             $grid->setModel($database->table('user'), TRUE);
             $grid->addColumnText('firstname', 'Firstname')
                 ->setEditable();
@@ -309,7 +310,8 @@ class EditableTest extends \Tester\TestCase
         Helper::grid(function(Grid $grid) {
             $grid->setModel([]);
             $grid->presenter->forceAjaxMode = TRUE;
-            $grid->addColumnText('firstname', 'Firstname')->setEditable(function() {}, new TextInput);
+            $grid->addColumnText('firstname', 'Firstname')
+				->setEditable(function() {}, new \Nette\Forms\Controls\TextInput());
         });
 
         ob_start();
@@ -319,29 +321,6 @@ class EditableTest extends \Tester\TestCase
             ]);
         $output = ob_get_clean();
         Assert::same('<input type="text" name="editfirstname" id="frm-grid-form-editfirstname" value="Test">', $output);
-    }
-}
-
-class TextInput extends \Nette\Forms\Controls\TextInput
-{
-    public function getControl()
-    {
-        return new Html(parent::getControl());
-    }
-}
-
-class Html extends \Nette\Utils\Html
-{
-    private $control;
-
-    public function __construct($control)
-    {
-        $this->control = $control;
-    }
-
-    public function render($indent = NULL)
-    {
-        print $this->control->render();
     }
 }
 

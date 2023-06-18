@@ -23,7 +23,6 @@ doctrine:
         Grido\Tests\Entities: %doctrine_dir%/
 
 extensions:
+    annotation: Kdyby\Annotations\DI\AnnotationsExtension
     console: Kdyby\Console\DI\ConsoleExtension
-
-di:
-    accessors: true
+    doctrine: Kdyby\Doctrine\DI\OrmExtension

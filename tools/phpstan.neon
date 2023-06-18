@@ -20,3 +20,8 @@ parameters:
 
 	excludePaths:
 		- ../tests/tmp
+
+	ignoreErrors:
+		- '#^Fetching class constant (.+) of deprecated class(.+)#'
+		- '#^Fetching deprecated class constant(.+)#'
+		- '#(.+)deprecated interface Nette(.+)#'

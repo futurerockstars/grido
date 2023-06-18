@@ -89,9 +89,11 @@ class NetteDatabase implements IDataSource
 	 */
 	public function getRow($id, $idCol)
 	{
-		return $this->getSelection()
+		$res = $this->getSelection()
 			->where('?name = ?', $idCol, $id)
 			->fetch();
+
+		return $res === null ? false : $res;
 	}
 
 	/********************************** interface IDataSource ************************************/

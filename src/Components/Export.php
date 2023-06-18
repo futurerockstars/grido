@@ -166,12 +166,7 @@ class Export extends Component implements IResponse
 
 	/*************************** interface \Nette\Application\IResponse ***************************/
 
-	/**
-	 * Sends response to output.
-	 *
-	 * @return void
-	 */
-	public function send(IRequest $httpRequest, \Nette\Http\IResponse $httpResponse)
+	public function send(IRequest $httpRequest, \Nette\Http\IResponse $httpResponse): void
 	{
 		$encoding = 'utf-8';
 		$label = $this->label

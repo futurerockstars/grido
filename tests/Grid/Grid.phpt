@@ -319,7 +319,7 @@ class GridTest extends \Tester\TestCase
         Assert::same($rowCallback, $grid->rowCallback);
         $grid->getRowPrototype($testRow);
 
-        $rowCallback = mock('\Nette\Utils\Callback');
+        $rowCallback = function () {};
         $grid->setRowCallback($rowCallback);
         Assert::same($rowCallback, $grid->rowCallback);
     }

@@ -25,23 +25,31 @@ class Response implements \Nette\Http\IResponse
 
     public static $headers = [];
 
-    function setHeader($name, $value)
+    public function setHeader(string $name, string $value)
     {
         self::$headers[$name] = $value;
         return $this;
     }
 
-    function setCode($code) {}
-    function getCode() {}
-    function addHeader($name, $value) {}
-    function getHeader($header, $default = NULL) {}
-    function setContentType($type, $charset = NULL) {}
-    function redirect($url, $code = self::S302_FOUND) {}
-    function setExpiration($seconds) {}
-    function isSent() {}
-    function getHeaders() {}
-    function setCookie($name, $value, $expire, $path = NULL, $domain = NULL, $secure = NULL, $httpOnly = NULL) {}
-    function deleteCookie($name, $path = NULL, $domain = NULL, $secure = NULL) {}
+    public function setCode(int $code, ?string $reason = null) {}
+    public function getCode(): int {}
+    public function addHeader(string $name, string $value) {}
+    public function getHeader(string $header): ?string {}
+    public function setContentType(string $type, ?string $charset = null) {}
+    public function redirect(string $url, int $code = self::S302_Found): void {}
+    public function setExpiration(?string $expire) {}
+    public function isSent(): bool {}
+    public function getHeaders(): array {}
+    public function setCookie(
+		string $name,
+		string $value,
+		$expire,
+		?string $path = null,
+		?string $domain = null,
+		?bool $secure = null,
+		?bool $httpOnly = null
+	) {}
+    public function deleteCookie(string $name, ?string $path = null, ?string $domain = null, ?bool $secure = null) {}
 }
 
 class ExportTest extends \Tester\TestCase

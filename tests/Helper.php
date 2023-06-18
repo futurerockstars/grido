@@ -21,6 +21,7 @@ use Nette\Application\IRouter;
 use Nette\Application\Responses\JsonResponse;
 use Nette\Application\Routers\Route;
 use Nette\Application\UI\Presenter;
+use Nette\Application\UI\Template;
 use Nette\Configurator;
 use Nette\Http\Request;
 use Nette\Http\UrlScript;
@@ -99,25 +100,19 @@ class Helper
 		}
 	}
 
-	/**
-	 * @return \TestPresenter
-	 */
-	private function createPresenter()
+	private function createPresenter(): TestPresenter
 	{
-		$url = new UrlScript('http://localhost/');
-		$url->setScriptPath('/');
+		$url = new UrlScript('http://localhost/', '/');
 
 		$configurator = new Configurator();
 		$configurator->addConfig(__DIR__ . '/config.neon');
-		EventsExtension::register($configurator);
-		AnnotationsExtension::register($configurator);
-		OrmExtension::register($configurator);
+		//EventsExtension::register($configurator);
 
 		$container = $configurator
 			->setTempDirectory(TEMP_DIR)
 			->createContainer();
 		$container->removeService('httpRequest');
-		$container->addService('httpRequest', new Request($url));
+		$container->addService('httpRequest', new Request($url, NULL, NULL, ['nette-samesite' => TRUE]));
 
 		$router = $container->getByType(IRouter::class);
 		$router[] = new Route('<presenter>/<action>[/<id>]', 'Dashboard:default');
@@ -148,12 +143,12 @@ class TestPresenter extends Presenter
 		$this->onStartUp($this);
 	}
 
-	public function sendTemplate()
+	public function sendTemplate(?Template $template = null): void
 	{
 		//parent::sendTemplate(); intentionally
 	}
 
-	public function sendResponse(IResponse $response)
+	public function sendResponse(IResponse $response): void
 	{
 		if ($response instanceof JsonResponse) {
 			$response->send($this->getHttpRequest(), $this->getHttpResponse());
@@ -162,14 +157,12 @@ class TestPresenter extends Presenter
 		}
 	}
 
-	public function isAjax()
+	public function isAjax(): bool
 	{
-		return $this->forceAjaxMode === true
-			? true
-			: parent::isAjax();
+		return $this->forceAjaxMode === true || parent::isAjax();
 	}
 
-	public function terminate()
+	public function terminate(): void
 	{
 		if ($this->forceAjaxMode === false) {
 			parent::terminate();
