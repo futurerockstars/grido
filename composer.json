@@ -29,7 +29,7 @@
         "nette/application": "^2.4.17",
         "nette/forms": "^2.4.11",
         "nette/utils": "^2.5.7",
-        "symfony/property-access": "~3.0"
+        "symfony/property-access": "^5.4.22|^6.0.19"
     },
     "require-dev": {
         "dibi/dibi": "^4.0.0",
