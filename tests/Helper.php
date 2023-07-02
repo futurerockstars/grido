@@ -13,9 +13,6 @@ namespace Grido\Tests;
 
 use Closure;
 use Grido\Grid;
-use Kdyby\Annotations\DI\AnnotationsExtension;
-use Kdyby\Doctrine\DI\OrmExtension;
-use Kdyby\Events\DI\EventsExtension;
 use Nette\Application\IResponse;
 use Nette\Application\IRouter;
 use Nette\Application\Responses\JsonResponse;
@@ -112,7 +109,7 @@ class Helper
 			->setTempDirectory(TEMP_DIR)
 			->createContainer();
 		$container->removeService('httpRequest');
-		$container->addService('httpRequest', new Request($url, NULL, NULL, ['nette-samesite' => TRUE]));
+		$container->addService('httpRequest', new Request($url, null, null, ['nette-samesite' => true]));
 
 		$router = $container->getByType(IRouter::class);
 		$router[] = new Route('<presenter>/<action>[/<id>]', 'Dashboard:default');

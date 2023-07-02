@@ -64,8 +64,6 @@ class FileTranslator implements ITranslator
 		return include $filename;
 	}
 
-	/************************* interface \Nette\Localization\ITranslator **************************/
-
 	public function translate($message, ...$parameters): string
 	{
 		return $this->translations[$message] ?? (string) $message;

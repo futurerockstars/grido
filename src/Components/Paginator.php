@@ -89,9 +89,6 @@ class Paginator extends \Nette\Utils\Paginator
 		return $this;
 	}
 
-	/**
-	 * @return int
-	 */
 	public function getPage(): int
 	{
 		if ($this->page === null) {

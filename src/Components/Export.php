@@ -164,8 +164,6 @@ class Export extends Component implements IResponse
 		$this->grid->presenter->sendResponse($this);
 	}
 
-	/*************************** interface \Nette\Application\IResponse ***************************/
-
 	public function send(IRequest $httpRequest, \Nette\Http\IResponse $httpResponse): void
 	{
 		$encoding = 'utf-8';

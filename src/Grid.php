@@ -16,7 +16,6 @@ use Grido\Components\Button;
 use Grido\Components\Columns\Column;
 use Grido\Components\Filters\Filter;
 use Grido\Components\Paginator;
-use Nette\Application\UI\ComponentReflection;
 use Nette\Application\UI\Form;
 use Nette\Application\UI\Presenter;
 use Nette\Application\UI\Template;
@@ -34,6 +33,7 @@ use Throwable;
 use function array_combine;
 use function array_keys;
 use function array_merge;
+use function assert;
 use function call_user_func_array;
 use function explode;
 use function func_get_args;
@@ -1094,7 +1094,7 @@ class Grid extends Components\Container
 	 */
 	public function __triggerUserNotice($message)
 	{
-		if ($this->lookup(Presenter::class, FALSE) && $session = $this->getRememberSession()) {
+		if ($this->lookup(Presenter::class, false) && $session = $this->getRememberSession()) {
 			$session->remove();
 		}
 

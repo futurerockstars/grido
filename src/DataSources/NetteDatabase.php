@@ -93,7 +93,7 @@ class NetteDatabase implements IDataSource
 			->where('?name = ?', $idCol, $id)
 			->fetch();
 
-		return $res === null ? false : $res;
+		return $res ?? false;
 	}
 
 	/********************************** interface IDataSource ************************************/
