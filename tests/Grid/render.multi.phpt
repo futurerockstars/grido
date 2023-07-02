@@ -9,6 +9,7 @@
 
 namespace Grido\Tests;
 
+use Grido\Grid;
 use Tester\Assert,
     Grido\Components\Filters\Filter,
     Grido\Customization;
@@ -19,7 +20,7 @@ class Multirender extends \Tester\TestCase
 {
     function helper($template)
     {
-        $baseGrid = function($grid, TestPresenter $presenter) use ($template) {
+        $baseGrid = function(Grid $grid, TestPresenter $presenter) use ($template) {
             $data = @$presenter->context->getService('dibi_sqlite')
                 ->select('u.*, c.title AS country')
                 ->from('[user] u')
@@ -31,7 +32,8 @@ class Multirender extends \Tester\TestCase
             $grid->addColumnText('surname', 'Surname');
             $grid->addColumnText('gender', 'Gender');
             $grid->addColumnText('birthday', 'Birthday');
-            $grid->templateFile = $grid->customization->templateFiles[$template];
+			$templateFiles = $grid->customization->getTemplateFiles();
+			$grid->templateFile = $templateFiles[$template];
         };
 
         $addFilters = function($grid) {

@@ -70,7 +70,7 @@ class OperationTest extends \Tester\TestCase
 
         $params = [
             'do' => 'grid-form-submit',
-            'count' => 10,
+            'count' => '10',
             Grid::BUTTONS => [Operation::ID => 'OK'],
             Operation::ID => [
                 Operation::ID => 'edit',

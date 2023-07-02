@@ -20,8 +20,8 @@ parameters:
 
 	excludePaths:
 		- ../tests/tmp
+		# Unignorable error in test code
+		- ../tests/Helper.php
 
 	ignoreErrors:
-		- '#^Fetching class constant (.+) of deprecated class(.+)#'
-		- '#^Fetching deprecated class constant(.+)#'
 		- '#(.+)deprecated interface Nette(.+)#'

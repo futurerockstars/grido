@@ -166,6 +166,7 @@ class Grid extends Components\Container
 
 	public function __construct()
 	{
+		// Just for BC
 		[$parent, $name] = func_get_args() + [null, null];
 		if ($parent !== null) {
 			$parent->addComponent($this, $name);

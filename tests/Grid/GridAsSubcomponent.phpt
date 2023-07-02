@@ -39,7 +39,8 @@ class GridInSubcomponentTest extends \Tester\TestCase
             $subcomponent2 = new Subcomponent();
 			$presenter->addComponent($subcomponent2, 'subcomponent2');
 
-			$grid2 = new Grid($subcomponent2, 'grid');
+			$grid2 = new Grid();
+			$subcomponent2->addComponent($grid2, 'grid2');
             $grid2->setRememberState();
             $session2 = $grid2->getRememberSession();
             $session2->name = 'b';

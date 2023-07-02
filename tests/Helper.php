@@ -14,12 +14,14 @@ namespace Grido\Tests;
 use Closure;
 use Grido\Grid;
 use Nette\Application\IResponse;
-use Nette\Application\IRouter;
+use Nette\Application\Response;
 use Nette\Application\Responses\JsonResponse;
 use Nette\Application\Routers\Route;
+use Nette\Application\Routers\RouteList;
 use Nette\Application\UI\Presenter;
 use Nette\Application\UI\Template;
 use Nette\Configurator;
+use Nette\Http\Helpers;
 use Nette\Http\Request;
 use Nette\Http\UrlScript;
 use Tester\Assert;
@@ -57,7 +59,9 @@ class Helper
 				unset($presenter[self::GRID_NAME]);
 			}
 
-			$definition(new Grid($presenter, self::GRID_NAME), $presenter);
+			$grid = new Grid();
+			$presenter->addComponent($grid, self::GRID_NAME);
+			$definition($grid, $presenter);
 		};
 
 		return $self;
@@ -103,23 +107,32 @@ class Helper
 
 		$configurator = new Configurator();
 		$configurator->addConfig(__DIR__ . '/config.neon');
-		//EventsExtension::register($configurator);
 
 		$container = $configurator
 			->setTempDirectory(TEMP_DIR)
 			->createContainer();
 		$container->removeService('httpRequest');
-		$container->addService('httpRequest', new Request($url, null, null, ['nette-samesite' => true]));
+		$container->addService('httpRequest', new Request($url, null, null, [Helpers::StrictCookieName => true]));
 
-		$router = $container->getByType(IRouter::class);
-		$router[] = new Route('<presenter>/<action>[/<id>]', 'Dashboard:default');
-
-		$presenter = new TestPresenter($container);
+		$presenter = new TestPresenter();
 		$container->callInjects($presenter);
 		$presenter->invalidLinkMode = $presenter::INVALID_LINK_WARNING;
 		$presenter->autoCanonicalize = false;
 
 		return $presenter;
+	}
+
+}
+
+final class RouterFactory
+{
+
+	public static function create(): RouteList
+	{
+		$router = new RouteList();
+		$router[] = new Route('<presenter>/<action>[/<id>]', 'Dashboard:default');
+
+		return $router;
 	}
 
 }
@@ -143,12 +156,14 @@ class TestPresenter extends Presenter
 	public function sendTemplate(?Template $template = null): void
 	{
 		//parent::sendTemplate(); intentionally
+		$this->terminate();
 	}
 
-	public function sendResponse(IResponse $response): void
+	public function sendResponse(Response $response): void
 	{
 		if ($response instanceof JsonResponse) {
 			$response->send($this->getHttpRequest(), $this->getHttpResponse());
+			$this->terminate();
 		} else {
 			parent::sendResponse($response);
 		}

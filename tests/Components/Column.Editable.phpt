@@ -248,7 +248,7 @@ class EditableTest extends \Tester\TestCase
         copy($database, $database . $editableSuffix);
 
         Helper::grid(function(Grid $grid) use ($editableSuffix) {
-            $dsn = $grid->presenter->context->getService('ndb_sqlite')->getDsn() . $editableSuffix;
+            $dsn = @$grid->presenter->context->getService('ndb_sqlite')->getDsn() . $editableSuffix;
             $cacheMemoryStorage = new \Nette\Caching\Storages\MemoryStorage;
             $connection = new \Nette\Database\Connection($dsn);
             $structure = new \Nette\Database\Structure($connection, $cacheMemoryStorage);
@@ -272,7 +272,7 @@ class EditableTest extends \Tester\TestCase
 
         //TEST INSIDE EDITABLE CALLBACK
         Helper::grid(function(Grid $grid) use ($editableSuffix, $newValue, $oldValue, $id) {
-            $dsn = $grid->presenter->context->getService('ndb_sqlite')->getDsn() . $editableSuffix;
+            $dsn = @$grid->presenter->context->getService('ndb_sqlite')->getDsn() . $editableSuffix;
             $cacheMemoryStorage = new \Nette\Caching\Storages\MemoryStorage;
             $connection = new \Nette\Database\Connection($dsn);
             $structure = new \Nette\Database\Structure($connection, $cacheMemoryStorage);
@@ -315,10 +315,11 @@ class EditableTest extends \Tester\TestCase
         });
 
         ob_start();
-            Helper::request([
-                'do' => 'grid-columns-firstname-editableControl',
-                'grid-columns-firstname-value' => 'Test',
-            ]);
+		$response = Helper::request([
+			'do' => 'grid-columns-firstname-editableControl',
+			'grid-columns-firstname-value' => 'Test',
+		]);
+		$response->send(Helper::$presenter->getHttpRequest(), Helper::$presenter->getHttpResponse());
         $output = ob_get_clean();
         Assert::same('<input type="text" name="editfirstname" id="frm-grid-form-editfirstname" value="Test">', $output);
     }
