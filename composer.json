@@ -1,5 +1,5 @@
 {
-    "name": "vymak/grido",
+    "name": "futurerockstars/grido",
     "type": "library",
     "description": "Grido - DataGrid for Nette Framework",
     "keywords": ["datagrid", "datalist", "tablegrid", "grid", "list", "table", "nette"],
